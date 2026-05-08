@@ -2,12 +2,18 @@
 import "../styles/global.css";
 
 const {
+	canonicalPath = "/",
 	description = "Eltavine's personal page.",
 	image = "/eltavine.png",
+	jsonLd,
+	locale = "en_US",
+	siteUrl = Astro.site?.toString() ?? "https://eltavine.com",
 	title = "Eltavine",
 } = Astro.props;
 
 const pageTitle = title === "Eltavine" ? title : `${title} / Eltavine`;
+const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
+const imageUrl = new URL(image, siteUrl).toString();
 ---
 
 <!doctype html>
@@ -23,14 +29,23 @@ const pageTitle = title === "Eltavine" ? title : `${title} / Eltavine`;
 		<meta name="description" content={description} />
 		<meta name="author" content="Eltavine" />
 		<meta name="keywords" content="Eltavine, Android security, native systems, PGP" />
+		<link rel="canonical" href={canonicalUrl} />
 		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Eltavine" />
+		<meta property="og:locale" content={locale} />
+		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={image} />
+		<meta property="og:image" content={imageUrl} />
+		<meta property="og:image:alt" content="Eltavine personal site preview" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={pageTitle} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={image} />
+		<meta name="twitter:image" content={imageUrl} />
+		<meta name="twitter:image:alt" content="Eltavine personal site preview" />
+		{jsonLd && (
+			<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+		)}
 		<script is:inline>
 			(() => {
 				const storageKey = "eltavine-theme";

@@ -21,8 +21,10 @@ const pickStack = (...keys) =>
 
 export const siteMeta = {
   description:
-    "Eltavine's personal page: Android security tooling, native runtime surfaces, and service backends.",
+    "Eltavine is a software engineer building Android security tooling, native runtime surfaces, modular clients, and backend systems.",
   image: "/eltavine.png",
+  locale: "en_US",
+  siteUrl: "https://eltavine.com",
   title: "Eltavine",
 };
 
@@ -68,6 +70,7 @@ export const projects = [
         label: "GitHub",
       },
     ],
+    githubRepo: "eltavine/Duck-Detector-Refactoring",
     notes: [
       "Local evidence collection for root-related tampering, runtime hooking, mount manipulation, attestation trust, and virtualized execution environments.",
       "Kotlin-first app layer with Jetpack Compose, feature-scoped packages, view models, repositories, coroutines, and DataStore-backed settings.",
