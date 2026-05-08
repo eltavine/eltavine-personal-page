@@ -1,11 +1,359 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { Icon } from "astro-icon/components";
+import Layout from "../layouts/Layout.astro";
+import {
+	contact,
+	formatFingerprint,
+	navigation,
+	profile,
+	projects,
+	siteMeta,
+	stackGroups,
+} from "../data/site.js";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const fingerprintGroups = formatFingerprint(contact.fingerprint);
+const year = new Date().getFullYear();
 ---
 
-<Layout>
-	<Welcome />
+<Layout title={siteMeta.title} description={siteMeta.description} image={siteMeta.image}>
+	<div class="site-frame" id="top">
+		<header class="topbar shell" aria-label="Site header">
+			<a class="brand" href="#top" aria-label="Eltavine home">
+				<img
+					class="brand-mark"
+					src={profile.avatarUrl}
+					srcset={profile.avatarSrcset}
+					sizes="44px"
+					width="160"
+					height="160"
+					alt="Eltavine avatar"
+					decoding="async"
+					fetchpriority="high"
+				/>
+				<span class="brand-copy">
+					<span class="brand-name">{profile.name}</span>
+					<span class="brand-role">{profile.role}</span>
+				</span>
+			</a>
+
+			<div class="header-actions">
+				<nav class="topnav" aria-label="Primary navigation">
+					{navigation.map((item) => (
+						<a href={item.href}>
+							<Icon name={item.icon} class="nav-icon" aria-hidden="true" />
+							<span>{item.label}</span>
+						</a>
+					))}
+				</nav>
+				<button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme">
+					<Icon name="lucide:sun" class="theme-icon theme-icon-sun" aria-hidden="true" />
+					<Icon name="lucide:moon" class="theme-icon theme-icon-moon" aria-hidden="true" />
+				</button>
+			</div>
+		</header>
+
+		<main class="shell">
+			<section class="hero section-anchor" aria-labelledby="hero-title">
+				<div class="hero-copy">
+					<p class="eyebrow">{profile.role}</p>
+					<h1 id="hero-title" class="hero-title">
+						{profile.headlineLines.map((line) => <span>{line}</span>)}
+					</h1>
+					<p class="hero-lead">{profile.lead}</p>
+					<p class="body-copy hero-summary">{profile.summary}</p>
+
+					<div class="hero-actions" aria-label="Primary actions">
+						<a class="button button-primary" href="#projects">View project</a>
+						<a class="button button-secondary" href="#contact">Contact</a>
+					</div>
+
+					<ul class="principles" aria-label="Working principles">
+						{profile.principles.map((principle) => <li>{principle}</li>)}
+					</ul>
+				</div>
+			</section>
+
+			<section id="projects" class="section section-anchor" aria-labelledby="projects-title">
+				<div class="section-head">
+					<p class="eyebrow">Projects</p>
+					<h2 id="projects-title">Featured work.</h2>
+					<p class="body-copy">
+						One project for now, shown with enough detail to make the architecture and judgment visible.
+					</p>
+				</div>
+
+				<div class="project-list">
+					{projects.map((project) => (
+						<article class="project-feature">
+							<div class="project-meta" aria-label="Project metadata">
+								<span>
+									<Icon name={project.icon} class="meta-icon" aria-hidden="true" />
+									{project.section}
+								</span>
+								<span>{project.status}</span>
+							</div>
+
+							<div class="project-grid">
+								<div class="project-main">
+									<h3>{project.title}</h3>
+									<p class="project-summary">{project.summary}</p>
+									<p class="project-emphasis">{project.emphasis}</p>
+
+									<ul class="tag-list" aria-label={`${project.title} stack`}>
+										{project.stack.map((item) => (
+											<li>
+												<Icon name={item.icon} class="tag-icon" aria-hidden="true" />
+												<span>{item.label}</span>
+											</li>
+										))}
+									</ul>
+
+									<div class="project-links">
+										{project.links.map((link) => (
+											<a class="text-action" href={link.href} target="_blank" rel="noreferrer">
+												<Icon name="simple-icons:github" class="action-icon" aria-hidden="true" />
+												<span>{link.label}</span>
+											</a>
+										))}
+									</div>
+								</div>
+
+								<ol class="project-notes">
+									{project.notes.map((note) => <li>{note}</li>)}
+								</ol>
+							</div>
+						</article>
+					))}
+				</div>
+			</section>
+
+			<section id="stack" class="section section-anchor" aria-labelledby="stack-title">
+				<div class="section-head">
+					<p class="eyebrow">Stack</p>
+					<h2 id="stack-title">By layer, not by habit.</h2>
+					<p class="body-copy">
+						The language changes with the boundary, runtime, and failure mode.
+					</p>
+				</div>
+
+				<div class="stack-grid">
+					{stackGroups.map((group) => (
+						<article class="stack-group">
+							<p class="eyebrow icon-eyebrow">
+								<Icon name={group.icon} class="section-icon" aria-hidden="true" />
+								<span>{group.eyebrow}</span>
+							</p>
+							<h3>{group.title}</h3>
+							<p>{group.description}</p>
+							<ul class="tag-list" aria-label={`${group.title} items`}>
+								{group.items.map((item) => (
+									<li>
+										<Icon name={item.icon} class="tag-icon" aria-hidden="true" />
+										<span>{item.label}</span>
+									</li>
+								))}
+							</ul>
+						</article>
+					))}
+				</div>
+			</section>
+
+			<section id="contact" class="section section-anchor contact-section" aria-labelledby="contact-title">
+				<div class="section-head">
+					<p class="eyebrow">Contact</p>
+					<h2 id="contact-title">Direct, verifiable, quiet.</h2>
+					<p class="body-copy">
+						Email stays protected until intentionally revealed. PGP material is kept separate and minimal.
+					</p>
+				</div>
+
+				<div class="contact-grid">
+					<article class="contact-panel">
+						<p class="eyebrow icon-eyebrow">
+							<Icon name="lucide:mail" class="section-icon" aria-hidden="true" />
+							<span>Direct</span>
+						</p>
+						<h3>Email and GitHub</h3>
+						<dl class="contact-list">
+							<div>
+								<dt>
+									<Icon name="lucide:at-sign" class="label-icon" aria-hidden="true" />
+									<span>Email</span>
+								</dt>
+								<dd>
+									<button
+										class="text-action email-reveal"
+										type="button"
+										data-email-reveal
+										data-email-user={contact.emailParts.user}
+										data-email-domain={contact.emailParts.domain}
+										data-email-tld={contact.emailParts.tld}
+									>
+										<Icon name="lucide:lock-keyhole" class="action-icon" aria-hidden="true" />
+										<span>Press to reveal</span>
+									</button>
+								</dd>
+							</div>
+							<div>
+								<dt>
+									<Icon name="simple-icons:github" class="label-icon" aria-hidden="true" />
+									<span>GitHub</span>
+								</dt>
+								<dd>
+									<a class="text-action" href={contact.githubUrl} target="_blank" rel="noreferrer">
+										<Icon name="lucide:external-link" class="action-icon" aria-hidden="true" />
+										<span>{contact.githubLabel}</span>
+									</a>
+								</dd>
+							</div>
+						</dl>
+					</article>
+
+					<article class="contact-panel">
+						<p class="eyebrow icon-eyebrow">
+							<Icon name="lucide:key-round" class="section-icon" aria-hidden="true" />
+							<span>PGP</span>
+						</p>
+						<h3>{contact.keyId}</h3>
+						<dl class="contact-list">
+							<div>
+								<dt>
+									<Icon name="lucide:fingerprint" class="label-icon" aria-hidden="true" />
+									<span>Fingerprint</span>
+								</dt>
+								<dd class="fingerprint" aria-label={`Fingerprint ${contact.fingerprint}`}>
+									{fingerprintGroups.map((group) => <span>{group}</span>)}
+								</dd>
+							</div>
+							<div>
+								<dt>
+									<Icon name="lucide:key-round" class="label-icon" aria-hidden="true" />
+									<span>Public key</span>
+								</dt>
+								<dd>
+									<a class="text-action" href={contact.publicKeyUrl} download>
+										<Icon name="lucide:download" class="action-icon" aria-hidden="true" />
+										<span>Download .asc</span>
+									</a>
+								</dd>
+							</div>
+						</dl>
+					</article>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer shell">
+			<div class="footer-signature">
+				<img
+					class="footer-mark"
+					src={profile.avatarUrl}
+					srcset={profile.avatarSrcset}
+					sizes="52px"
+					width="160"
+					height="160"
+					alt=""
+					decoding="async"
+				/>
+				<div>
+					<p class="footer-name">{profile.name}</p>
+					<p class="footer-note">
+						Built for clear boundaries, modular systems, and long-lived iteration.
+					</p>
+				</div>
+			</div>
+
+			<div class="footer-directory" aria-label="Footer directory">
+				<div>
+					<p class="eyebrow">Navigate</p>
+					<div class="footer-links">
+						{navigation.map((item) => (
+							<a href={item.href}>
+								<Icon name={item.icon} class="nav-icon" aria-hidden="true" />
+								<span>{item.label}</span>
+							</a>
+						))}
+					</div>
+				</div>
+				<div>
+					<p class="eyebrow">Identity</p>
+					<div class="footer-links">
+						<a href={contact.githubUrl} target="_blank" rel="noreferrer">
+							<Icon name="simple-icons:github" class="nav-icon" aria-hidden="true" />
+							<span>GitHub</span>
+						</a>
+						<a href={contact.publicKeyUrl} download>
+							<Icon name="lucide:key-round" class="nav-icon" aria-hidden="true" />
+							<span>PGP key</span>
+						</a>
+						<span>{year} / {profile.name}</span>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<script is:inline>
+		const storageKey = "eltavine-theme";
+		const themeToggle = document.querySelector("[data-theme-toggle]");
+
+		function applyTheme(theme) {
+			const root = document.documentElement;
+			root.dataset.theme = theme;
+			root.style.colorScheme = theme;
+			themeToggle?.setAttribute(
+				"aria-label",
+				theme === "dark" ? "Switch to light theme" : "Switch to dark theme",
+			);
+		}
+
+		themeToggle?.addEventListener("click", () => {
+			const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+			const nextTheme = currentTheme === "dark" ? "light" : "dark";
+			try {
+				window.localStorage.setItem(storageKey, nextTheme);
+			} catch {}
+			applyTheme(nextTheme);
+		});
+
+		applyTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
+
+		const revealButtons = document.querySelectorAll("[data-email-reveal]");
+
+		revealButtons.forEach((button) => {
+			let isPrimed = false;
+			const icon = button.querySelector("[data-icon]");
+			const label = button.querySelector("span");
+
+			button.addEventListener("click", () => {
+				const user = button.dataset.emailUser;
+				const domain = button.dataset.emailDomain;
+				const tld = button.dataset.emailTld;
+
+				if (!user || !domain || !tld) {
+					return;
+				}
+
+				if (!isPrimed) {
+					isPrimed = true;
+					if (label) {
+						label.textContent = "Reveal email";
+					}
+					icon?.setAttribute("data-icon-state", "primed");
+					button.dataset.state = "primed";
+					return;
+				}
+
+				const email = `${user}@${domain}.${tld}`;
+				const link = document.createElement("a");
+				link.className = button.className;
+				link.href = `mailto:${email}`;
+				link.textContent = email;
+				link.dataset.state = "revealed";
+				link.setAttribute("aria-label", `Email ${email}`);
+				button.replaceWith(link);
+				link.focus({ preventScroll: true });
+			});
+		});
+	</script>
 </Layout>
