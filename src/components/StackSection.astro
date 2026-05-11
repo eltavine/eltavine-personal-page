@@ -1,0 +1,36 @@
+---
+import { Icon } from "astro-icon/components";
+
+const { stackGroups } = Astro.props;
+---
+
+<section id="stack" class="section section-anchor" aria-labelledby="stack-title">
+	<div class="section-head">
+		<p class="eyebrow">Stack</p>
+		<h2 id="stack-title">By layer, not by habit.</h2>
+		<p class="body-copy">
+			The language changes with the boundary, runtime, and failure mode.
+		</p>
+	</div>
+
+	<div class="stack-grid">
+		{stackGroups.map((group) => (
+			<article class="stack-group">
+				<p class="eyebrow icon-eyebrow">
+					<Icon name={group.icon} class="section-icon" aria-hidden="true" />
+					<span>{group.eyebrow}</span>
+				</p>
+				<h3>{group.title}</h3>
+				<p>{group.description}</p>
+				<ul class="tag-list" aria-label={`${group.title} items`}>
+					{group.items.map((item) => (
+						<li>
+							<Icon name={item.icon} class="tag-icon" aria-hidden="true" />
+							<span>{item.label}</span>
+						</li>
+					))}
+				</ul>
+			</article>
+		))}
+	</div>
+</section>

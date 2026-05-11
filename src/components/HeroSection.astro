@@ -1,0 +1,23 @@
+---
+const { profile } = Astro.props;
+---
+
+<section class="hero section-anchor" aria-labelledby="hero-title">
+	<div class="hero-copy">
+		<p class="eyebrow">{profile.role}</p>
+		<h1 id="hero-title" class="hero-title">
+			{profile.headlineLines.map((line) => <span>{line}</span>)}
+		</h1>
+		<p class="hero-lead">{profile.lead}</p>
+		<p class="body-copy hero-summary">{profile.summary}</p>
+
+		<div class="hero-actions" aria-label="Primary actions">
+			<a class="button button-primary" href="#projects">View project</a>
+			<a class="button button-secondary" href="#contact">Contact</a>
+		</div>
+
+		<ul class="principles" aria-label="Working principles">
+			{profile.principles.map((principle) => <li>{principle}</li>)}
+		</ul>
+	</div>
+</section>

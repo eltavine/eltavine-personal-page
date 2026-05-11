@@ -1,0 +1,91 @@
+---
+import { Icon } from "astro-icon/components";
+import { formatFingerprint } from "../data/site.js";
+
+const { contact } = Astro.props;
+const fingerprintGroups = formatFingerprint(contact.fingerprint);
+---
+
+<section id="contact" class="section section-anchor contact-section" aria-labelledby="contact-title">
+	<div class="section-head">
+		<p class="eyebrow">Contact</p>
+		<h2 id="contact-title">Direct, verifiable, quiet.</h2>
+		<p class="body-copy">
+			Email stays protected until intentionally revealed. PGP material is kept separate and minimal.
+		</p>
+	</div>
+
+	<div class="contact-grid">
+		<article class="contact-panel">
+			<p class="eyebrow icon-eyebrow">
+				<Icon name="lucide:mail" class="section-icon" aria-hidden="true" />
+				<span>Direct</span>
+			</p>
+			<h3>Email and GitHub</h3>
+			<dl class="contact-list">
+				<div>
+					<dt>
+						<Icon name="lucide:at-sign" class="label-icon" aria-hidden="true" />
+						<span>Email</span>
+					</dt>
+					<dd>
+						<button
+							class="text-action email-reveal"
+							type="button"
+							data-email-reveal
+							data-email-user={contact.emailParts.user}
+							data-email-domain={contact.emailParts.domain}
+							data-email-tld={contact.emailParts.tld}
+						>
+							<Icon name="lucide:lock-keyhole" class="action-icon" aria-hidden="true" />
+							<span>Press to reveal</span>
+						</button>
+					</dd>
+				</div>
+				<div>
+					<dt>
+						<Icon name="simple-icons:github" class="label-icon" aria-hidden="true" />
+						<span>GitHub</span>
+					</dt>
+					<dd>
+						<a class="text-action" href={contact.githubUrl} target="_blank" rel="noreferrer">
+							<Icon name="lucide:external-link" class="action-icon" aria-hidden="true" />
+							<span>{contact.githubLabel}</span>
+						</a>
+					</dd>
+				</div>
+			</dl>
+		</article>
+
+		<article class="contact-panel">
+			<p class="eyebrow icon-eyebrow">
+				<Icon name="lucide:key-round" class="section-icon" aria-hidden="true" />
+				<span>PGP</span>
+			</p>
+			<h3>{contact.keyId}</h3>
+			<dl class="contact-list">
+				<div>
+					<dt>
+						<Icon name="lucide:fingerprint" class="label-icon" aria-hidden="true" />
+						<span>Fingerprint</span>
+					</dt>
+					<dd class="fingerprint" aria-label={`Fingerprint ${contact.fingerprint}`}>
+						{fingerprintGroups.map((group) => <span>{group}</span>)}
+					</dd>
+				</div>
+				<div>
+					<dt>
+						<Icon name="lucide:key-round" class="label-icon" aria-hidden="true" />
+						<span>Public key</span>
+					</dt>
+					<dd>
+						<a class="text-action" href={contact.publicKeyUrl} download>
+							<Icon name="lucide:download" class="action-icon" aria-hidden="true" />
+							<span>Download .asc</span>
+						</a>
+					</dd>
+				</div>
+			</dl>
+		</article>
+	</div>
+</section>

@@ -21,7 +21,7 @@ const pickStack = (...keys) =>
 
 export const siteMeta = {
   description:
-    "Eltavine is a software engineer building Android security tooling, native runtime surfaces, modular clients, and backend systems.",
+    "Eltavine builds Android security inspection tools, native runtime probes, and backend systems with modular boundaries.",
   image: "/eltavine.png",
   locale: "en_US",
   siteUrl: "https://eltavine.com",
@@ -38,12 +38,12 @@ export const profile = {
   avatarSrcset: "/eltavine-avatar-80.webp 80w, /eltavine-avatar-160.webp 160w",
   avatarUrl: "/eltavine-avatar-160.webp",
   headlineLines: ["Android,", "Windows,", "native."],
-  lead: "I build across Android, low-level runtime surfaces, and service backends.",
+  lead: "I build Android security tooling, native runtime probes, and backend systems with modular boundaries and local evidence in mind.",
   name: "Eltavine",
-  principles: ["Modular systems", "Native-first tooling", "Clear boundaries"],
+  principles: ["Modular detectors", "Native probes", "Clear boundaries"],
   role: "Software engineer",
   summary:
-    "A short overview of the systems I work on, the tools I keep close, and the boundaries I prefer to keep legible.",
+    "A focused view of the systems I work on, the signals I trust, and the seams I keep visible.",
 };
 
 export const contact = {
@@ -62,7 +62,7 @@ export const contact = {
 export const projects = [
   {
     emphasis:
-      "A device-side Android security inspection app built around modular detectors instead of one monolithic scan flow.",
+      "Duck Detector keeps each signal in its own detector so bootloader state, hook frameworks, mount changes, and attestation checks can evolve without a monolithic scan pipeline.",
     id: "duck-detector",
     links: [
       {
@@ -71,45 +71,54 @@ export const projects = [
       },
     ],
     githubRepo: "eltavine/Duck-Detector-Refactoring",
+    githubFallback: {
+      forks: 68,
+      stars: 333,
+      starHistory: [
+        { count: 2, month: "2026-03" },
+        { count: 241, month: "2026-04" },
+        { count: 90, month: "2026-05" },
+      ],
+    },
     notes: [
-      "Local evidence collection for root-related tampering, runtime hooking, mount manipulation, attestation trust, and virtualized execution environments.",
-      "Kotlin-first app layer with Jetpack Compose, feature-scoped packages, view models, repositories, coroutines, and DataStore-backed settings.",
-      "Native probes through the Android NDK with C++, CMake, and arm64 assembly paths where syscall timing or mount visibility matters.",
+      "Detector coverage spans bootloader state, root traces, hook frameworks, mount changes, virtualization, and attestation trust signals.",
+      "The app layer is Kotlin and Jetpack Compose, split by feature with view models, repositories, coroutines, and DataStore-backed settings.",
+      "Native probes use the Android NDK with C++, CMake, and arm64 assembly where syscall timing or mount visibility needs a lower-level view.",
     ],
     icon: "lucide:shield-check",
     section: "Android / Security",
     stack: pickStack("android", "kotlin", "cpp", "asm"),
     status: "Native Android security tooling",
     summary:
-      "Duck Detector surfaces detector cards for bootloader state, LSPosed / Zygisk traces, native root evidence, virtualization, TEE attestation trust, and other integrity signals while keeping most analysis local to the device.",
+      "Duck Detector is a device-side Android security inspection app that keeps analysis local and composes results from modular detectors rather than one monolithic scan flow.",
     title: "Duck Detector",
   },
 ];
 
 export const stackGroups = [
   {
-    description: "Lower-level work where control, layout, and runtime behavior matter most.",
+    description: "Where ABI control, memory layout, and runtime behavior matter most.",
     eyebrow: "Core",
     icon: "lucide:cpu",
     items: pickStack("cpp", "c", "rust"),
     title: "Core Languages",
   },
   {
-    description: "Languages used to ship user-facing apps, services, and flexible product surfaces.",
+    description: "Where UI, orchestration, and service logic turn into shipped software.",
     eyebrow: "Application",
     icon: "lucide:braces",
     items: pickStack("kotlin", "typescript", "javascript", "java"),
     title: "Application Languages",
   },
   {
-    description: "Operating systems and platform-specific areas that shape how software lands in the real world.",
+    description: "Where OS behavior and deployment constraints shape the design.",
     eyebrow: "Platform",
     icon: "lucide:monitor",
     items: pickStack("linux", "windowsKernel", "android"),
     title: "Systems and Platform",
   },
   {
-    description: "Persistent state and service storage when the product boundary reaches the data layer.",
+    description: "Where state must stay durable, queryable, and recoverable.",
     eyebrow: "Data",
     icon: "lucide:database",
     items: pickStack("postgresql"),

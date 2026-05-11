@@ -1,0 +1,48 @@
+---
+import { Icon } from "astro-icon/components";
+import GithubStarChart from "./GithubStarChart.astro";
+
+const { project } = Astro.props;
+---
+
+<article class="project-feature">
+	<div class="project-meta" aria-label="Project metadata">
+		<span>
+			<Icon name={project.icon} class="meta-icon" aria-hidden="true" />
+			{project.section}
+		</span>
+		<span>{project.status}</span>
+	</div>
+
+	<div class="project-grid">
+		<div class="project-main">
+			<h3>{project.title}</h3>
+			<p class="project-summary">{project.summary}</p>
+			<p class="project-emphasis">{project.emphasis}</p>
+
+			<GithubStarChart project={project} />
+
+			<ul class="tag-list" aria-label={`${project.title} stack`}>
+				{project.stack.map((item) => (
+					<li>
+						<Icon name={item.icon} class="tag-icon" aria-hidden="true" />
+						<span>{item.label}</span>
+					</li>
+				))}
+			</ul>
+
+			<div class="project-links">
+				{project.links.map((link) => (
+					<a class="text-action" href={link.href} target="_blank" rel="noreferrer">
+						<Icon name="simple-icons:github" class="action-icon" aria-hidden="true" />
+						<span>{link.label}</span>
+					</a>
+				))}
+			</div>
+		</div>
+
+		<ol class="project-notes">
+			{project.notes.map((note) => <li>{note}</li>)}
+		</ol>
+	</div>
+</article>

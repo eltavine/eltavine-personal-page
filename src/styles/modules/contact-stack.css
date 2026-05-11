@@ -1,0 +1,54 @@
+.contact-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 1rem;
+}
+
+.contact-panel {
+	padding: 1.35rem;
+}
+
+.contact-panel h3 {
+	margin-top: 0.55rem;
+}
+
+.contact-list {
+	display: grid;
+	gap: 1.15rem;
+	margin: 1.35rem 0 0;
+}
+
+.fingerprint {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.34rem 0.55rem;
+	font-family: var(--font-mono);
+	font-size: 0.82rem;
+	line-height: 1.7;
+	overflow-wrap: anywhere;
+}
+
+.stack-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem;
+}
+
+.stack-group {
+	border-top: 1px solid var(--line);
+	padding-top: 1.15rem;
+}
+
+.stack-group h3 {
+	margin-top: 0.55rem;
+}
+
+.stack-group p:not(.eyebrow) {
+	margin: 0.72rem 0 0;
+	color: var(--muted);
+	line-height: 1.7;
+}
+
+.stack-group .tag-list {
+	margin: 1.05rem 0 0;
+}

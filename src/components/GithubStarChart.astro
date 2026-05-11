@@ -1,0 +1,66 @@
+---
+const { project } = Astro.props;
+---
+
+<figure
+	class="github-star-chart"
+	data-github-star-chart
+	data-repo={project.githubRepo}
+	data-project-title={project.title}
+	data-fallback-history={JSON.stringify(project.githubFallback?.starHistory ?? [])}
+	data-state="idle"
+	data-source="loading"
+	aria-busy="true"
+>
+	<div class="github-chart-head">
+		<div>
+			<p class="eyebrow">Star history</p>
+			<p class="github-chart-title">{project.title}</p>
+		</div>
+		<div class="github-chart-head-aside">
+			<div class="github-chart-summary" aria-label={`${project.title} star summary`}>
+				<span>
+					<strong data-github-star-total>--</strong>
+					<span>Total stars</span>
+				</span>
+				<span>
+					<strong data-github-star-latest>--</strong>
+					<span>Latest</span>
+				</span>
+				<span
+					data-github-stats
+					data-repo={project.githubRepo}
+					data-fallback-forks={project.githubFallback?.forks}
+					aria-label={`${project.title} GitHub forks`}
+				>
+					<strong data-github-forks>{project.githubFallback?.forks ?? "--"}</strong>
+					<span>Forks</span>
+				</span>
+			</div>
+			<p class="github-chart-source" data-github-star-source aria-live="polite">
+				Loading GitHub data...
+			</p>
+		</div>
+	</div>
+
+	<div class="github-chart-body">
+		<canvas
+			data-github-star-canvas
+			role="img"
+			aria-label={`${project.title} star history line chart`}
+		></canvas>
+		<div class="github-chart-loader" data-github-star-loader aria-hidden="true">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<p class="github-chart-message" data-github-star-message>Loading star history...</p>
+	</div>
+
+	<div class="github-chart-foot">
+		<span data-github-star-range>--</span>
+		<span data-github-star-peak>--</span>
+	</div>
+</figure>
+
+

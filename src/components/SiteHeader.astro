@@ -1,0 +1,40 @@
+---
+import { Icon } from "astro-icon/components";
+
+const { navigation, profile } = Astro.props;
+---
+
+<header class="topbar shell" aria-label="Site header">
+	<a class="brand" href="#top" aria-label="Eltavine home">
+		<img
+			class="brand-mark"
+			src={profile.avatarUrl}
+			srcset={profile.avatarSrcset}
+			sizes="44px"
+			width="160"
+			height="160"
+			alt="Eltavine avatar"
+			decoding="async"
+			fetchpriority="high"
+		/>
+		<span class="brand-copy">
+			<span class="brand-name">{profile.name}</span>
+			<span class="brand-role">{profile.role}</span>
+		</span>
+	</a>
+
+	<div class="header-actions">
+		<nav class="topnav" aria-label="Primary navigation">
+			{navigation.map((item) => (
+				<a href={item.href}>
+					<Icon name={item.icon} class="nav-icon" aria-hidden="true" />
+					<span>{item.label}</span>
+				</a>
+			))}
+		</nav>
+		<button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme">
+			<Icon name="lucide:sun" class="theme-icon theme-icon-sun" aria-hidden="true" />
+			<Icon name="lucide:moon" class="theme-icon theme-icon-moon" aria-hidden="true" />
+		</button>
+	</div>
+</header>

@@ -1,0 +1,19 @@
+---
+import ProjectFeature from "./ProjectFeature.astro";
+
+const { projects } = Astro.props;
+---
+
+<section id="projects" class="section section-anchor" aria-labelledby="projects-title">
+	<div class="section-head">
+		<p class="eyebrow">Projects</p>
+		<h2 id="projects-title">Featured work.</h2>
+		<p class="body-copy">
+			One project for now, shown with enough depth to make the architecture, live signals, and judgment visible.
+		</p>
+	</div>
+
+	<div class="project-list">
+		{projects.map((project) => <ProjectFeature project={project} />)}
+	</div>
+</section>

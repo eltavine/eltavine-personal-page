@@ -1,0 +1,54 @@
+---
+import { Icon } from "astro-icon/components";
+
+const { contact, navigation, profile, year } = Astro.props;
+---
+
+<footer class="site-footer shell">
+	<div class="footer-signature">
+		<img
+			class="footer-mark"
+			src={profile.avatarUrl}
+			srcset={profile.avatarSrcset}
+			sizes="52px"
+			width="160"
+			height="160"
+			alt=""
+			decoding="async"
+		/>
+		<div>
+			<p class="footer-name">{profile.name}</p>
+			<p class="footer-note">
+				Built for clear boundaries, modular systems, and long-lived iteration.
+			</p>
+		</div>
+	</div>
+
+	<div class="footer-directory" aria-label="Footer directory">
+		<div>
+			<p class="eyebrow">Navigate</p>
+			<div class="footer-links">
+				{navigation.map((item) => (
+					<a href={item.href}>
+						<Icon name={item.icon} class="nav-icon" aria-hidden="true" />
+						<span>{item.label}</span>
+					</a>
+				))}
+			</div>
+		</div>
+		<div>
+			<p class="eyebrow">Identity</p>
+			<div class="footer-links">
+				<a href={contact.githubUrl} target="_blank" rel="noreferrer">
+					<Icon name="simple-icons:github" class="nav-icon" aria-hidden="true" />
+					<span>GitHub</span>
+				</a>
+				<a href={contact.publicKeyUrl} download>
+					<Icon name="lucide:key-round" class="nav-icon" aria-hidden="true" />
+					<span>PGP key</span>
+				</a>
+				<span>{year} / {profile.name}</span>
+			</div>
+		</div>
+	</div>
+</footer>

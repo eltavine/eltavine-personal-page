@@ -1,0 +1,73 @@
+.contact-panel {
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	background: var(--surface);
+	box-shadow: var(--shadow);
+}
+
+.contact-list div {
+	display: grid;
+	gap: 0.4rem;
+}
+
+.contact-list dt {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	color: var(--muted);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+
+.label-icon,
+.meta-icon,
+.section-icon,
+.action-icon {
+	stroke-width: 1.75;
+}
+
+.label-icon,
+.meta-icon,
+.section-icon {
+	font-size: 0.88rem;
+}
+
+.action-icon {
+	font-size: 0.95rem;
+}
+
+.icon-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+}
+
+.contact-list dd {
+	margin: 0;
+}
+
+.section {
+	padding: 4.6rem 0;
+	border-top: 1px solid var(--line);
+}
+
+.section-head {
+	max-width: 45rem;
+	margin-bottom: 2.35rem;
+}
+
+.section-head h2 {
+	margin: 0.82rem 0 0;
+	font-family: var(--font-serif);
+	font-size: 3.25rem;
+	font-weight: 500;
+	line-height: 1.04;
+	text-wrap: balance;
+}
+
+.section-head .body-copy {
+	max-width: 38rem;
+	margin-top: 0.9rem;
+}
