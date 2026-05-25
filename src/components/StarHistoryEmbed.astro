@@ -1,0 +1,24 @@
+---
+const { project } = Astro.props;
+const { starHistory } = project;
+---
+
+<figure class="star-history-embed" aria-label={`${project.title} star history`}>
+	<a
+		href={starHistory.href}
+		target="_blank"
+		rel="noreferrer"
+		aria-label={`Open ${project.title} star history on Star History`}
+	>
+		<picture>
+			<source media="(prefers-color-scheme: dark)" srcset={starHistory.darkSrc} />
+			<source media="(prefers-color-scheme: light)" srcset={starHistory.lightSrc} />
+			<img
+				alt={`${project.title} star history chart`}
+				src={starHistory.lightSrc}
+				loading="lazy"
+				decoding="async"
+			/>
+		</picture>
+	</a>
+</figure>

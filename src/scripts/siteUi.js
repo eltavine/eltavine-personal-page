@@ -1,5 +1,10 @@
 const storageKey = "eltavine-theme";
 
+const compactNumberFormatter = new Intl.NumberFormat("en", {
+	compactDisplay: "short",
+	notation: "compact",
+});
+
 function applyTheme(theme, toggle) {
 	const root = document.documentElement;
 	root.dataset.theme = theme;
@@ -68,5 +73,43 @@ export function initEmailReveal() {
 			button.replaceWith(link);
 			link.focus({ preventScroll: true });
 		});
+	}
+}
+
+export function initGitHubRepoStats() {
+	for (const link of document.querySelectorAll("[data-github-repo-stats]")) {
+		if (link.dataset.bound === "true") {
+			continue;
+		}
+
+		link.dataset.bound = "true";
+		void updateGitHubRepoStats(link);
+	}
+}
+
+async function updateGitHubRepoStats(link) {
+	const repo = link.dataset.repo;
+	const starsEl = link.querySelector("[data-github-stars]");
+	const forksEl = link.querySelector("[data-github-forks]");
+
+	if (!repo || !starsEl || !forksEl) {
+		return;
+	}
+
+	try {
+		const response = await fetch(`https://api.github.com/repos/${repo}`, {
+			headers: { Accept: "application/vnd.github+json" },
+		});
+
+		if (!response.ok) {
+			throw new Error("GitHub stats unavailable");
+		}
+
+		const data = await response.json();
+		starsEl.textContent = compactNumberFormatter.format(data.stargazers_count ?? 0);
+		forksEl.textContent = compactNumberFormatter.format(data.forks_count ?? 0);
+		link.dataset.state = "live";
+	} catch {
+		link.dataset.state = "error";
 	}
 }

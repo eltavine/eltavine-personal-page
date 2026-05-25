@@ -64,21 +64,16 @@ export const projects = [
     emphasis:
       "Duck Detector keeps each signal in its own detector so bootloader state, hook frameworks, mount changes, and attestation checks can evolve without a monolithic scan pipeline.",
     id: "duck-detector",
-    links: [
-      {
-        href: "https://github.com/eltavine/Duck-Detector-Refactoring",
-        label: "GitHub",
-      },
-    ],
-    githubRepo: "eltavine/Duck-Detector-Refactoring",
-    githubFallback: {
-      forks: 68,
-      stars: 333,
-      starHistory: [
-        { count: 2, month: "2026-03" },
-        { count: 241, month: "2026-04" },
-        { count: 90, month: "2026-05" },
-      ],
+    github: {
+      href: "https://github.com/eltavine/Duck-Detector-Refactoring",
+      repo: "eltavine/Duck-Detector-Refactoring",
+    },
+    starHistory: {
+      href: "https://www.star-history.com/?repos=eltavine%2FDuck-Detector-Refactoring&type=date&legend=top-left",
+      darkSrc:
+        "https://api.star-history.com/chart?repos=eltavine/Duck-Detector-Refactoring&type=date&theme=dark&legend=top-left",
+      lightSrc:
+        "https://api.star-history.com/chart?repos=eltavine/Duck-Detector-Refactoring&type=date&legend=top-left",
     },
     notes: [
       "Detector coverage spans bootloader state, root traces, hook frameworks, mount changes, virtualization, and attestation trust signals.",

@@ -1,0 +1,26 @@
+.star-history-embed {
+	margin: 1.55rem 0 0;
+	padding-top: 1.2rem;
+	border-top: 1px solid var(--line);
+	overflow-x: auto;
+}
+
+.star-history-embed a {
+	display: block;
+	width: 100%;
+	min-width: 600px;
+	border-radius: var(--radius-md);
+	background: var(--surface);
+	box-shadow: inset 0 0 0 1px var(--line);
+	overflow: hidden;
+}
+
+.star-history-embed picture,
+.star-history-embed img {
+	display: block;
+}
+
+.star-history-embed img {
+	width: 100%;
+	height: auto;
+}

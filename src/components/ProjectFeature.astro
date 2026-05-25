@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import GithubStarChart from "./GithubStarChart.astro";
+import StarHistoryEmbed from "./StarHistoryEmbed.astro";
 
 const { project } = Astro.props;
 ---
@@ -20,7 +20,42 @@ const { project } = Astro.props;
 			<p class="project-summary">{project.summary}</p>
 			<p class="project-emphasis">{project.emphasis}</p>
 
-			<GithubStarChart project={project} />
+			<StarHistoryEmbed project={project} />
+
+			<a
+				class="github-repo-stats"
+				href={project.github.href}
+				target="_blank"
+				rel="noreferrer"
+				data-github-repo-stats
+				data-repo={project.github.repo}
+				data-state="loading"
+				aria-label={`Open ${project.title} on GitHub`}
+			>
+				<Icon
+					name="simple-icons:github"
+					class="repo-stats-icon repo-stats-icon-github"
+					aria-hidden="true"
+				/>
+				<Icon
+					name="lucide:wifi-off"
+					class="repo-stats-icon repo-stats-icon-network"
+					aria-hidden="true"
+				/>
+				<span class="repo-stats-values" data-github-values>
+					<span class="repo-stat">
+						<strong data-github-stars>--</strong>
+						<span>Stars</span>
+					</span>
+					<span class="repo-stat">
+						<strong data-github-forks>--</strong>
+						<span>Forks</span>
+					</span>
+				</span>
+				<span class="repo-network-status" data-github-network-status>
+					Network Unavailable
+				</span>
+			</a>
 
 			<ul class="tag-list" aria-label={`${project.title} stack`}>
 				{project.stack.map((item) => (
@@ -30,15 +65,6 @@ const { project } = Astro.props;
 					</li>
 				))}
 			</ul>
-
-			<div class="project-links">
-				{project.links.map((link) => (
-					<a class="text-action" href={link.href} target="_blank" rel="noreferrer">
-						<Icon name="simple-icons:github" class="action-icon" aria-hidden="true" />
-						<span>{link.label}</span>
-					</a>
-				))}
-			</div>
 		</div>
 
 		<ol class="project-notes">
