@@ -22,40 +22,49 @@ const { project } = Astro.props;
 
 			<StarHistoryEmbed project={project} />
 
-			<a
-				class="github-repo-stats"
-				href={project.github.href}
-				target="_blank"
-				rel="noreferrer"
-				data-github-repo-stats
-				data-repo={project.github.repo}
-				data-state="loading"
-				aria-label={`Open ${project.title} on GitHub`}
-			>
-				<Icon
-					name="simple-icons:github"
-					class="repo-stats-icon repo-stats-icon-github"
-					aria-hidden="true"
-				/>
-				<Icon
-					name="lucide:wifi-off"
-					class="repo-stats-icon repo-stats-icon-network"
-					aria-hidden="true"
-				/>
-				<span class="repo-stats-values" data-github-values>
-					<span class="repo-stat">
-						<strong data-github-stars>--</strong>
-						<span>Stars</span>
+			{project.github && (
+				<a
+					class="github-repo-stats"
+					href={project.github.href}
+					target="_blank"
+					rel="noreferrer"
+					data-github-repo-stats
+					data-repo={project.github.repo}
+					data-state="loading"
+					aria-label={`Open ${project.title} on GitHub`}
+				>
+					<Icon
+						name="simple-icons:github"
+						class="repo-stats-icon repo-stats-icon-github"
+						aria-hidden="true"
+					/>
+					<Icon
+						name="lucide:wifi-off"
+						class="repo-stats-icon repo-stats-icon-network"
+						aria-hidden="true"
+					/>
+					<span class="repo-stats-values" data-github-values>
+						<span class="repo-stat">
+							<strong data-github-stars>--</strong>
+							<span>Stars</span>
+						</span>
+						<span class="repo-stat">
+							<strong data-github-forks>--</strong>
+							<span>Forks</span>
+						</span>
 					</span>
-					<span class="repo-stat">
-						<strong data-github-forks>--</strong>
-						<span>Forks</span>
+					<span class="repo-network-status" data-github-network-status>
+						Network Unavailable
 					</span>
-				</span>
-				<span class="repo-network-status" data-github-network-status>
-					Network Unavailable
-				</span>
-			</a>
+				</a>
+			)}
+
+			{project.availability && (
+				<p class="project-availability">
+					<Icon name={project.availability.icon} class="availability-icon" aria-hidden="true" />
+					<span>{project.availability.label}</span>
+				</p>
+			)}
 
 			<ul class="tag-list" aria-label={`${project.title} stack`}>
 				{project.stack.map((item) => (

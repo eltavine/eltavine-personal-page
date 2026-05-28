@@ -113,6 +113,31 @@
 	display: none;
 }
 
+.project-availability {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	width: fit-content;
+	margin: 1.25rem 0 0;
+	padding: 0.5rem 0.62rem;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-sm);
+	background: var(--surface);
+	color: var(--muted);
+	font-family: var(--font-mono);
+	font-size: 0.64rem;
+	letter-spacing: 0.1em;
+	line-height: 1;
+	text-transform: uppercase;
+}
+
+.availability-icon {
+	width: 1rem;
+	height: 1rem;
+	color: var(--text);
+	stroke-width: 1.75;
+}
+
 .repo-stats-icon {
 	width: 1rem;
 	height: 1rem;
