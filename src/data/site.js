@@ -33,7 +33,7 @@ const pickStack = (...keys) =>
 
 export const siteMeta = {
   description:
-    "Eltavine builds Android security inspection tools, native runtime probes, and backend systems with modular boundaries.",
+    "Eltavine builds Android security tools, native probes, and web platforms that make system signals easier to understand.",
   image: "/eltavine.png",
   locale: "en_US",
   siteUrl: "https://eltavine.com",
@@ -50,12 +50,12 @@ export const profile = {
   avatarSrcset: "/eltavine-avatar-80.webp 80w, /eltavine-avatar-160.webp 160w",
   avatarUrl: "/eltavine-avatar-160.webp",
   headlineLines: ["Android,", "Windows,", "native."],
-  lead: "I build Android security tooling, native runtime probes, and backend systems with modular boundaries and local evidence in mind.",
+  lead: "I build Android security tools, native probes, and web platforms with clear signals and practical reliability in mind.",
   name: "Eltavine",
-  principles: ["Modular detectors", "Native probes", "Clear boundaries"],
+  principles: ["Local checks", "Native probes", "Reliable systems"],
   role: "Software engineer",
   summary:
-    "A focused view of the systems I work on, the signals I trust, and the seams I keep visible.",
+    "A compact portfolio of security tools, platform work, and the technologies behind them.",
 };
 
 export const contact = {
@@ -74,7 +74,7 @@ export const contact = {
 export const projects = [
   {
     emphasis:
-      "Duck Detector keeps each signal in its own detector so bootloader state, hook frameworks, mount changes, and attestation checks can evolve without a monolithic scan pipeline.",
+      "It turns device trust signals into focused local checks, from bootloader state to root traces and attestation results.",
     id: "duck-detector",
     github: {
       href: "https://github.com/eltavine/Duck-Detector-Refactoring",
@@ -88,30 +88,30 @@ export const projects = [
         "https://api.star-history.com/chart?repos=eltavine/Duck-Detector-Refactoring&type=date&legend=top-left",
     },
     notes: [
-      "Detector coverage spans bootloader state, root traces, hook frameworks, mount changes, virtualization, and attestation trust signals.",
-      "The app layer is Kotlin and Jetpack Compose, split by feature with view models, repositories, coroutines, and DataStore-backed settings.",
-      "Native probes use the Android NDK with C++, CMake, and arm64 assembly where syscall timing or mount visibility needs a lower-level view.",
+      "Checks risky device states locally, including bootloader, root, hook, mount, virtualization, and attestation signals.",
+      "Uses Kotlin and Jetpack Compose for a clear Android inspection flow.",
+      "Adds native probes where lower-level device evidence matters.",
     ],
     icon: "lucide:shield-check",
     section: "Android / Security",
     stack: pickStack("android", "kotlin", "cpp", "asm"),
     status: "Native Android security tooling",
     summary:
-      "Duck Detector is a device-side Android security inspection app that keeps analysis local and composes results from modular detectors rather than one monolithic scan flow.",
+      "Duck Detector is a device-side Android security inspection app that keeps analysis local.",
     title: "Duck Detector",
   },
   {
     emphasis:
-      "The work is organized as a contract-first monorepo: product surfaces, generated clients, backend modules, identity boundaries, migrations, and release guardrails move together without exposing the private product name.",
+      "The private source and product name stay hidden here, but the work spans public pages, customer tools, operator views, and service APIs.",
     id: "anonymous-platform",
     availability: {
       icon: "lucide:lock-keyhole",
       label: "Private source, anonymized project",
     },
     notes: [
-      "A pnpm and Turborepo workspace coordinates an Astro public site, React/Vite console apps, shared TypeScript packages, and generated web contracts.",
-      "The backend is a Go resource server with ConnectRPC, Protobuf/Buf governance, SQLC-backed PostgreSQL access, Redis caching, and OpenTelemetry instrumentation.",
-      "Operational boundaries include Ory identity services, Cloudflare Pages frontends, Docker-based service deployment, migration checks, SBOM generation, dependency audits, and secret scanning.",
+      "Built web surfaces for public visitors, customers, and operators.",
+      "Connected account, data, caching, and API services into one product platform.",
+      "Kept releases steady with practical deployment and dependency checks.",
     ],
     icon: "lucide:network",
     section: "Full-stack / Platform",
@@ -129,44 +129,44 @@ export const projects = [
       "cloudflare",
       "docker",
     ),
-    status: "Anonymous private platform",
+    status: "Private platform work",
     summary:
-      "A private multi-app platform project with separate public, customer, operator, and API surfaces, built around explicit service contracts and production deployment guardrails.",
+      "A private multi-app platform project with separate web and API surfaces.",
     title: "Private Platform",
   },
 ];
 
 export const stackGroups = [
   {
-    description: "Where ABI control, memory layout, and runtime behavior matter most.",
+    description: "Languages for native code, services, and performance-sensitive work.",
     eyebrow: "Core",
     icon: "lucide:cpu",
     items: pickStack("cpp", "c", "rust", "go"),
     title: "Core Languages",
   },
   {
-    description: "Where UI, orchestration, and service logic turn into shipped software.",
+    description: "Tools for Android apps, web interfaces, and shipped product features.",
     eyebrow: "Application",
     icon: "lucide:braces",
     items: pickStack("kotlin", "typescript", "javascript", "java", "react", "astro", "vite"),
     title: "Application Languages",
   },
   {
-    description: "Where OS behavior and deployment constraints shape the design.",
+    description: "Systems I use for device, server, and deployment work.",
     eyebrow: "Platform",
     icon: "lucide:monitor",
     items: pickStack("linux", "windowsKernel", "android", "docker", "cloudflare", "ory"),
     title: "Systems and Platform",
   },
   {
-    description: "Where state must stay durable, queryable, and recoverable.",
+    description: "Storage, caching, and API tools for product data.",
     eyebrow: "Data",
     icon: "lucide:database",
     items: pickStack("postgresql", "redis", "protobuf", "connectRpc"),
     title: "Data Layer",
   },
   {
-    description: "Where monorepo boundaries, repeatable checks, and generated code keep releases honest.",
+    description: "Package and workspace tools that keep builds repeatable.",
     eyebrow: "Workflow",
     icon: "lucide:workflow",
     items: pickStack("pnpm", "turborepo"),
