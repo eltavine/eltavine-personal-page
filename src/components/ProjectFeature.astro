@@ -60,7 +60,10 @@ const { project } = Astro.props;
 			)}
 
 			{project.availability && (
-				<p class="project-availability">
+				<p class:list={[
+					"project-availability",
+					`project-availability--${project.availability.kind ?? "default"}`,
+				]}>
 					<Icon name={project.availability.icon} class="availability-icon" aria-hidden="true" />
 					<span>{project.availability.label}</span>
 				</p>

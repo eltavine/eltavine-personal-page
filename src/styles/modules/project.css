@@ -131,6 +131,17 @@
 	text-transform: uppercase;
 }
 
+.project-availability--public {
+	border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+	background: var(--accent-soft);
+	color: var(--text);
+}
+
+.project-availability--internal {
+	border-color: color-mix(in srgb, var(--muted) 42%, var(--line));
+	background: var(--surface-strong);
+}
+
 .availability-icon {
 	width: 1rem;
 	height: 1rem;
