@@ -16,7 +16,7 @@ const stackRegistry = {
   java: { icon: "devicon:java", label: "Java" },
   javascript: { icon: "devicon:javascript", label: "JavaScript" },
   kotlin: { icon: "devicon:kotlin", label: "Kotlin" },
-  linux: { icon: "devicon:linux", label: "Linux" },
+  linux: { icon: "logos:linux-tux", label: "Linux" },
   macos: { icon: "simple-icons:macos", label: "macOS" },
   ory: { icon: "devicon:ory", label: "Ory" },
   pingora: { icon: "lucide:network", label: "Pingora" },
@@ -64,10 +64,17 @@ export const navigation = [
 export const profile = {
   avatarSrcset: "/eltavine-avatar-80.webp 80w, /eltavine-avatar-160.webp 160w",
   avatarUrl: "/eltavine-avatar-160.webp",
+  figureCaption: "Fig. 01 — Eltavine, crayon on paper",
+  handNote: "hi, that's me!",
   headlineLines: ["Android,", "Windows,", "native."],
   lead: "I build Android security tools, network infrastructure, and local-first workspaces with clear signals and practical reliability in mind.",
   name: "Eltavine",
-  principles: ["Local checks", "Native probes", "Reliable systems"],
+  principles: [
+    { crayon: "sage", label: "Local checks" },
+    { crayon: "blue", label: "Native probes" },
+    { crayon: "marigold", label: "Reliable systems" },
+  ],
+  readoutLabel: "Signals",
   role: "Software engineer",
   summary:
     "A compact portfolio of security tools, platform work, and the technologies behind them.",
@@ -88,6 +95,7 @@ export const contact = {
 
 export const projects = [
   {
+    crayon: "marigold",
     emphasis:
       "It turns device trust signals into focused local checks, from bootloader state to root traces and attestation results.",
     id: "duck-detector",
@@ -121,6 +129,7 @@ export const projects = [
     title: "Duck Detector",
   },
   {
+    crayon: "blue",
     emphasis:
       "It turns Pingora into a durable control plane for team operated gateways, keeping configuration, activation, rollback, and recovery explicit.",
     id: "pingora-panel",
@@ -163,6 +172,7 @@ export const projects = [
     title: "Pingora Panel",
   },
   {
+    crayon: "lavender",
     emphasis:
       "It brings a secure native runtime, provider adapters, encrypted local storage, and a cross platform Flutter shell together behind explicit contracts.",
     id: "yurimashi",
@@ -195,6 +205,7 @@ export const projects = [
     title: "Yurimashi",
   },
   {
+    crayon: "sage",
     emphasis:
       "It is shaped as a high-density Android operations desk: connect devices, see their live state, and send carefully bounded actions across a batch.",
     id: "yunheshiguang-droid-farm",

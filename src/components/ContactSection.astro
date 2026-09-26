@@ -1,91 +1,141 @@
 ---
 import { Icon } from "astro-icon/components";
 import { formatFingerprint } from "../data/site.js";
+import CrayonMark from "./doodles/CrayonMark.astro";
+import Sparkle from "./doodles/Sparkle.astro";
+import SectionHead from "./SectionHead.astro";
 
-const { contact } = Astro.props;
+const { contact, profile } = Astro.props;
 const fingerprintGroups = formatFingerprint(contact.fingerprint);
+const year = new Date().getFullYear();
+const postmarkText = `ELTAVINE.COM · ${year} · DIRECT · VERIFIABLE · QUIET ·`;
 ---
 
-<section id="contact" class="section section-anchor contact-section" aria-labelledby="contact-title">
-	<div class="section-head">
-		<p class="eyebrow">Contact</p>
-		<h2 id="contact-title">Direct, verifiable, quiet.</h2>
-		<p class="body-copy">
-			Email stays protected until intentionally revealed. PGP material is kept separate and minimal.
-		</p>
-	</div>
+<section id="contact" class="section contact section-anchor" aria-labelledby="contact-title">
+	<SectionHead
+		index="03"
+		label="Contact"
+		titleId="contact-title"
+		before="Direct, "
+		marked="verifiable"
+		after=", quiet."
+		markSeed={14}
+		lead="Email stays protected until intentionally revealed. PGP material is kept separate and minimal."
+	/>
 
-	<div class="contact-grid">
-		<article class="contact-panel">
-			<p class="eyebrow icon-eyebrow">
-				<Icon name="lucide:mail" class="section-icon" aria-hidden="true" />
-				<span>Direct</span>
-			</p>
-			<h3>Email and GitHub</h3>
-			<dl class="contact-list">
-				<div>
+	<article class="postcard" aria-label="Contact details" data-postcard data-reveal>
+		<p class="postcard-heading" aria-hidden="true">Post card</p>
+
+		<div class="postcard-message">
+			<p class="postcard-greeting hand" data-greeting>Say hi —</p>
+
+			<dl class="postcard-lines">
+				<div class="postcard-line" data-postcard-line>
 					<dt>
-						<Icon name="lucide:at-sign" class="label-icon" aria-hidden="true" />
+						<Icon name="lucide:at-sign" class="postcard-label-icon" aria-hidden="true" />
 						<span>Email</span>
 					</dt>
 					<dd>
 						<button
-							class="text-action email-reveal"
+							class="email-reveal"
 							type="button"
 							data-email-reveal
 							data-email-user={contact.emailParts.user}
 							data-email-domain={contact.emailParts.domain}
 							data-email-tld={contact.emailParts.tld}
 						>
-							<Icon name="lucide:lock-keyhole" class="action-icon" aria-hidden="true" />
-							<span>Press to reveal</span>
+							<Icon name="lucide:lock-keyhole" is:inline class="email-icon" data-email-icon="locked" aria-hidden="true" />
+							<Icon name="lucide:lock-keyhole-open" is:inline class="email-icon" data-email-icon="primed" aria-hidden="true" />
+							<Icon name="lucide:send" is:inline class="email-icon" data-email-icon="revealed" aria-hidden="true" />
+							<span data-email-label>Press to reveal</span>
 						</button>
 					</dd>
 				</div>
-				<div>
+				<div class="postcard-line" data-postcard-line>
 					<dt>
-						<Icon name="simple-icons:github" class="label-icon" aria-hidden="true" />
+						<Icon name="simple-icons:github" class="postcard-label-icon" aria-hidden="true" />
 						<span>GitHub</span>
 					</dt>
 					<dd>
-						<a class="text-action" href={contact.githubUrl} target="_blank" rel="noreferrer">
-							<Icon name="lucide:external-link" class="action-icon" aria-hidden="true" />
+						<a class="text-link" href={contact.githubUrl} target="_blank" rel="noreferrer">
 							<span>{contact.githubLabel}</span>
+							<Icon name="lucide:arrow-up-right" class="postcard-link-icon" aria-hidden="true" />
 						</a>
 					</dd>
 				</div>
 			</dl>
-		</article>
 
-		<article class="contact-panel">
-			<p class="eyebrow icon-eyebrow">
-				<Icon name="lucide:key-round" class="section-icon" aria-hidden="true" />
-				<span>PGP</span>
-			</p>
-			<h3>{contact.keyId}</h3>
-			<dl class="contact-list">
-				<div>
+			<p class="postcard-sign hand" data-postcard-line>— {profile.name}</p>
+		</div>
+
+		<span class="postcard-divider" aria-hidden="true"></span>
+
+		<div class="postcard-address">
+			<div class="postcard-franking" aria-hidden="true">
+				<div class="postmark" data-postmark>
+					<CrayonMark kind="waves" seed={33} strokeWidth={2} draw class="postmark-waves" />
+					<CrayonMark kind="circle" width={120} height={120} seed={31} strokeWidth={2.2} draw class="postmark-ring" />
+					<svg class="postmark-text" viewBox="0 0 120 120" data-postmark-text data-reveal>
+						<defs>
+							<path id="postmark-ring-path" d="M60 60m-41 0a41 41 0 1 1 82 0a41 41 0 1 1-82 0" />
+						</defs>
+						<text textLength="252" lengthAdjust="spacing">
+							<textPath href="#postmark-ring-path">{postmarkText}</textPath>
+						</text>
+					</svg>
+					<Sparkle class="postmark-sparkle" color="currentColor" size="1.4em" rotate={8} />
+				</div>
+
+				<div class="postage-stamp-wrap" data-postage data-reveal>
+					<div class="postage-stamp">
+						<img
+							src={profile.avatarUrl}
+							srcset={profile.avatarSrcset}
+							sizes="112px"
+							width="160"
+							height="160"
+							alt=""
+							loading="lazy"
+							decoding="async"
+						/>
+						<p class="postage-stamp-meta">
+							<span>Eltavine</span>
+							<strong>{contact.keyId.slice(-4)}</strong>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<dl class="postcard-lines postcard-lines--address">
+				<div class="postcard-line" data-postcard-line>
 					<dt>
-						<Icon name="lucide:fingerprint" class="label-icon" aria-hidden="true" />
+						<Icon name="lucide:key-round" class="postcard-label-icon" aria-hidden="true" />
+						<span>PGP key</span>
+					</dt>
+					<dd class="postcard-key">{contact.keyId}</dd>
+				</div>
+				<div class="postcard-line" data-postcard-line>
+					<dt>
+						<Icon name="lucide:fingerprint" class="postcard-label-icon" aria-hidden="true" />
 						<span>Fingerprint</span>
 					</dt>
-					<dd class="fingerprint" aria-label={`Fingerprint ${contact.fingerprint}`}>
+					<dd class="fingerprint" data-fingerprint aria-label={`Fingerprint ${contact.fingerprint}`}>
 						{fingerprintGroups.map((group) => <span>{group}</span>)}
 					</dd>
 				</div>
-				<div>
+				<div class="postcard-line" data-postcard-line>
 					<dt>
-						<Icon name="lucide:key-round" class="label-icon" aria-hidden="true" />
+						<Icon name="lucide:file-key-2" class="postcard-label-icon" aria-hidden="true" />
 						<span>Public key</span>
 					</dt>
 					<dd>
-						<a class="text-action" href={contact.publicKeyUrl} download>
-							<Icon name="lucide:download" class="action-icon" aria-hidden="true" />
+						<a class="text-link" href={contact.publicKeyUrl} download>
+							<Icon name="lucide:download" class="postcard-link-icon" aria-hidden="true" />
 							<span>Download .asc</span>
 						</a>
 					</dd>
 				</div>
 			</dl>
-		</article>
-	</div>
+		</div>
+	</article>
 </section>

@@ -1,0 +1,157 @@
+---
+import rough from "roughjs";
+
+type Point = [number, number];
+
+interface Props {
+	kind?: "underline" | "circle" | "scribble" | "check" | "arrow" | "waves";
+	seed?: number;
+	width?: number;
+	height?: number;
+	points?: Point[];
+	roughness?: number;
+	bowing?: number;
+	strokeWidth?: number;
+	color?: string;
+	draw?: boolean;
+	stretch?: boolean;
+	class?: string;
+}
+
+const defaultSizes = {
+	underline: [240, 28],
+	circle: [220, 96],
+	scribble: [320, 44],
+	check: [32, 28],
+	arrow: [120, 92],
+	waves: [180, 60],
+} satisfies Record<NonNullable<Props["kind"]>, [number, number]>;
+
+const {
+	kind = "underline",
+	seed = 7,
+	points,
+	roughness = 1.25,
+	bowing = 1,
+	strokeWidth = 3,
+	color = "currentColor",
+	draw = false,
+	stretch = false,
+	class: className,
+} = Astro.props;
+
+const [width, height] = [
+	Astro.props.width ?? defaultSizes[kind][0],
+	Astro.props.height ?? defaultSizes[kind][1],
+];
+
+const generator = rough.generator();
+const options = { seed, roughness, bowing, strokeWidth, stroke: color };
+
+function arrowHead([px, py]: Point, [ex, ey]: Point, size = 13): Point[] {
+	const angle = Math.atan2(ey - py, ex - px);
+	return [
+		[ex - size * Math.cos(angle - 0.55), ey - size * Math.sin(angle - 0.55)],
+		[ex, ey],
+		[ex - size * Math.cos(angle + 0.55), ey - size * Math.sin(angle + 0.55)],
+	];
+}
+
+function buildShapes() {
+	const w = width;
+	const h = height;
+
+	switch (kind) {
+		case "circle":
+			return [
+				generator.ellipse(w / 2, h / 2, w - strokeWidth * 4, h - strokeWidth * 4, {
+					...options,
+					curveStepCount: 12,
+				}),
+			];
+		case "scribble": {
+			const loops = 7;
+			const zigzag: Point[] = Array.from({ length: loops * 2 + 1 }, (_, index) => [
+				8 + ((w - 16) * index) / (loops * 2),
+				index % 2 === 0 ? h * 0.74 : h * 0.26,
+			]);
+			return [generator.curve(zigzag, { ...options, disableMultiStroke: true })];
+		}
+		case "check":
+			return [
+				generator.linearPath(
+					[
+						[3, h * 0.55],
+						[w * 0.38, h - 4],
+						[w - 3, 4],
+					],
+					options,
+				),
+			];
+		case "arrow": {
+			const path: Point[] = points ?? [
+				[8, 16],
+				[50, 6],
+				[90, 24],
+				[106, 74],
+			];
+			return [
+				generator.curve(path, options),
+				generator.linearPath(arrowHead(path[path.length - 2], path[path.length - 1]), {
+					...options,
+					disableMultiStroke: true,
+				}),
+			];
+		}
+		case "waves":
+			return Array.from({ length: 4 }, (_, row) => {
+				const y = 10 + row * ((h - 20) / 3);
+				const wave: Point[] = Array.from({ length: 7 }, (_, index) => [
+					4 + ((w - 8) * index) / 6,
+					y + (index % 2 === 0 ? -3.5 : 3.5),
+				]);
+				return generator.curve(wave, { ...options, seed: seed + row, disableMultiStroke: true });
+			});
+		default: {
+			const path: Point[] = points ?? [
+				[4, h * 0.64],
+				[w * 0.28, h * 0.42],
+				[w * 0.55, h * 0.6],
+				[w * 0.8, h * 0.4],
+				[w - 4, h * 0.5],
+			];
+			return [generator.curve(path, options)];
+		}
+	}
+}
+
+const roundPath = (d: string) =>
+	d.replace(/-?\d*\.\d+/g, (value) => String(Math.round(Number(value) * 10) / 10));
+
+const paths = buildShapes()
+	.flatMap((shape) => generator.toPaths(shape))
+	.map((path) => ({ d: roundPath(path.d), strokeWidth: path.strokeWidth }));
+---
+
+<svg
+	class:list={["crayon-mark", `crayon-mark--${kind}`, className]}
+	viewBox={`0 0 ${width} ${height}`}
+	preserveAspectRatio={stretch ? "none" : undefined}
+	fill="none"
+	aria-hidden="true"
+	focusable="false"
+	data-draw={draw ? "" : undefined}
+>
+	<g filter="url(#crayon)">
+		{paths.map((path) => (
+			<path
+				d={path.d}
+				pathLength="1"
+				stroke={color}
+				stroke-width={path.strokeWidth}
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		))}
+	</g>
+</svg>

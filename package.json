@@ -14,9 +14,13 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@iconify-json/devicon": "^1.2.62",
+    "@iconify-json/logos": "^1.2.14",
     "@iconify-json/lucide": "^1.2.129",
     "@iconify-json/simple-icons": "^1.2.94",
     "astro": "^7.3.1",
-    "astro-icon": "^1.2.0"
+    "astro-icon": "^1.2.0",
+    "gsap": "^3.15.0",
+    "roughjs": "^4.6.6",
+    "sharp": "^0.35.4"
   }
 }

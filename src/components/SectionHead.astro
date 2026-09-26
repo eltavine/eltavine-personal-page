@@ -1,0 +1,51 @@
+---
+import CrayonMark from "./doodles/CrayonMark.astro";
+
+interface Props {
+	index: string;
+	label: string;
+	titleId: string;
+	before?: string;
+	marked: string;
+	after?: string;
+	mark?: "underline" | "circle";
+	markSeed?: number;
+	lead?: string;
+}
+
+const {
+	index,
+	label,
+	titleId,
+	before = "",
+	marked,
+	after = "",
+	mark = "underline",
+	markSeed = 3,
+	lead,
+} = Astro.props;
+
+const markSize = mark === "circle" ? { height: 84, width: 300 } : { height: 30, width: 260 };
+---
+
+<header class="section-head" data-section-head>
+	<div class="section-head-main">
+		<p class="eyebrow" data-eyebrow data-reveal>
+			<span class="eyebrow-index">{index}</span>
+			<span class="eyebrow-rule" aria-hidden="true"></span>
+			<span data-eyebrow-label>{label}</span>
+		</p>
+		<h2 id={titleId} data-reveal>
+			{before}<span class="marked">{marked}<CrayonMark
+					kind={mark}
+					seed={markSeed}
+					strokeWidth={mark === "circle" ? 3.2 : 4.5}
+					stretch={mark === "circle"}
+					draw
+					{...markSize}
+				/></span>{after}
+		</h2>
+		{lead && <p class="section-lead" data-lead data-reveal>{lead}</p>}
+	</div>
+	<slot name="aside" />
+</header>

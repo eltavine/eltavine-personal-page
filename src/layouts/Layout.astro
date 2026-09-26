@@ -1,4 +1,6 @@
 ---
+import { Font } from "astro:assets";
+import CrayonDefs from "../components/doodles/CrayonDefs.astro";
 import "../styles/global.css";
 
 const {
@@ -22,8 +24,8 @@ const imageUrl = new URL(image, siteUrl).toString();
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="color-scheme" content="light dark" />
-		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f4" />
-		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d0d0c" />
+		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbf7ef" />
+		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#15130f" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
@@ -43,6 +45,10 @@ const imageUrl = new URL(image, siteUrl).toString();
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={imageUrl} />
 		<meta name="twitter:image:alt" content="Eltavine personal site preview" />
+		<Font cssVariable="--font-display" preload={[{ subset: "latin" }]} />
+		<Font cssVariable="--font-sans" preload={[{ subset: "latin" }]} />
+		<Font cssVariable="--font-mono" />
+		<Font cssVariable="--font-hand" />
 		{jsonLd && (
 			<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 		)}
@@ -61,11 +67,22 @@ const imageUrl = new URL(image, siteUrl).toString();
 					root.dataset.theme = "light";
 					root.style.colorScheme = "light";
 				}
+
+				if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+					root.classList.add("js-motion");
+					window.setTimeout(() => {
+						if (root.dataset.motion !== "ready") {
+							root.classList.remove("js-motion");
+						}
+					}, 4000);
+				}
 			})();
 		</script>
 		<title>{pageTitle}</title>
 	</head>
 	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
+		<CrayonDefs />
 		<slot />
 	</body>
 </html>

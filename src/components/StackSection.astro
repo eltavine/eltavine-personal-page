@@ -1,36 +1,66 @@
 ---
 import { Icon } from "astro-icon/components";
+import CrayonMark from "./doodles/CrayonMark.astro";
+import SectionHead from "./SectionHead.astro";
 
 const { stackGroups } = Astro.props;
+const rowColors = ["heart", "marigold", "blue", "lavender", "sage"];
+const rows = stackGroups.reduce((result, group) => {
+	const offset = result.reduce((total, row) => total + row.group.items.length, 0);
+	return [...result, { group, offset }];
+}, []);
 ---
 
-<section id="stack" class="section section-anchor" aria-labelledby="stack-title">
-	<div class="section-head">
-		<p class="eyebrow">Stack</p>
-		<h2 id="stack-title">Tools I reach for.</h2>
-		<p class="body-copy">
-			A short map of the languages, platforms, and services I use most.
-		</p>
-	</div>
+<section id="stack" class="section stack section-anchor" aria-labelledby="stack-title">
+	<SectionHead
+		index="02"
+		label="Stack"
+		titleId="stack-title"
+		before="Tools I "
+		marked="reach for"
+		after="."
+		mark="circle"
+		markSeed={8}
+		lead="A short map of the languages, platforms, and services I use most."
+	/>
 
-	<div class="stack-grid">
-		{stackGroups.map((group) => (
-			<article class="stack-group">
-				<p class="eyebrow icon-eyebrow">
-					<Icon name={group.icon} class="section-icon" aria-hidden="true" />
-					<span>{group.eyebrow}</span>
-				</p>
-				<h3>{group.title}</h3>
-				<p>{group.description}</p>
-				<ul class="tag-list" aria-label={`${group.title} items`}>
-					{group.items.map((item) => (
-						<li>
-							<Icon name={item.icon} class="tag-icon" aria-hidden="true" />
-							<span>{item.label}</span>
+	<div class="specimen">
+		{rows.map(({ group, offset }, rowIndex) => (
+			<div
+				class="specimen-row"
+				data-specimen-row
+				style={`--row-color: var(--crayon-${rowColors[rowIndex % rowColors.length]});`}
+			>
+				<div class="specimen-label" data-specimen-label data-reveal>
+					<p class="eyebrow">
+						<Icon name={group.icon} class="specimen-icon" aria-hidden="true" />
+						<span>{group.eyebrow}</span>
+					</p>
+					<h3>{group.title}</h3>
+					<p class="specimen-description">{group.description}</p>
+				</div>
+				<ul class="specimen-tiles" aria-label={`${group.title} items`}>
+					{group.items.map((item, itemIndex) => (
+						<li class="tile" data-tile data-reveal>
+							<span class="tile-number" aria-hidden="true">
+								{String(offset + itemIndex + 1).padStart(2, "0")}
+							</span>
+							<span class="tile-logo">
+								<Icon name={item.icon} class="tile-icon" aria-hidden="true" />
+								<CrayonMark
+									kind="circle"
+									seed={61 + offset + itemIndex}
+									width={80}
+									height={80}
+									strokeWidth={2.6}
+									class="tile-circle"
+								/>
+							</span>
+							<span class="tile-label">{item.label}</span>
 						</li>
 					))}
 				</ul>
-			</article>
+			</div>
 		))}
 	</div>
 </section>

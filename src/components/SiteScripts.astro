@@ -1,3 +1,29 @@
 <script>
 	import "../scripts/bootstrap.js";
 </script>
+
+<script>
+	const startMotion = () => {
+		if (!document.documentElement.classList.contains("js-motion")) {
+			return;
+		}
+
+		import("../scripts/motion/index.js")
+			.then(({ initMotion }) => initMotion())
+			.catch(() => document.documentElement.classList.remove("js-motion"));
+	};
+
+	const scheduleMotion = () => {
+		if ("requestIdleCallback" in window) {
+			window.requestIdleCallback(startMotion, { timeout: 1000 });
+		} else {
+			window.setTimeout(startMotion, 200);
+		}
+	};
+
+	if (document.readyState === "complete") {
+		scheduleMotion();
+	} else {
+		window.addEventListener("load", scheduleMotion, { once: true });
+	}
+</script>

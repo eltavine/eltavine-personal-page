@@ -1,0 +1,32 @@
+---
+interface Props {
+	color?: string;
+	size?: string;
+	rotate?: number;
+	class?: string;
+	[attribute: string]: unknown;
+}
+
+const {
+	color = "var(--crayon-marigold)",
+	size = "1.5rem",
+	rotate = 0,
+	class: className,
+	...attributes
+} = Astro.props;
+---
+
+<svg
+	class:list={["sparkle", className]}
+	viewBox="0 0 24 24"
+	aria-hidden="true"
+	focusable="false"
+	style={`--sparkle-color: ${color}; --sparkle-size: ${size}; --sparkle-rotate: ${rotate}deg;`}
+	{...attributes}
+>
+	<path
+		d="M12 1.2C12.8 7.4 15.6 10.4 22.6 11.8 15.8 13.5 12.9 16.6 12.1 22.8 11 16.8 8.3 13.6 1.4 12.3 8.2 10.5 11.2 7.2 12 1.2Z"
+		fill="currentColor"
+		filter="url(#crayon)"
+	/>
+</svg>

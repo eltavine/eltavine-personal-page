@@ -79,11 +79,11 @@ const jsonLd = {
 	<div class="site-frame" id="top">
 		<SiteHeader navigation={navigation} profile={profile} />
 
-		<main class="shell">
+		<main class="shell" id="main">
 			<HeroSection profile={profile} />
 			<ProjectsSection projects={projects} />
 			<StackSection stackGroups={stackGroups} />
-			<ContactSection contact={contact} />
+			<ContactSection contact={contact} profile={profile} />
 		</main>
 
 		<SiteFooter

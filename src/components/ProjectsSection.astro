@@ -1,19 +1,51 @@
 ---
 import ProjectFeature from "./ProjectFeature.astro";
+import ProjectIndex from "./ProjectIndex.astro";
+import SectionHead from "./SectionHead.astro";
 
 const { projects } = Astro.props;
+const pad = (value) => String(value).padStart(2, "0");
+const publicCount = projects.filter((project) => project.availability?.kind === "public").length;
+const [firstProject] = projects;
 ---
 
-<section id="projects" class="section section-anchor" aria-labelledby="projects-title">
-	<div class="section-head">
-		<p class="eyebrow">Projects</p>
-		<h2 id="projects-title">Featured work.</h2>
-		<p class="body-copy">
-			Selected work across Android security, network infrastructure, and local-first workspaces.
-		</p>
-	</div>
+<section
+	id="projects"
+	class="section projects section-anchor"
+	aria-labelledby="projects-title"
+	data-projects
+	style={`--project-color: var(--crayon-${firstProject.crayon}); --project-ink: var(--crayon-${firstProject.crayon}-ink);`}
+>
+	<SectionHead
+		index="01"
+		label="Projects"
+		titleId="projects-title"
+		before="Featured "
+		marked="work"
+		after="."
+		markSeed={5}
+		lead="Selected work across Android security, network infrastructure, and local-first workspaces."
+	>
+		<dl class="section-tally" slot="aside" data-reveal>
+			<div>
+				<dt>Projects</dt>
+				<dd>{pad(projects.length)}</dd>
+			</div>
+			<div>
+				<dt>Public</dt>
+				<dd>{pad(publicCount)}</dd>
+			</div>
+			<div>
+				<dt>Internal</dt>
+				<dd>{pad(projects.length - publicCount)}</dd>
+			</div>
+		</dl>
+	</SectionHead>
 
-	<div class="project-list">
-		{projects.map((project) => <ProjectFeature project={project} />)}
+	<div class="projects-layout">
+		<ProjectIndex projects={projects} />
+		<div class="project-sheets" data-project-sheets>
+			{projects.map((project, index) => <ProjectFeature project={project} index={index} />)}
+		</div>
 	</div>
 </section>

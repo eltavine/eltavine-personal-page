@@ -1,33 +1,70 @@
-.star-history-embed {
-	margin: 1.55rem 0 0;
-	padding-top: 1.2rem;
-	border-top: 1px solid var(--line);
-	overflow: hidden;
+.taped-photo {
+	position: relative;
+	width: min(100%, 470px);
+	margin-top: 2.25rem;
+	padding: 0.65rem 0.65rem 0.55rem;
+	background: light-dark(#fffdf8, #26221c);
+	box-shadow: var(--shadow-paper);
+	rotate: -1.4deg;
 }
 
-.star-history-embed a {
+.taped-photo .tape--left {
+	--tape-color: var(--sheet-color, var(--crayon-butter));
+	--tape-rotate: -34deg;
+	top: -0.55rem;
+	left: -1.6rem;
+}
+
+.taped-photo .tape--right {
+	--tape-color: var(--crayon-butter);
+	--tape-rotate: 30deg;
+	top: -0.5rem;
+	right: -1.5rem;
+}
+
+.taped-photo a {
 	display: block;
-	width: 100%;
-	max-width: 600px;
-	border-radius: var(--radius-md);
-	background: var(--surface);
+	overflow: hidden;
+	border-radius: 2px;
 	box-shadow: inset 0 0 0 1px var(--line);
-	overflow: hidden;
 }
 
-.star-history-embed picture,
-.star-history-embed img {
-	display: block;
-}
-
-.star-history-embed img {
+.star-chart {
 	width: 100%;
 	height: auto;
+	transition: scale 700ms var(--ease-out-expo);
 }
 
-@media (max-width: 560px) {
-	.star-history-embed {
-		margin-top: 1.25rem;
-		padding-top: 1rem;
+.taped-photo a:hover .star-chart {
+	scale: 1.025;
+}
+
+.star-chart--dark,
+:root[data-theme="dark"] .star-chart--light {
+	display: none;
+}
+
+:root[data-theme="dark"] .star-chart--dark {
+	display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) .star-chart--light {
+		display: none;
 	}
+
+	:root:not([data-theme]) .star-chart--dark {
+		display: block;
+	}
+}
+
+.taped-photo figcaption {
+	margin-top: 0.55rem;
+	color: var(--ink-muted);
+	font-family: var(--font-mono);
+	font-size: 0.64rem;
+	letter-spacing: 0.1em;
+	text-align: center;
+	text-transform: uppercase;
+	overflow-wrap: anywhere;
 }

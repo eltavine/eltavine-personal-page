@@ -1,0 +1,22 @@
+@media (prefers-reduced-motion: no-preference) {
+	.js-motion [data-reveal],
+	.js-motion [data-doodle] {
+		opacity: 0;
+	}
+
+	.js-motion [data-draw] path {
+		stroke-dashoffset: 1.01;
+	}
+}
+
+.split-word-mask,
+.split-char-mask {
+	margin: -0.12em -0.08em -0.14em;
+	padding: 0.12em 0.08em 0.14em;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}

@@ -1,0 +1,40 @@
+---
+import CrayonMark from "./doodles/CrayonMark.astro";
+
+const { projects } = Astro.props;
+---
+
+<aside class="project-index" data-project-index aria-label="Project index">
+	<p class="project-index-label">Index</p>
+	<div class="project-index-track" aria-hidden="true">
+		<span data-index-progress></span>
+	</div>
+	<ol class="project-index-list">
+		{projects.map((project, index) => (
+			<li>
+				<a
+					class="project-index-link"
+					href={`#project-${project.id}`}
+					data-index-link={project.id}
+					data-active={index === 0 ? "" : undefined}
+					style={`--item-color: var(--crayon-${project.crayon}); --item-ink: var(--crayon-${project.crayon}-ink);`}
+				>
+					<span class="project-index-number" aria-hidden="true">
+						{String(index + 1).padStart(2, "0")}
+						<CrayonMark
+							kind="circle"
+							seed={41 + index}
+							width={72}
+							height={56}
+							strokeWidth={2.4}
+							stretch
+							class="project-index-circle"
+						/>
+					</span>
+					<span class="project-index-title">{project.title}</span>
+					<span class="project-index-kind">{project.availability?.label}</span>
+				</a>
+			</li>
+		))}
+	</ol>
+</aside>

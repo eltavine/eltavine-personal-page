@@ -1,6 +1,16 @@
 # Eltavine Personal Page
 
-An Astro single-page personal site for Eltavine. The page is intentionally static, editorial, and light on client JavaScript.
+An Astro single-page personal site for Eltavine, designed as an engineer's hand-drawn notebook: precise editorial typography, monospace readouts, and fine grid lines, warmed up by a few crayon marks, sparkles, stickers, stamps, and tape. Every section is static HTML; JavaScript only layers interaction and motion on top.
+
+## Client JavaScript
+
+- A small UI script (about 3 KB gzip) always loads. It handles the theme toggle, hiding the header on scroll, active-section highlighting, the email reveal, and GitHub star and fork counts.
+- GSAP motion (about 54 KB gzip, with ScrollTrigger, SplitText, DrawSVG, and ScrambleText) is a separate chunk. It is imported after the `load` event once the browser is idle, so it never blocks the first render.
+- With `prefers-reduced-motion: reduce`, the motion chunk is never requested and every section renders in its final state.
+- If the motion chunk fails to load or has not started within 4 seconds, all content is shown without animation.
+- Without JavaScript, all content stays readable: the theme follows the system setting, the header keeps a static background, GitHub counts are hidden, and the email address stays hidden because only the UI script assembles it.
+
+Fonts (Fraunces, Geist, Geist Mono, Caveat) are downloaded at build time through the Astro Fonts API and served from the site itself, and the hand-drawn marks are generated at build time with Rough.js. The only third-party requests at runtime are GitHub repository stats and the lazily loaded Star History charts.
 
 ## Commands
 
