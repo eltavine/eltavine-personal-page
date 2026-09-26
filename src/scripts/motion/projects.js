@@ -5,6 +5,22 @@ const drawableShapes = "path, line, polyline, polygon, circle, ellipse, rect";
 
 const restingRotation = (element) => Number(gsap.getProperty(element, "rotation")) || 0;
 
+function revealSketch(sketch) {
+	gsap
+		.timeline({ scrollTrigger: { once: true, start: "top 85%", trigger: sketch } })
+		.to(sketch.querySelectorAll(".sketch-stroke, .sketch-fill"), {
+			duration: 0.7,
+			ease: "power2.inOut",
+			stagger: 0.03,
+			strokeDashoffset: 0,
+		})
+		.to(
+			sketch.querySelectorAll(".sketch-dashed, .sketch-text"),
+			{ autoAlpha: 1, duration: 0.45, ease: "power1.out", stagger: 0.025 },
+			0.25,
+		);
+}
+
 function revealSheet(sheet) {
 	const number = sheet.querySelector("[data-sheet-number]");
 	const title = sheet.querySelector("[data-sheet-title]");
@@ -13,16 +29,21 @@ function revealSheet(sheet) {
 	const photo = sheet.querySelector("[data-photo]");
 	const items = sheet.querySelectorAll("[data-sheet-item]");
 	const notes = sheet.querySelectorAll("[data-sheet-note]");
+	const sketch = sheet.querySelector("[data-sketch]");
+
+	if (sketch) {
+		revealSketch(sketch);
+	}
 
 	const timeline = gsap.timeline({
 		defaults: { duration: 1, ease: "expo.out" },
-		scrollTrigger: { once: true, start: "top 78%", trigger: sheet },
+		scrollTrigger: { once: true, start: "top 96%", trigger: sheet },
 	});
 
 	timeline.fromTo(
 		sheet,
-		{ autoAlpha: 0, rotation: -0.8, y: 80 },
-		{ autoAlpha: 1, duration: 1.2, rotation: 0, y: 0 },
+		{ autoAlpha: 0, rotation: -0.6, y: 44 },
+		{ autoAlpha: 1, duration: 1.1, rotation: 0, y: 0 },
 	);
 
 	if (number) {

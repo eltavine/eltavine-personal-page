@@ -36,6 +36,7 @@
 
 .brand {
 	display: inline-flex;
+	flex-shrink: 0;
 	align-items: center;
 	min-width: 0;
 	gap: 0.65rem;
@@ -188,7 +189,7 @@
 	}
 }
 
-@media (max-width: 460px) {
+@media (max-width: 600px) {
 	.brand-name {
 		display: none;
 	}
@@ -199,8 +200,79 @@
 
 	.nav-link {
 		padding-inline: 0.5rem;
-		font-size: 0.68rem;
-		letter-spacing: 0.06em;
+		letter-spacing: 0.08em;
+	}
+
+	.nav-mark {
+		right: 0.38rem;
+		left: 0.38rem;
+		width: calc(100% - 0.76rem);
+	}
+}
+
+@media (max-width: 460px) {
+	.nav-pill {
+		padding: 0.2rem;
+	}
+
+	.nav-link {
+		padding-inline: 0.42rem;
+		font-size: 0.62rem;
+		letter-spacing: 0.04em;
+	}
+
+	.nav-mark {
+		right: 0.32rem;
+		left: 0.32rem;
+		width: calc(100% - 0.64rem);
+	}
+
+	.nav-divider {
+		margin-inline: 0.1rem;
+	}
+
+	.theme-toggle {
+		width: 2.25rem;
+		height: 2.25rem;
+	}
+}
+
+@media (max-width: 374px) {
+	.site-header-inner {
+		gap: 0.5rem;
+	}
+
+	.brand {
+		padding: 0.2rem;
+	}
+
+	.brand-mark {
+		width: 34px;
+		height: 34px;
+	}
+
+	.nav-pill {
+		padding: 0.15rem;
+	}
+
+	.nav-link {
+		padding-inline: 0.3rem;
+		font-size: 0.58rem;
+	}
+
+	.nav-mark {
+		right: 0.22rem;
+		left: 0.22rem;
+		width: calc(100% - 0.44rem);
+	}
+
+	.nav-divider {
+		display: none;
+	}
+
+	.theme-toggle {
+		width: 2.2rem;
+		height: 2.2rem;
 	}
 }
 

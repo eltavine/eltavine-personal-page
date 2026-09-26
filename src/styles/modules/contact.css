@@ -70,6 +70,59 @@
 	min-width: 0;
 }
 
+.copy-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-left: auto;
+	padding: 0.3rem 0.6rem;
+	border: 1px dashed var(--line-strong);
+	border-radius: var(--radius-pill);
+	background: transparent;
+	color: var(--ink-muted);
+	cursor: pointer;
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.12em;
+	line-height: 1;
+	text-transform: uppercase;
+	transition:
+		border-color 220ms ease,
+		color 220ms ease;
+}
+
+.copy-button[hidden] {
+	display: none;
+}
+
+.copy-button:hover,
+.copy-button:focus-visible {
+	border-style: solid;
+	border-color: var(--accent);
+	color: var(--accent-ink);
+}
+
+.copy-button[data-state="copied"] {
+	border-style: solid;
+	border-color: var(--crayon-sage);
+	color: var(--crayon-sage-ink);
+}
+
+.copy-icon {
+	font-size: 0.8rem;
+	stroke-width: 2;
+}
+
+.copy-button [data-copy-icon="done"],
+.copy-button[data-state="copied"] [data-copy-icon="idle"] {
+	display: none;
+}
+
+.copy-button[data-state="copied"] [data-copy-icon="done"] {
+	display: inline-block;
+	animation: email-unlock 420ms var(--ease-out-back);
+}
+
 .postcard-label-icon {
 	font-size: 0.9rem;
 	stroke-width: 1.8;

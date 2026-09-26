@@ -9,6 +9,7 @@ const {
 	image = "/eltavine.png",
 	jsonLd,
 	locale = "en_US",
+	noindex = false,
 	siteUrl = Astro.site?.toString() ?? "https://eltavine.com",
 	title = "Eltavine",
 } = Astro.props;
@@ -31,7 +32,7 @@ const imageUrl = new URL(image, siteUrl).toString();
 		<meta name="description" content={description} />
 		<meta name="author" content="Eltavine" />
 		<meta name="keywords" content="Eltavine, Android security, native systems, PGP" />
-		<link rel="canonical" href={canonicalUrl} />
+		{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalUrl} />}
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="Eltavine" />
 		<meta property="og:locale" content={locale} />

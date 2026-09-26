@@ -1,0 +1,121 @@
+.sheet-side {
+	display: grid;
+	align-content: start;
+	gap: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+}
+
+.sheet-sketch {
+	position: relative;
+	width: min(100%, 26rem);
+	padding: 0.9rem 0.5rem 0.75rem;
+	background-image:
+		linear-gradient(var(--grid-line) 1px, transparent 1px),
+		linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+	background-position: -1px -1px;
+	background-size: 16px 16px;
+	color: color-mix(in srgb, var(--ink) 76%, transparent);
+}
+
+.sheet-sketch .crop-marks i {
+	width: 12px;
+	height: 12px;
+}
+
+.sketch {
+	width: 100%;
+	height: auto;
+	overflow: visible;
+}
+
+.sketch .is-accent {
+	color: var(--sheet-color);
+}
+
+.sketch-stroke,
+.sketch-fill {
+	stroke-dasharray: 1 2;
+	stroke-dashoffset: 0;
+}
+
+.sketch-dashed {
+	stroke-dasharray: 5 4;
+}
+
+.sketch-text {
+	fill: var(--ink);
+	paint-order: stroke fill;
+	stroke: var(--paper-raised);
+	stroke-linejoin: round;
+	stroke-width: 3.5px;
+}
+
+.sketch-text--label {
+	font-family: var(--font-mono);
+	font-size: 13px;
+	font-weight: 500;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+.sketch-text--sub {
+	fill: var(--ink-muted);
+	font-family: var(--font-sans);
+	font-size: 11.5px;
+}
+
+.sketch-text--small {
+	fill: var(--ink-muted);
+	font-family: var(--font-mono);
+	font-size: 11.5px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.sketch-text--mono {
+	fill: var(--ink-soft);
+	font-family: var(--font-mono);
+	font-size: 11.5px;
+}
+
+.sketch-text.is-on-fill {
+	stroke-width: 5px;
+}
+
+.sketch-text--sub.is-on-fill {
+	fill: var(--ink-soft);
+}
+
+.sketch-text--hand {
+	fill: var(--sheet-ink);
+	font-family: var(--font-hand);
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.sheet-sketch figcaption {
+	margin-top: 0.55rem;
+	padding-inline: 0.4rem;
+	color: var(--ink-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+@container sheet (max-width: 639px) {
+	.sheet-sketch {
+		width: auto;
+		max-width: 28rem;
+		margin-inline: -0.5rem;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.js-motion [data-sketch] :is(.sketch-stroke, .sketch-fill) {
+		stroke-dashoffset: 1.01;
+	}
+
+	.js-motion [data-sketch] :is(.sketch-dashed, .sketch-text) {
+		opacity: 0;
+	}
+}

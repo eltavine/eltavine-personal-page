@@ -13,7 +13,7 @@ const postmarkText = `ELTAVINE.COM · ${year} · DIRECT · VERIFIABLE · QUIET �
 
 <section id="contact" class="section contact section-anchor" aria-labelledby="contact-title">
 	<SectionHead
-		index="03"
+		index="04"
 		label="Contact"
 		titleId="contact-title"
 		before="Direct, "
@@ -118,6 +118,13 @@ const postmarkText = `ELTAVINE.COM · ${year} · DIRECT · VERIFIABLE · QUIET �
 					<dt>
 						<Icon name="lucide:fingerprint" class="postcard-label-icon" aria-hidden="true" />
 						<span>Fingerprint</span>
+						<button class="copy-button" type="button" data-copy={contact.fingerprint} hidden>
+							<Icon name="lucide:copy" class="copy-icon" data-copy-icon="idle" aria-hidden="true" />
+							<Icon name="lucide:check" class="copy-icon" data-copy-icon="done" aria-hidden="true" />
+							<span data-copy-label>Copy</span>
+							<span class="sr-only"> fingerprint</span>
+						</button>
+						<span class="sr-only" aria-live="polite" data-copy-status></span>
 					</dt>
 					<dd class="fingerprint" data-fingerprint aria-label={`Fingerprint ${contact.fingerprint}`}>
 						{fingerprintGroups.map((group) => <span>{group}</span>)}

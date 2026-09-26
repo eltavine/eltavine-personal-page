@@ -4,7 +4,7 @@ import rough from "roughjs";
 type Point = [number, number];
 
 interface Props {
-	kind?: "underline" | "circle" | "scribble" | "check" | "arrow" | "waves";
+	kind?: "underline" | "circle" | "scribble" | "check" | "box" | "arrow" | "waves";
 	seed?: number;
 	width?: number;
 	height?: number;
@@ -23,6 +23,7 @@ const defaultSizes = {
 	circle: [220, 96],
 	scribble: [320, 44],
 	check: [32, 28],
+	box: [32, 32],
 	arrow: [120, 92],
 	waves: [180, 60],
 } satisfies Record<NonNullable<Props["kind"]>, [number, number]>;
@@ -88,6 +89,10 @@ function buildShapes() {
 					options,
 				),
 			];
+		case "box":
+			return [
+				generator.rectangle(strokeWidth * 1.5, strokeWidth * 1.5, w - strokeWidth * 3, h - strokeWidth * 3, options),
+			];
 		case "arrow": {
 			const path: Point[] = points ?? [
 				[8, 16],
@@ -125,8 +130,7 @@ function buildShapes() {
 	}
 }
 
-const roundPath = (d: string) =>
-	d.replace(/-?\d*\.\d+/g, (value) => String(Math.round(Number(value) * 10) / 10));
+const roundPath = (d: string) => d.replace(/-?\d*\.\d+/g, (value) => String(Math.round(Number(value))));
 
 const paths = buildShapes()
 	.flatMap((shape) => generator.toPaths(shape))

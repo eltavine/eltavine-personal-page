@@ -1,19 +1,38 @@
 ---
 import { Icon } from "astro-icon/components";
+import { thisSite } from "../data/site.js";
 import CrayonMark from "./doodles/CrayonMark.astro";
 import SectionHead from "./SectionHead.astro";
 
-const { stackGroups } = Astro.props;
+const { projects, stackGroups } = Astro.props;
 const rowColors = ["heart", "marigold", "blue", "lavender", "sage"];
+const columnCounts = [3, 4, 5, 6];
 const rows = stackGroups.reduce((result, group) => {
 	const offset = result.reduce((total, row) => total + row.group.items.length, 0);
 	return [...result, { group, offset }];
 }, []);
+
+const sources = [
+	...projects.map((project, index) => ({ ...project, number: String(index + 1).padStart(2, "0") })),
+	{ ...thisSite, number: "✳" },
+];
+
+const usedBy = (key) => sources.filter((source) => source.stack.some((item) => item.key === key));
+
+const listNames = (names) =>
+	names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0];
+
+const fillers = (count) => {
+	const needed = columnCounts.map((columns) => (columns - (count % columns)) % columns);
+	return Array.from({ length: Math.max(...needed) }, (_, slot) =>
+		columnCounts.filter((_, index) => slot < needed[index]).join(" "),
+	);
+};
 ---
 
 <section id="stack" class="section stack section-anchor" aria-labelledby="stack-title">
 	<SectionHead
-		index="02"
+		index="03"
 		label="Stack"
 		titleId="stack-title"
 		before="Tools I "
@@ -21,10 +40,34 @@ const rows = stackGroups.reduce((result, group) => {
 		after="."
 		mark="circle"
 		markSeed={8}
-		lead="A short map of the languages, platforms, and services I use most."
+		lead="A short map of the languages, platforms, and services I use most. The colored dots point back to the projects that use them."
 	/>
 
-	<div class="specimen">
+	<div class="stack-legend" data-reveal>
+		<p class="stack-legend-label" id="stack-legend-label">Cross-reference</p>
+		<ul class="stack-legend-list" aria-labelledby="stack-legend-label">
+			{sources.map((source) => (
+				<li>
+					<button
+						class="legend-chip"
+						type="button"
+						data-stack-filter={source.id}
+						data-title={source.title}
+						aria-pressed="false"
+						disabled
+						style={`--chip-color: var(--crayon-${source.crayon}); --chip-ink: var(--crayon-${source.crayon}-ink);`}
+					>
+						<span class="legend-dot" aria-hidden="true"></span>
+						<span class="legend-number" aria-hidden="true">{source.number}</span>
+						<span>{source.title}</span>
+					</button>
+				</li>
+			))}
+		</ul>
+		<p class="sr-only" aria-live="polite" data-stack-status></p>
+	</div>
+
+	<div class="specimen" data-specimen>
 		{rows.map(({ group, offset }, rowIndex) => (
 			<div
 				class="specimen-row"
@@ -39,27 +82,45 @@ const rows = stackGroups.reduce((result, group) => {
 					<h3>{group.title}</h3>
 					<p class="specimen-description">{group.description}</p>
 				</div>
-				<ul class="specimen-tiles" aria-label={`${group.title} items`}>
-					{group.items.map((item, itemIndex) => (
-						<li class="tile" data-tile data-reveal>
-							<span class="tile-number" aria-hidden="true">
-								{String(offset + itemIndex + 1).padStart(2, "0")}
-							</span>
-							<span class="tile-logo">
-								<Icon name={item.icon} class="tile-icon" aria-hidden="true" />
-								<CrayonMark
-									kind="circle"
-									seed={61 + offset + itemIndex}
-									width={80}
-									height={80}
-									strokeWidth={2.6}
-									class="tile-circle"
-								/>
-							</span>
-							<span class="tile-label">{item.label}</span>
-						</li>
-					))}
-				</ul>
+				<div class="specimen-grid">
+					<ul class="specimen-tiles" aria-label={`${group.title} items`}>
+						{group.items.map((item, itemIndex) => {
+							const refs = usedBy(item.key);
+							return (
+								<li class="tile" data-tile data-reveal data-refs={refs.map((ref) => ref.id).join(" ")}>
+									<span class="tile-number" aria-hidden="true">
+										{String(offset + itemIndex + 1).padStart(2, "0")}
+									</span>
+									{refs.length > 0 && (
+										<span class="tile-refs" aria-hidden="true">
+											{refs.map((ref) => (
+												<span class="tile-ref" style={`--ref-color: var(--crayon-${ref.crayon});`}></span>
+											))}
+										</span>
+									)}
+									<span class="tile-logo">
+										<Icon name={item.icon} class="tile-icon" aria-hidden="true" />
+										<CrayonMark
+											kind="circle"
+											seed={61 + offset + itemIndex}
+											width={80}
+											height={80}
+											strokeWidth={2.6}
+											class="tile-circle"
+										/>
+									</span>
+									<span class="tile-label">{item.label}</span>
+									{refs.length > 0 && (
+										<span class="sr-only">, used in {listNames(refs.map((ref) => ref.title))}</span>
+									)}
+								</li>
+							);
+						})}
+						{fillers(group.items.length).map((columns) => (
+							<li class="tile-filler" data-cols={columns} aria-hidden="true"></li>
+						))}
+					</ul>
+				</div>
 			</div>
 		))}
 	</div>

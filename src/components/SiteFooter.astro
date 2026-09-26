@@ -33,6 +33,8 @@ const { contact, navigation, profile, year } = Astro.props;
 
 		<p class="footer-wordmark" aria-hidden="true" data-wordmark data-reveal>
 			<span class="footer-wordmark-text" data-wordmark-text>{profile.name}</span>
+			<span class="footer-wordmark-draft">{profile.name}</span>
+			<span class="footer-lens-ring"></span>
 			<CrayonMark
 				kind="scribble"
 				seed={19}

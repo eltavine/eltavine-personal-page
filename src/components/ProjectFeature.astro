@@ -1,9 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
+import { sketches } from "../data/sketches.js";
+import ProjectSketch from "./ProjectSketch.astro";
 import StarHistoryEmbed from "./StarHistoryEmbed.astro";
 
 const { project, index } = Astro.props;
 const number = String(index + 1).padStart(2, "0");
+const sketch = sketches[project.id];
 const kind = project.availability?.kind === "public" ? "public" : "internal";
 const titleId = `project-${project.id}-title`;
 ---
@@ -60,6 +63,10 @@ const titleId = `project-${project.id}-title`;
 								</li>
 							))}
 						</ul>
+						<a class="spec-map-link" href="#stack" data-stack-focus={project.id}>
+							<span>Highlight in stack</span>
+							<Icon name="lucide:arrow-down-right" class="spec-map-icon" aria-hidden="true" />
+						</a>
 					</dd>
 				</div>
 				{project.github && (
@@ -103,8 +110,11 @@ const titleId = `project-${project.id}-title`;
 			<StarHistoryEmbed project={project} />
 		</div>
 
-		<ol class="sheet-notes" aria-label={`${project.title} highlights`}>
-			{project.notes.map((note) => <li data-sheet-note>{note}</li>)}
-		</ol>
+		<div class="sheet-side">
+			{sketch && <ProjectSketch sketch={sketch} seed={index + 1} />}
+			<ol class="sheet-notes" aria-label={`${project.title} highlights`}>
+				{project.notes.map((note) => <li data-sheet-note>{note}</li>)}
+			</ol>
+		</div>
 	</div>
 </article>

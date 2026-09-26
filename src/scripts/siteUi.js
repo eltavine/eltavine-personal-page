@@ -186,6 +186,188 @@ export function initScrollSpy() {
 	}
 }
 
+export function initStackFocus() {
+	const specimen = document.querySelector("[data-specimen]");
+	const chips = [...document.querySelectorAll("[data-stack-filter]")];
+	const status = document.querySelector("[data-stack-status]");
+
+	if (!specimen || chips.length === 0 || specimen.dataset.bound === "true") {
+		return;
+	}
+
+	specimen.dataset.bound = "true";
+	const tiles = [...specimen.querySelectorAll("[data-tile]")];
+	let pinned = null;
+
+	const highlight = (id) => {
+		const chip = chips.find((item) => item.dataset.stackFilter === id);
+		let matches = 0;
+
+		for (const tile of tiles) {
+			const isMatch = Boolean(chip) && (tile.dataset.refs ?? "").split(" ").includes(id);
+			tile.classList.toggle("is-match", isMatch);
+			matches += Number(isMatch);
+		}
+
+		specimen.toggleAttribute("data-focusing", Boolean(chip));
+		specimen.style.setProperty("--focus-color", chip ? chip.style.getPropertyValue("--chip-color") : "");
+		return matches;
+	};
+
+	const pin = (id) => {
+		pinned = pinned === id ? null : id;
+		const matches = highlight(pinned);
+
+		for (const chip of chips) {
+			chip.setAttribute("aria-pressed", String(chip.dataset.stackFilter === pinned));
+		}
+
+		if (status) {
+			const title = chips.find((chip) => chip.dataset.stackFilter === pinned)?.dataset.title;
+			status.textContent = title
+				? `${matches} ${matches === 1 ? "tool" : "tools"} highlighted for ${title}.`
+				: "Highlight cleared.";
+		}
+	};
+
+	for (const chip of chips) {
+		chip.disabled = false;
+		chip.addEventListener("click", () => pin(chip.dataset.stackFilter));
+		chip.addEventListener("pointerenter", (event) => {
+			if (event.pointerType === "mouse") {
+				highlight(chip.dataset.stackFilter);
+			}
+		});
+		chip.addEventListener("pointerleave", (event) => {
+			if (event.pointerType === "mouse") {
+				highlight(pinned);
+			}
+		});
+	}
+
+	for (const link of document.querySelectorAll("[data-stack-focus]")) {
+		link.addEventListener("click", () => {
+			pinned = null;
+			pin(link.dataset.stackFocus);
+		});
+	}
+}
+
+export function initCopyButtons() {
+	if (!navigator.clipboard?.writeText) {
+		return;
+	}
+
+	for (const button of document.querySelectorAll("[data-copy]")) {
+		if (button.dataset.bound === "true") {
+			continue;
+		}
+
+		button.dataset.bound = "true";
+		button.hidden = false;
+		const label = button.querySelector("[data-copy-label]");
+		const status = button.parentElement?.querySelector("[data-copy-status]");
+		const idleText = label?.textContent ?? "Copy";
+		let timer = 0;
+
+		button.addEventListener("click", async () => {
+			let message = "Copied";
+			try {
+				await navigator.clipboard.writeText(button.dataset.copy ?? "");
+				button.dataset.state = "copied";
+			} catch {
+				message = "Copy failed";
+				button.dataset.state = "error";
+			}
+
+			if (label) {
+				label.textContent = message;
+			}
+			if (status) {
+				status.textContent = message === "Copied" ? "Fingerprint copied to clipboard." : message;
+			}
+
+			window.clearTimeout(timer);
+			timer = window.setTimeout(() => {
+				delete button.dataset.state;
+				if (label) {
+					label.textContent = idleText;
+				}
+				if (status) {
+					status.textContent = "";
+				}
+			}, 1800);
+		});
+	}
+}
+
+export function initWordmarkLens() {
+	const wordmark = document.querySelector("[data-wordmark]");
+
+	if (!wordmark || wordmark.dataset.lensBound === "true") {
+		return;
+	}
+
+	wordmark.dataset.lensBound = "true";
+	let frame = 0;
+	let hideTimer = 0;
+	let point = { x: 0, y: 0 };
+
+	const render = () => {
+		frame = 0;
+		wordmark.style.setProperty("--lens-x", `${point.x}px`);
+		wordmark.style.setProperty("--lens-y", `${point.y}px`);
+	};
+
+	const track = (event) => {
+		const rect = wordmark.getBoundingClientRect();
+		point = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+		if (!frame) {
+			frame = window.requestAnimationFrame(render);
+		}
+	};
+
+	const show = (event) => {
+		window.clearTimeout(hideTimer);
+		track(event);
+		render();
+		wordmark.dataset.lens = "";
+	};
+
+	const hide = (delay = 0) => {
+		window.clearTimeout(hideTimer);
+		hideTimer = window.setTimeout(() => delete wordmark.dataset.lens, delay);
+	};
+
+	wordmark.addEventListener("pointerenter", (event) => {
+		if (event.pointerType === "mouse") {
+			show(event);
+		}
+	});
+	wordmark.addEventListener("pointerdown", (event) => {
+		if (event.pointerType !== "mouse") {
+			show(event);
+		}
+	});
+	wordmark.addEventListener("pointermove", (event) => {
+		if ("lens" in wordmark.dataset) {
+			track(event);
+		}
+	});
+	wordmark.addEventListener("pointerleave", (event) => {
+		if (event.pointerType === "mouse") {
+			hide();
+		}
+	});
+	for (const type of ["pointerup", "pointercancel"]) {
+		wordmark.addEventListener(type, (event) => {
+			if (event.pointerType !== "mouse") {
+				hide(900);
+			}
+		});
+	}
+}
+
 export function initEmailReveal() {
 	for (const button of document.querySelectorAll("[data-email-reveal]")) {
 		if (button.dataset.bound === "true") {

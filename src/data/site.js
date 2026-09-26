@@ -57,6 +57,7 @@ export const siteMeta = {
 
 export const navigation = [
   { href: "#projects", icon: "lucide:folder-kanban", label: "Projects" },
+  { href: "#about", icon: "lucide:notebook-pen", label: "About" },
   { href: "#stack", icon: "lucide:layers-3", label: "Stack" },
   { href: "#contact", icon: "lucide:mail", label: "Contact" },
 ];
@@ -78,6 +79,35 @@ export const profile = {
   role: "Software engineer",
   summary:
     "A compact portfolio of security tools, platform work, and the technologies behind them.",
+};
+
+export const about = {
+  bench: ["pingora-panel", "yurimashi", "yunheshiguang-droid-farm"],
+  greeting: "hello!",
+  lead: "The short version of who I am, plus the rules I keep coming back to.",
+  marginNote: "long version: the projects",
+  paragraphs: [
+    "I'm Eltavine, a software engineer who likes to work close to the platform: Android internals, native code, and the infrastructure that keeps services running.",
+    "A lot of my work starts with a trust question. Is this device in the state it claims? Is this config safe to roll out? Does this data need to leave the machine at all? I like answering those with tools that check locally and show their evidence.",
+    "I care about calm software: clear signals, honest status, and failure modes that are designed rather than discovered.",
+  ],
+  rules: [
+    {
+      body: "Checks run on the device, and data stays on the machine by default.",
+      crayon: "sage",
+      title: "Keep it local.",
+    },
+    {
+      body: "Contracts, an engine-neutral IR, ports and adapters: the seams are written down so each side can change safely.",
+      crayon: "blue",
+      title: "Make boundaries explicit.",
+    },
+    {
+      body: "When something breaks, stop safely, fall back to a last known good state, and treat recovery as a normal path.",
+      crayon: "marigold",
+      title: "Fail closed, recover cleanly.",
+    },
+  ],
 };
 
 export const contact = {
@@ -239,6 +269,13 @@ export const projects = [
     title: "yunheshiguang",
   },
 ];
+
+export const thisSite = {
+  crayon: "heart",
+  id: "this-site",
+  stack: pickStack("astro", "typescript", "javascript", "vite", "pnpm", "cloudflare"),
+  title: "This site",
+};
 
 export const stackGroups = [
   {

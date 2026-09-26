@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AboutSection from "../components/AboutSection.astro";
 import ContactSection from "../components/ContactSection.astro";
 import HeroSection from "../components/HeroSection.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
@@ -8,6 +9,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteScripts from "../components/SiteScripts.astro";
 import StackSection from "../components/StackSection.astro";
 import {
+	about,
 	contact,
 	navigation,
 	profile,
@@ -82,7 +84,8 @@ const jsonLd = {
 		<main class="shell" id="main">
 			<HeroSection profile={profile} />
 			<ProjectsSection projects={projects} />
-			<StackSection stackGroups={stackGroups} />
+			<AboutSection about={about} projects={projects} />
+			<StackSection projects={projects} stackGroups={stackGroups} />
 			<ContactSection contact={contact} profile={profile} />
 		</main>
 
