@@ -196,12 +196,26 @@
 		}
 	}
 
-	/* Below this width the words no longer fit at 11px, so the links become labelled icons. */
-	@media (max-width: 359px) {
+	/* Phones only fit the words beside the lamp at tighter spacing; otherwise the pill runs off the right edge. */
+	@media (max-width: 420px) {
 		.site-header-inner {
 			gap: 0.5rem;
 		}
 
+		.nav-link {
+			padding-inline: 0.3rem;
+			letter-spacing: 0.02em;
+		}
+
+		.nav-mark {
+			right: 0.3rem;
+			left: 0.3rem;
+			width: calc(100% - 0.6rem);
+		}
+	}
+
+	/* Below this width the words no longer fit at 11px, so the links become labelled icons. */
+	@media (max-width: 374px) {
 		.nav-icon {
 			display: inline-block;
 		}
@@ -217,12 +231,6 @@
 
 		.nav-link {
 			padding: 0.7rem 0.6rem;
-		}
-
-		.nav-mark {
-			right: 0.3rem;
-			left: 0.3rem;
-			width: calc(100% - 0.6rem);
 		}
 	}
 

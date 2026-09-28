@@ -157,3 +157,24 @@ test.describe("tall screens", () => {
 			.toBeGreaterThan(0.99);
 	});
 });
+
+test.describe("phone widths", () => {
+	test.skip(({ hasTouch }) => hasTouch, "one run per engine is enough");
+
+	test("the header keeps the lamp inside the page margins", async ({ page }) => {
+		await page.goto("/");
+		await page.evaluate(async () => {
+			await document.fonts.ready;
+		});
+		for (const width of [320, 360, 375, 390, 402, 430]) {
+			await page.setViewportSize({ height: 800, width });
+			const lopsided = await page.evaluate(() => {
+				const brand = document.querySelector(".brand")?.getBoundingClientRect();
+				const pill = document.querySelector(".nav-pill")?.getBoundingClientRect();
+				return brand && pill ? document.documentElement.clientWidth - pill.right - brand.left : Number.NaN;
+			});
+			// The frame clips horizontal overflow, so a pill wider than the shell only shows as uneven margins.
+			expect(lopsided, `${width}px`).toBeCloseTo(0, 0);
+		}
+	});
+});
