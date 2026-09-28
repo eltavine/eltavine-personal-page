@@ -164,17 +164,6 @@ const postmarkText = `${host} · ${year} · DIRECT · VERIFIABLE · QUIET ·`;
 			</article>
 
 			<div class="postcard-face postcard-face--front" data-postcard-face="front" aria-hidden="true" inert>
-				<img
-					class="postcard-front-sticker"
-					src={profile.avatar.src}
-					srcset={profile.avatar.srcset}
-					sizes="96px"
-					width="160"
-					height="160"
-					alt=""
-					loading="lazy"
-					decoding="async"
-				/>
 				<p class="greetings-from hand">Greetings from</p>
 				<p class="greetings-letters display">{profile.name}</p>
 				<p class="greetings-sub">{new URL(site.url).host}</p>
