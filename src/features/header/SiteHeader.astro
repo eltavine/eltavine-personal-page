@@ -3,6 +3,7 @@ import { navigation, profile } from "../../config/site.ts";
 import { pad2 } from "../../lib/format.ts";
 import CrayonMark from "../../ui/CrayonMark.astro";
 import Icon from "../../ui/Icon.astro";
+import LampGlow from "../theme/LampGlow.astro";
 import ThemeLamp from "../theme/ThemeLamp.astro";
 import "./header.css";
 ---
@@ -64,3 +65,5 @@ import "./header.css";
 		</div>
 	</header>
 </site-header>
+<!-- Outside the header: its backdrop blur and hide transform would pin the fixed glow to the header instead of the viewport. -->
+<LampGlow />

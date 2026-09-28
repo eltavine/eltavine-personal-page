@@ -70,7 +70,7 @@ class ThemeLamp extends HTMLElement {
 	};
 
 	#onGlowMove = (event: PointerEvent) => {
-		if (!finePointer.matches || reducedMotion.matches || currentTheme() !== "dark") {
+		if (!finePointer.matches || reducedMotion.matches) {
 			return;
 		}
 		this.#pointer = { x: event.clientX, y: event.clientY };

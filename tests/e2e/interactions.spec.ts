@@ -103,6 +103,27 @@ test.describe("scratch card", () => {
 	});
 });
 
+test.describe("lamp glow", () => {
+	test.skip(({ hasTouch }) => Boolean(hasTouch), "the glow follows a mouse");
+
+	test("stays centred on the pointer once the header blurs and slides away", async ({ page }) => {
+		await page.addInitScript(() => window.localStorage.setItem("eltavine-theme", "dark"));
+		await page.goto("/");
+		await page.mouse.move(600, 400);
+		await page.mouse.wheel(0, 1500);
+		await expect(page.locator("site-header")).toHaveAttribute("data-hidden", "true");
+		await page.mouse.move(640, 420);
+		await expect
+			.poll(() =>
+				page.locator("[data-lamp-glow]").evaluate((glow) => {
+					const rect = glow.getBoundingClientRect();
+					return [Math.round(rect.x + rect.width / 2), Math.round(rect.y + rect.height / 2)];
+				}),
+			)
+			.toEqual([640, 420]);
+	});
+});
+
 test.describe("live sketches", () => {
 	test.skip(({ viewport }) => (viewport?.width ?? 0) < 1080, "desktop-only motion checks");
 
