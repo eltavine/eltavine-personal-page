@@ -15,20 +15,13 @@ const INK = "#1f1b16";
 const sealDrawing = () =>
 	renderDiagram(fingerprintSeal(contact.fingerprint), { multiStroke: false, seed: 7 });
 
-/** Square "white-character" seal: paper-colored walk on a vermilion block, legible at 16px. */
-export function sealIconSvg() {
-	const seal = sealDrawing();
-	const side = Math.max(seal.width, seal.height) + 24;
-	const offsetX = (side - seal.width) / 2;
-	const offsetY = (side - seal.height) / 2;
-	const inner = diagramToSvg(seal, { color: PAPER, pad: 0 })
-		.replace(/^<svg[^>]*>/, "")
-		.replace(/<\/svg>$/, "");
-	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${side} ${side}"><rect width="${side}" height="${side}" rx="${side * 0.2}" fill="${SEAL_RED}"/><g transform="translate(${offsetX} ${offsetY})">${inner}</g></svg>`;
-}
-
+/** The avatar on paper: iOS fills a transparent home-screen icon with black. */
 export async function appleTouchIcon() {
-	return sharp(Buffer.from(sealIconSvg())).resize(180, 180).png({ compressionLevel: 9 }).toBuffer();
+	return sharp(join(process.cwd(), "public/eltavine.png"))
+		.flatten({ background: PAPER })
+		.resize(180, 180)
+		.png({ compressionLevel: 9 })
+		.toBuffer();
 }
 
 type Node = {

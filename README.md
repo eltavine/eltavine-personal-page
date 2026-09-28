@@ -38,7 +38,7 @@ src/
   features/<name>/       One folder per feature: Component.astro + feature.css + *.element.ts + motion.ts
   motion/                gsap.ts (the only GSAP import) and the runtime that loads feature motion on demand
   styles/                tokens, base, paper surfaces, motion overrides; cascade order set once in Layout
-  pages/                 index, 404, and build-time artifacts: og.png, favicon.svg, apple-touch-icon.png, card.txt
+  pages/                 index, 404, and build-time artifacts: og.png, apple-touch-icon.png, card.txt
 functions/index.ts       Cloudflare Pages Function: `curl eltavine.com` gets the ASCII postcard
 tests/unit, tests/e2e    Vitest and Playwright
 ```

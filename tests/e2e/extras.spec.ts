@@ -17,8 +17,10 @@ test("build-time artifacts are served", async ({ request }) => {
 	expect(og.headers()["content-type"]).toContain("image/png");
 	expect((await og.body()).byteLength).toBeGreaterThan(20_000);
 
-	const favicon = await request.get("/favicon.svg");
-	expect(await favicon.text()).toMatch(/^<svg /);
+	const touchIcon = await request.get("/apple-touch-icon.png");
+	expect(touchIcon.headers()["content-type"]).toContain("image/png");
+	// PNG width sits right after the signature and the IHDR chunk header.
+	expect((await touchIcon.body()).readUInt32BE(16)).toBe(180);
 });
 
 test.describe("print", () => {

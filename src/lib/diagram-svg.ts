@@ -9,7 +9,7 @@ export interface SvgOptions {
 	background?: string;
 }
 
-/** Standalone SVG for contexts without the page's CSS (favicons, OG images). Text items are not rendered. */
+/** Standalone SVG for contexts without the page's CSS (OG images). Text items are not rendered. */
 export function diagramToSvg(
 	rendered: RenderedDiagram,
 	{ color = "#1f1b16", accent = color, pad = 4, size, background }: SvgOptions = {},
