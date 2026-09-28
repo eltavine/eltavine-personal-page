@@ -37,3 +37,6 @@ Thumbs.db
 
 # local verification artifacts
 .codex-*.png
+playwright-report/
+test-results/
+blob-report/

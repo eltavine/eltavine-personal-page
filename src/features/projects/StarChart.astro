@@ -1,0 +1,27 @@
+---
+import { formatMonthYear } from "../../lib/format.ts";
+import type { StarPoint } from "../../lib/github.ts";
+import { starChartDiagram } from "../../lib/star-chart.ts";
+import Diagram from "../../ui/Diagram.astro";
+import Tape from "../../ui/Tape.astro";
+
+interface Props {
+	history: StarPoint[];
+	repo: string;
+	fetchedAt: string;
+	seed: number;
+}
+
+const { history, repo, fetchedAt, seed } = Astro.props;
+const diagram = starChartDiagram(history, "stars over time");
+---
+
+{diagram && (
+	<figure class="star-card paper paper--grid" data-photo>
+		<Tape class="star-card-tape" color="var(--sheet-color)" rotate={-28} />
+		<Diagram diagram={diagram} seed={seed} multiStroke={false} class="star-chart" />
+		<figcaption class="figure-caption">
+			Star history · {repo} · as of {formatMonthYear(fetchedAt)}
+		</figcaption>
+	</figure>
+)}

@@ -1,0 +1,402 @@
+/* Printed, the notebook collapses into a one-page spec sheet: identity, projects, rules, stack, keys. */
+@layer overrides {
+	@media print {
+		@page {
+			margin: 11mm 12mm;
+		}
+
+		:root {
+			color-scheme: light;
+			--paper: #fff;
+			--paper-raised: #fff;
+			--ink: #111;
+			--ink-soft: #222;
+			--ink-muted: #555;
+			--line: #ccc;
+			--line-strong: #999;
+			--grain: none;
+		}
+
+		*,
+		*::before,
+		*::after {
+			animation: none !important;
+			transition: none !important;
+			box-shadow: none !important;
+		}
+
+		[data-reveal],
+		[data-doodle],
+		[data-notebook-line],
+		[data-rule],
+		[data-sheet-item],
+		[data-sheet-note],
+		[data-project-sheet] {
+			opacity: 1 !important;
+			visibility: visible !important;
+			transform: none !important;
+		}
+
+		body {
+			background: #fff;
+			font-size: 8.5pt;
+			line-height: 1.4;
+		}
+
+		.site-header,
+		.skip-link,
+		.lamp-glow,
+		.scroll-cue,
+		.hero-figure,
+		.hero-actions,
+		.hero-summary,
+		.readout,
+		.graph-paper,
+		.section-lead,
+		.section-tally,
+		.project-index,
+		.sheet-doodle,
+		.sheet-emphasis,
+		.spec-map-link,
+		.sheet-more,
+		.live-sketch,
+		.sheet-figure,
+		.title-block-stamp,
+		.notebook-page--ruled,
+		.notebook-crease,
+		.bench,
+		.rule-box,
+		.rule-evidence,
+		.stack-legend,
+		.stack-group-description,
+		.tile-refs,
+		.tile-logo,
+		.perforation,
+		.postcard-turn,
+		.postcard-face--front,
+		.postcard-face--back > .postcard-heading,
+		.postcard-greeting,
+		.postcard-franking,
+		.postcard-signature,
+		.footer-top,
+		.footer-wordmark,
+		.footer-nav,
+		.sparkle,
+		.crayon-mark {
+			display: none !important;
+		}
+
+		.shell {
+			width: 100%;
+		}
+
+		.section {
+			padding-block: 1.6mm;
+			border-top: 0.5pt solid #bbb;
+			break-inside: avoid;
+		}
+
+		.section-head {
+			display: block;
+			margin-bottom: 1.2mm;
+		}
+
+		.section-head .eyebrow {
+			display: none;
+		}
+
+		.section-head h2 {
+			max-width: none;
+			margin-top: 0;
+			font-size: 11pt;
+		}
+
+		.eyebrow {
+			font-size: 6.5pt;
+		}
+
+		.marked-struck {
+			display: none;
+		}
+
+		.marked-insert {
+			font-family: inherit;
+			font-size: inherit;
+			rotate: none;
+			translate: none;
+			color: inherit;
+		}
+
+		.hero {
+			display: block;
+			min-height: 0;
+			padding: 0 0 2mm;
+		}
+
+		.hero-eyebrow {
+			margin-bottom: 1.5mm;
+		}
+
+		.hero-title {
+			font-size: 17pt;
+			line-height: 1;
+		}
+
+		.hero-line {
+			display: inline;
+		}
+
+		.hero-lead {
+			max-width: none;
+			margin-top: 1.5mm;
+			font-size: 9pt;
+		}
+
+		.project-sheets {
+			grid-template-columns: 1fr 1fr;
+			gap: 2mm;
+		}
+
+		.project-sheet {
+			padding: 2.5mm 3mm;
+			border: 0.5pt solid #bbb;
+			background: #fff !important;
+			mask: none !important;
+			break-inside: avoid;
+		}
+
+		.project-sheet::before,
+		.paper--drafting::after {
+			display: none;
+		}
+
+		.sheet-head {
+			display: none;
+		}
+
+		.sheet-hero {
+			display: block;
+			margin-top: 0;
+		}
+
+		.sheet-number {
+			display: none;
+		}
+
+		.sheet-title {
+			font-size: 11pt;
+		}
+
+		.sheet-summary {
+			margin-top: 0.5mm;
+			font-size: 7.5pt;
+			line-height: 1.35;
+		}
+
+		.sheet-body {
+			display: block;
+			margin-top: 1.5mm;
+			padding-top: 1.5mm;
+		}
+
+		.sheet-main,
+		.sheet-side {
+			gap: 1mm;
+		}
+
+		.sheet-side {
+			display: none;
+		}
+
+		.spec-stack {
+			gap: 0.5mm 2.5mm;
+			font-size: 7.5pt;
+		}
+
+		.spec-stack-icon {
+			display: none;
+		}
+
+		.title-block {
+			margin-top: 0;
+		}
+
+		/* On paper only the status and the source matter; the drawing metadata is decoration. */
+		.title-block-grid {
+			grid-template-columns: 1fr;
+			border-width: 0.5pt;
+		}
+
+		.title-block-grid > div:not(.title-block-wide, .title-block-source) {
+			display: none;
+		}
+
+		.title-block-source {
+			grid-column: 1;
+			border-bottom: 0 !important;
+		}
+
+		.repo-asof {
+			font-size: 8pt;
+		}
+
+		/* Things you can only do on screen. */
+		.postcard-line:has(.scratch-reveal),
+		.postcard-line:has([download]),
+		.copy-button {
+			display: none !important;
+		}
+
+		.title-block-grid dt {
+			font-size: 6pt;
+		}
+
+		.title-block-grid dd {
+			font-size: 7pt;
+		}
+
+		.title-block-grid > div {
+			padding: 0.6mm 1.2mm;
+		}
+
+		.about .notebook {
+			display: block;
+			border: 0;
+		}
+
+		.notebook-page {
+			padding: 0;
+			background: none;
+		}
+
+		.notebook-kicker {
+			display: none;
+		}
+
+		.rules {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 2mm;
+			margin: 0;
+		}
+
+		.rule {
+			display: block;
+			padding: 0;
+			border: 0;
+		}
+
+		.rule-title strong {
+			font-size: 9pt;
+		}
+
+		.rule-body {
+			font-size: 7.5pt;
+		}
+
+		.stack-groups {
+			grid-template-columns: repeat(5, 1fr);
+			gap: 2mm;
+			padding-top: 1.5mm;
+		}
+
+		.stack-group,
+		.stack-group--compact {
+			grid-column: span 1;
+			gap: 0.5mm;
+		}
+
+		.stack-group-label .eyebrow {
+			display: none;
+		}
+
+		.stack-group-label h3 {
+			margin: 0;
+			font-size: 8.5pt;
+		}
+
+		.stack-tiles {
+			display: block;
+		}
+
+		.tile {
+			display: inline;
+			min-height: 0;
+			padding: 0;
+			border: 0;
+			background: none;
+		}
+
+		.tile:not(:last-child)::after {
+			content: " · ";
+		}
+
+		.tile-label {
+			font-family: inherit;
+			font-size: 7.5pt;
+			letter-spacing: 0;
+			text-transform: none;
+		}
+
+		.postcard-face--back {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1mm 6mm;
+			padding: 0;
+			border: 0;
+			background: none;
+			opacity: 1 !important;
+		}
+
+		.postcard-face--back::before,
+		.postcard-divider {
+			display: none;
+		}
+
+		.postcard-lines {
+			display: grid;
+			grid-template-columns: repeat(4, auto);
+			gap: 1mm 5mm;
+			margin: 0;
+		}
+
+		.postcard-line {
+			padding: 0;
+			border: 0;
+		}
+
+		.postcard-lines--address {
+			margin-top: 0;
+		}
+
+		.postcard-lines--address .postcard-line:has(.fingerprint) {
+			grid-column: span 2;
+		}
+
+		.fingerprint {
+			font-size: 7.5pt;
+		}
+
+		.site-footer {
+			padding: 1.5mm 0 0;
+			border-top: 0.5pt solid #bbb;
+		}
+
+		.footer-bottom {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 6.5pt;
+		}
+
+		.footer-seal {
+			width: 12mm;
+		}
+
+		a[href^="http"]::after {
+			content: " (" attr(href) ")";
+			color: #555;
+			font-size: 0.85em;
+		}
+	}
+}

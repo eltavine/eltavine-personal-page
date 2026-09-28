@@ -1,0 +1,31 @@
+---
+import "./theme.css";
+---
+
+<theme-lamp class="theme-lamp">
+	<button
+		class="lamp-switch"
+		type="button"
+		aria-label="Toggle color theme"
+		aria-pressed="false"
+		data-lamp-switch
+	>
+		<svg class="lamp-shade" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+			<circle class="lamp-halo" cx="12" cy="15" r="9"></circle>
+			<path
+				class="lamp-body"
+				d="M12 2v4M7.5 6h9l3 7h-15zM10 13a2 2 0 0 0 4 0"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.7"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			></path>
+		</svg>
+	</button>
+	<span class="lamp-cord" data-lamp-cord aria-hidden="true">
+		<span class="lamp-cord__string"></span>
+		<span class="lamp-cord__bead"></span>
+	</span>
+</theme-lamp>
+<div class="lamp-glow" data-lamp-glow aria-hidden="true"></div>

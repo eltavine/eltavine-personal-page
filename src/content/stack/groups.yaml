@@ -1,0 +1,40 @@
+- id: core
+  order: 1
+  eyebrow: Core
+  title: Core Languages
+  description: Languages for native code, services, and performance-sensitive work.
+  icon: "lucide:cpu"
+  crayon: heart
+  items: [cpp, c, rust, go]
+- id: application
+  order: 2
+  eyebrow: Application
+  title: Application Languages
+  description: Tools for Android apps, web interfaces, and shipped product features.
+  icon: "lucide:braces"
+  crayon: marigold
+  items: [kotlin, typescript, javascript, java, react, astro, vite]
+- id: platform
+  order: 3
+  eyebrow: Platform
+  title: Systems and Platform
+  description: Systems I use for device, server, and deployment work.
+  icon: "lucide:monitor"
+  crayon: blue
+  items: [linux, windows-kernel, android, ios, macos, docker, cloudflare, ory]
+- id: data
+  order: 4
+  eyebrow: Data
+  title: Data Layer
+  description: Storage, caching, and API tools for product data.
+  icon: "lucide:database"
+  crayon: lavender
+  items: [postgresql, redis, protobuf, connectrpc]
+- id: workflow
+  order: 5
+  eyebrow: Workflow
+  title: Build and Governance
+  description: Package and workspace tools that keep builds repeatable.
+  icon: "lucide:workflow"
+  crayon: sage
+  items: [pnpm, turborepo]

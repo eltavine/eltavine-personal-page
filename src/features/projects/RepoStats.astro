@@ -1,0 +1,42 @@
+---
+import { compactNumber, formatMonthYear } from "../../lib/format.ts";
+import Icon from "../../ui/Icon.astro";
+
+interface Props {
+	repo: string;
+	title: string;
+	stats?: { stars: number; forks: number; fetchedAt: string };
+}
+
+const { repo, title, stats } = Astro.props;
+---
+
+<repo-stats class="repo-stats" data-repo={repo}>
+	<a
+		class="repo-link"
+		href={`https://github.com/${repo}`}
+		target="_blank"
+		rel="noreferrer"
+		aria-label={`Open ${title} on GitHub`}
+	>
+		<Icon name="simple-icons:github" class="repo-icon" aria-hidden="true" />
+		<span class="repo-name">{repo}</span>
+	</a>
+	{stats && (
+		<span class="repo-counts">
+			<span class="repo-stat">
+				<Icon name="lucide:star" class="repo-stat-icon" aria-hidden="true" />
+				<strong data-stars>{compactNumber(stats.stars)}</strong>
+				<span class="sr-only"> stars</span>
+			</span>
+			<span class="repo-stat">
+				<Icon name="lucide:git-fork" class="repo-stat-icon" aria-hidden="true" />
+				<strong data-forks>{compactNumber(stats.forks)}</strong>
+				<span class="sr-only"> forks</span>
+			</span>
+			<span class="repo-asof hand" data-asof>
+				as of {formatMonthYear(stats.fetchedAt)}
+			</span>
+		</span>
+	)}
+</repo-stats>

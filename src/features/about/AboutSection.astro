@@ -1,0 +1,124 @@
+---
+import { getEntries, getEntry, render } from "astro:content";
+import { sections } from "../../config/site.ts";
+import { pad2 } from "../../lib/format.ts";
+import CrayonMark from "../../ui/CrayonMark.astro";
+import SectionHead from "../../ui/SectionHead.astro";
+import Sparkle from "../../ui/Sparkle.astro";
+import Highlight from "./Highlight.astro";
+import Note from "./Note.astro";
+import "./about.css";
+
+const entry = await getEntry("about", "about");
+if (!entry) {
+	throw new Error("Missing src/content/about/about.mdx");
+}
+const { data } = entry;
+const { Content } = await render(entry);
+const bench = await getEntries(data.bench);
+---
+
+<section id="about" class="section about section-anchor" aria-labelledby="about-title" data-motion="about">
+	<SectionHead copy={sections.about} titleId="about-title" />
+
+	<div class="notebook" data-notebook data-reveal>
+		<div class="notebook-page notebook-page--ruled paper paper--ruled" data-notebook-page>
+			<p class="notebook-greeting hand" data-notebook-greeting>
+				{data.greeting}
+			</p>
+			<div class="notebook-copy" data-notebook-line>
+				<Content components={{ Highlight, Note }} />
+			</div>
+			<p class="notebook-note hand" aria-hidden="true" data-notebook-line>
+				<span>{data.marginNote}</span>
+				<CrayonMark
+					kind="arrow"
+					seed={29}
+					width={34}
+					height={52}
+					strokeWidth={2.2}
+					points={[
+						[8, 48],
+						[20, 32],
+						[16, 16],
+						[24, 4],
+					]}
+					draw
+					class="notebook-note-arrow"
+				/>
+			</p>
+			<Sparkle class="notebook-sparkle" color="var(--crayon-pink)" size="1.2rem" rotate={16} />
+		</div>
+
+		<span class="notebook-crease" aria-hidden="true"></span>
+
+		<div class="notebook-page notebook-page--grid paper paper--grid" data-notebook-page>
+			<h3 class="notebook-kicker label">Working rules</h3>
+			<ol class="rules">
+				{data.rules.map((rule, index) => (
+					<li
+						class="rule"
+						data-rule
+						style={`--rule-color: var(--crayon-${rule.crayon}); --rule-ink: var(--crayon-${rule.crayon}-ink);`}
+					>
+						<span class="rule-box" aria-hidden="true">
+							<CrayonMark
+								kind="box"
+								seed={71 + index}
+								width={36}
+								height={36}
+								strokeWidth={1.8}
+								class="rule-frame"
+							/>
+							<CrayonMark
+								kind="check"
+								seed={75 + index}
+								width={36}
+								height={30}
+								strokeWidth={3.2}
+								draw
+								class="rule-check"
+							/>
+						</span>
+						<p class="rule-title">
+							<span class="rule-number">{pad2(index + 1)}</span>
+							<strong>{rule.title}</strong>
+						</p>
+						<p class="rule-body">{rule.body}</p>
+						{rule.evidence && (
+							<evidence-link data-project={rule.evidence.project.id} data-segment={rule.evidence.segment}>
+								<a class="rule-evidence hand" href={`#sketch-${rule.evidence.project.id}`}>
+									{rule.evidence.label} ↘
+								</a>
+							</evidence-link>
+						)}
+					</li>
+				))}
+			</ol>
+
+			{bench.length > 0 && (
+				<div class="bench" data-notebook-line>
+					<p class="bench-label label" id="bench-label">
+						On the bench
+					</p>
+					<ul class="bench-list" aria-labelledby="bench-label">
+						{bench.map(({ data: project, id }) => (
+							<li>
+								<a
+									href={`#project-${id}`}
+									style={`--bench-color: var(--crayon-${project.crayon}); --bench-ink: var(--crayon-${project.crayon}-ink);`}
+								>
+									<span class="bench-dot" aria-hidden="true" />
+									<span class="bench-number" aria-hidden="true">
+										{pad2(project.order)}
+									</span>
+									<span>{project.title}</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			)}
+		</div>
+	</div>
+</section>

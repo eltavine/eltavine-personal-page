@@ -1,0 +1,33 @@
+---
+import Diagram from "../../ui/Diagram.astro";
+import Icon from "../../ui/Icon.astro";
+import { getDiagram } from "./registry.ts";
+import "./sketches.css";
+
+interface Props {
+	name: string;
+	project: string;
+	seed: number;
+}
+
+const { name, project, seed } = Astro.props;
+const diagram = getDiagram(name);
+---
+
+<figure class="live-sketch" id={`sketch-${project}`} data-sketch={project} data-motion="sketches">
+	<span class="crop-marks" aria-hidden="true">
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+	</span>
+	<Diagram diagram={diagram} seed={seed} live />
+	<figcaption class="figure-caption live-sketch-caption">
+		<span>{diagram.caption}</span>
+		<button class="sketch-play" type="button" data-sketch-play hidden>
+			<Icon name="lucide:play" class="sketch-play-icon" aria-hidden="true" />
+			<span>Play</span>
+			<span class="sr-only"> the {project.replaceAll("-", " ")} sketch</span>
+		</button>
+	</figcaption>
+</figure>

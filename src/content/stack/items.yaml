@@ -1,0 +1,40 @@
+# Monochrome icons only: tiles take their color from the crayon palette, never from brand colors.
+- { id: adb, label: ADB, icon: "lucide:terminal" }
+- { id: android, label: Android, icon: "simple-icons:android" }
+- { id: asm, label: ASM, icon: "lucide:binary" }
+- { id: astro, label: Astro, icon: "simple-icons:astro" }
+- { id: axum, label: Axum, icon: "lucide:route" }
+- { id: buf, label: Buf, icon: "lucide:boxes" }
+- { id: c, label: C, icon: "simple-icons:c" }
+- { id: cloudflare, label: Cloudflare, icon: "simple-icons:cloudflare" }
+- { id: connectrpc, label: ConnectRPC, icon: "lucide:radio-tower" }
+- { id: cpp, label: C++, icon: "simple-icons:cplusplus" }
+- { id: dart, label: Dart, icon: "simple-icons:dart" }
+- { id: docker, label: Docker, icon: "simple-icons:docker" }
+- { id: go, label: Go, icon: "simple-icons:go" }
+- { id: ios, label: iOS, icon: "simple-icons:ios" }
+- { id: java, label: Java, icon: "simple-icons:openjdk" }
+- { id: javascript, label: JavaScript, icon: "simple-icons:javascript" }
+- { id: kotlin, label: Kotlin, icon: "simple-icons:kotlin" }
+- { id: linux, label: Linux, icon: "simple-icons:linux" }
+- { id: macos, label: macOS, icon: "simple-icons:macos" }
+- { id: ory, label: Ory, icon: "simple-icons:ory" }
+- { id: pingora, label: Pingora, icon: "lucide:network" }
+- { id: pnpm, label: pnpm, icon: "simple-icons:pnpm" }
+- { id: postgresql, label: PostgreSQL, icon: "simple-icons:postgresql" }
+- { id: protobuf, label: Protobuf, icon: "lucide:boxes" }
+- { id: react, label: React, icon: "simple-icons:react" }
+- { id: redis, label: Redis, icon: "simple-icons:redis" }
+- { id: riverpod, label: Riverpod, icon: "lucide:git-branch" }
+- { id: rust, label: Rust, icon: "simple-icons:rust" }
+- { id: scrcpy, label: scrcpy, icon: "lucide:monitor" }
+- { id: sqlcipher, label: SQLCipher, icon: "lucide:database" }
+- { id: tailwind, label: Tailwind CSS, icon: "simple-icons:tailwindcss" }
+- { id: tauri, label: Tauri, icon: "simple-icons:tauri" }
+- { id: tokio, label: Tokio, icon: "simple-icons:tokio" }
+- { id: tonic, label: Tonic, icon: "lucide:radio" }
+- { id: turborepo, label: Turborepo, icon: "simple-icons:turborepo" }
+- { id: typescript, label: TypeScript, icon: "simple-icons:typescript" }
+- { id: vite, label: Vite, icon: "simple-icons:vite" }
+- { id: vitest, label: Vitest, icon: "simple-icons:vitest" }
+- { id: windows-kernel, label: Windows Kernel, icon: "simple-icons:windows" }

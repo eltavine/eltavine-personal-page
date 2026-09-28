@@ -1,0 +1,97 @@
+@layer features {
+	/* An opaque graph-paper cutout: the label halos are painted in --diagram-halo and must match what is behind them. */
+	.live-sketch,
+	.sheet-figure {
+		position: relative;
+		width: min(100%, 26rem);
+		padding: 0.9rem 0.5rem 0.75rem;
+		background-color: var(--diagram-halo);
+		background-image:
+			var(--grain), linear-gradient(var(--grid-line) 1px, transparent 1px),
+			linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+		background-position:
+			0 0,
+			-1px -1px,
+			-1px -1px;
+		background-size:
+			var(--grain-size),
+			16px 16px,
+			16px 16px;
+		scroll-margin-top: calc(var(--header-height) + 2rem);
+	}
+
+	.live-sketch .crop-marks i {
+		width: 12px;
+		height: 12px;
+	}
+
+	.live-sketch-caption {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.4rem 1rem;
+		padding-inline: 0.4rem;
+	}
+
+	.sketch-play {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		min-height: 2rem;
+		padding: 0.25rem 0.7rem;
+		border: 1px dashed var(--line-strong);
+		border-radius: var(--radius-pill);
+		background: transparent;
+		color: var(--ink-muted);
+		cursor: pointer;
+		font-family: var(--font-mono);
+		font-size: var(--step--2);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		transition:
+			border-color 220ms ease,
+			color 220ms ease;
+	}
+
+	.sketch-play:hover,
+	.sketch-play:focus-visible,
+	.sketch-play[aria-pressed="true"] {
+		border-style: solid;
+		border-color: var(--sheet-color, var(--accent));
+		color: var(--sheet-ink, var(--accent-ink));
+	}
+
+	.sketch-play-icon {
+		font-size: 0.8rem;
+	}
+
+	/* Scenario props: the packet dot and the pulse ring are injected by the motion module. */
+	.sketch-packet {
+		fill: var(--sheet-color, var(--accent));
+		stroke: var(--diagram-halo);
+		stroke-width: 2px;
+	}
+
+	.live-sketch :is(path, text) {
+		transition:
+			color 220ms ease,
+			fill 220ms ease;
+	}
+
+	.live-sketch path.is-lit {
+		color: var(--sheet-color, var(--accent));
+	}
+
+	.live-sketch text.is-lit {
+		fill: var(--sheet-ink, var(--accent-ink));
+	}
+
+	.live-sketch path.is-failing {
+		color: var(--crayon-heart);
+	}
+
+	.live-sketch .diagram-layer {
+		transition: translate 700ms var(--ease-out-back);
+	}
+}

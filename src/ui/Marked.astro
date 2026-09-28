@@ -1,0 +1,37 @@
+---
+import type { SectionCopy } from "../config/site.ts";
+import CrayonMark from "./CrayonMark.astro";
+
+interface Props {
+	kind: SectionCopy["mark"];
+	seed: number;
+	/** For `strike`: the crossed-out word; the slot becomes the handwritten replacement. */
+	struck?: string;
+	class?: string;
+}
+
+const { kind, seed, struck, class: className } = Astro.props;
+const sizes = {
+	circle: { height: 84, stretch: true, strokeWidth: 3.2, width: 300 },
+	highlight: { height: 40, stretch: true, strokeWidth: 3, width: 260 },
+	underline: { height: 30, stretch: false, strokeWidth: 4.5, width: 260 },
+} as const;
+---
+
+{kind === "strike" ? (
+	<span class:list={["marked", "marked--strike", className]}>
+		<span class="marked-struck" aria-hidden="true">
+			{struck}
+			<CrayonMark kind="strike" seed={seed} width={120} height={24} strokeWidth={4} stretch draw />
+		</span>
+		<ins class="marked-insert hand">
+			<slot />
+			<CrayonMark kind="caret" seed={seed + 1} strokeWidth={2.6} draw class="marked-caret" />
+		</ins>
+	</span>
+) : (
+	<span class:list={["marked", `marked--${kind}`, className]}>
+		<slot />
+		<CrayonMark kind={kind} seed={seed} {...sizes[kind]} draw />
+	</span>
+)}

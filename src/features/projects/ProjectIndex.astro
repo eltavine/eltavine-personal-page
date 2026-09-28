@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { pad2 } from "../../lib/format.ts";
+import CrayonMark from "../../ui/CrayonMark.astro";
+
+interface Props {
+	projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+---
+
+<aside class="project-index" data-project-index aria-label="Project index">
+	<p class="project-index-label label">Index</p>
+	<div class="project-index-track" aria-hidden="true">
+		<span data-index-progress></span>
+	</div>
+	<ol class="project-index-list">
+		{projects.map(({ data, id }, index) => (
+			<li>
+				<a
+					class="project-index-link"
+					href={`#project-${id}`}
+					data-index-link={id}
+					data-active={index === 0 ? "" : undefined}
+					style={`--item-color: var(--crayon-${data.crayon}); --item-ink: var(--crayon-${data.crayon}-ink);`}
+				>
+					<span class="project-index-number" aria-hidden="true">
+						{pad2(data.order)}
+						<CrayonMark
+							kind="circle"
+							seed={41 + (index % 2)}
+							width={72}
+							height={56}
+							strokeWidth={2.4}
+							stretch
+							share
+							class="project-index-circle"
+						/>
+					</span>
+					<span class="project-index-title">{data.title}</span>
+					<span class="project-index-kind">{data.availability === "public" ? "Public" : "Internal"}</span>
+				</a>
+			</li>
+		))}
+	</ol>
+</aside>

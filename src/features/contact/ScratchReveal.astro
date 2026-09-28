@@ -1,0 +1,37 @@
+---
+import type { EmailParts } from "../../lib/format.ts";
+import Icon from "../../ui/Icon.astro";
+
+interface Props {
+	email: EmailParts;
+}
+
+const { email } = Astro.props;
+---
+
+<scratch-reveal
+	class="scratch-reveal"
+	data-email-user={email.user}
+	data-email-domain={email.domain}
+	data-email-tld={email.tld}
+>
+	<button class="email-reveal" type="button" data-email-reveal>
+		<Icon
+			name="lucide:lock-keyhole"
+			is:inline
+			class="email-icon"
+			data-email-icon="locked"
+			aria-hidden="true"
+		/>
+		<Icon
+			name="lucide:lock-keyhole-open"
+			is:inline
+			class="email-icon"
+			data-email-icon="primed"
+			aria-hidden="true"
+		/>
+		<span data-email-label>Press to reveal</span>
+	</button>
+	<span class="scratch-underlay" aria-hidden="true" data-scratch-underlay></span>
+	<canvas class="scratch-canvas" aria-hidden="true" data-scratch-canvas hidden></canvas>
+</scratch-reveal>

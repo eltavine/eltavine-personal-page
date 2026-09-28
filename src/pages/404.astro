@@ -1,15 +1,14 @@
 ---
-import { Icon } from "astro-icon/components";
-import CrayonMark from "../components/doodles/CrayonMark.astro";
-import Sparkle from "../components/doodles/Sparkle.astro";
 import Layout from "../layouts/Layout.astro";
+import CrayonMark from "../ui/CrayonMark.astro";
+import Icon from "../ui/Icon.astro";
+import Sparkle from "../ui/Sparkle.astro";
 
 let state = 404;
 const random = () => {
 	state = (state * 16807) % 2147483647;
 	return state / 2147483647;
 };
-
 const teeth = 30;
 const tornEdge = Array.from({ length: teeth + 1 }, (_, index) => {
 	const x = 100 - (index * 100) / teeth;
@@ -22,32 +21,38 @@ const clipPath = `polygon(0 0, 100% 0, ${tornEdge.join(", ")})`;
 <Layout title="Page not found" description="This page is not in the notebook." noindex>
 	<main class="missing" id="main">
 		<div class="graph-paper" aria-hidden="true"></div>
-
 		<div class="missing-page">
-			<article class="missing-sheet" style={`clip-path: ${clipPath};`} aria-labelledby="missing-title">
-				<span class="missing-holes" aria-hidden="true"><i></i><i></i><i></i></span>
+			<article
+				class="missing-sheet paper paper--ruled"
+				style={`clip-path: ${clipPath};`}
+				aria-labelledby="missing-title"
+			>
+				<span class="missing-holes" aria-hidden="true">
+					<i></i>
+					<i></i>
+					<i></i>
+				</span>
 				<p class="eyebrow">
 					<span class="eyebrow-index">404</span>
 					<span class="eyebrow-rule" aria-hidden="true"></span>
 					<span>Missing page</span>
 				</p>
 				<h1 id="missing-title" class="missing-title">
-					This page was <span class="marked">torn out<CrayonMark
-							kind="underline"
-							seed={404}
-							width={260}
-							height={30}
-							strokeWidth={4.5}
-						/></span>.
+					This page was{" "}
+					<span class="marked marked--underline">
+						torn out
+						<CrayonMark kind="underline" seed={404} width={260} height={30} strokeWidth={4.5} />
+					</span>
+					.
 				</h1>
-				<p class="missing-lead">
-					The link may be old, or this page never made it into the notebook.
-				</p>
+				<p class="missing-lead">The link may be old, or this page never made it into the notebook.</p>
 				<a class="button button-primary missing-home" href="/">
 					<Icon name="lucide:arrow-left" class="button-icon" aria-hidden="true" />
 					<span>Back to the first page</span>
 				</a>
-				<p class="missing-note hand" aria-hidden="true">(it happens)</p>
+				<p class="missing-note hand" aria-hidden="true">
+					(it happens)
+				</p>
 				<Sparkle class="missing-sparkle" color="var(--crayon-marigold)" size="2rem" rotate={-10} />
 			</article>
 		</div>
@@ -55,118 +60,98 @@ const clipPath = `polygon(0 0, 100% 0, ${tornEdge.join(", ")})`;
 </Layout>
 
 <style is:global>
-	.missing {
-		position: relative;
-		display: grid;
-		place-items: center;
-		min-height: 100svh;
-		padding: clamp(1.25rem, 6svh, 3rem) var(--page-margin);
-		overflow: hidden;
-		isolation: isolate;
-	}
-
-	.missing .graph-paper {
-		mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 20%, transparent 80%);
-	}
-
-	.missing-page {
-		width: min(100%, 40rem);
-		filter: drop-shadow(0 26px 30px var(--sticker-shadow));
-		rotate: -1.2deg;
-	}
-
-	.missing-sheet {
-		--rule: 2rem;
-		position: relative;
-		padding: clamp(2.25rem, 1.5rem + 3vw, 3.5rem) clamp(1.5rem, 1rem + 3vw, 3.25rem) clamp(3.5rem, 2.5rem + 3vw, 4.5rem);
-		padding-left: clamp(3.25rem, 2.5rem + 3vw, 4.75rem);
-		background-color: var(--paper-raised);
-		background-image: linear-gradient(transparent calc(var(--rule) - 1px), var(--line) calc(var(--rule) - 1px));
-		background-size: 100% var(--rule);
-	}
-
-	.missing-holes {
-		position: absolute;
-		inset: 0 auto 0 0;
-		display: grid;
-		align-content: space-evenly;
-		width: clamp(2rem, 1.6rem + 1.5vw, 2.75rem);
-		justify-items: center;
-	}
-
-	.missing-holes i {
-		width: 0.85rem;
-		height: 0.85rem;
-		border-radius: 50%;
-		background: var(--paper);
-		box-shadow: inset 0 1px 2px light-dark(rgb(76 52 24 / 0.35), rgb(0 0 0 / 0.6));
-	}
-
-	.missing-title {
-		margin-top: 1.25rem;
-		font-size: clamp(2.2rem, 1.2rem + 4.6vw, 4.6rem);
-		font-weight: 380;
-		letter-spacing: -0.035em;
-		line-height: 1.02;
-	}
-
-	.missing-lead {
-		max-width: 28rem;
-		margin-top: 1.25rem;
-		color: var(--ink-muted);
-		font-size: var(--step-1);
-		line-height: 1.6;
-		text-wrap: pretty;
-	}
-
-	.missing-home {
-		margin-top: 2rem;
-	}
-
-	.missing-home:hover .button-icon,
-	.missing-home:focus-visible .button-icon {
-		transform: translateX(-3px);
-	}
-
-	.missing-note {
-		position: absolute;
-		right: clamp(1.25rem, 3vw, 2.5rem);
-		bottom: clamp(1.75rem, 4vw, 2.5rem);
-		color: var(--crayon-heart-ink);
-		font-size: 1.45rem;
-		rotate: -4deg;
-	}
-
-	.missing-sparkle {
-		position: absolute;
-		top: clamp(1.25rem, 3vw, 2rem);
-		right: clamp(1.25rem, 3vw, 2.25rem);
-	}
-
-	@media (max-width: 560px) {
-		.missing-note {
-			position: static;
-			margin-top: 1.25rem;
-			text-align: right;
+	@layer features {
+		.missing {
+			position: relative;
+			display: grid;
+			place-items: center;
+			min-height: 100svh;
+			padding: clamp(1.25rem, 6svh, 3rem) var(--page-margin);
+			overflow: hidden;
+			isolation: isolate;
 		}
-	}
 
-	@media (max-height: 540px) {
+		.missing .graph-paper {
+			mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 20%, transparent 80%);
+		}
+
+		.missing-page {
+			width: min(100%, 40rem);
+			filter: drop-shadow(0 26px 30px var(--sticker-shadow));
+			rotate: -1.2deg;
+		}
+
 		.missing-sheet {
-			padding-block: 1.5rem 2.75rem;
+			--rule: 2rem;
+			position: relative;
+			padding: clamp(2.25rem, 1.5rem + 3vw, 3.5rem) clamp(1.5rem, 1rem + 3vw, 3.25rem)
+				clamp(3.5rem, 2.5rem + 3vw, 4.5rem);
+			padding-left: clamp(3.25rem, 2.5rem + 3vw, 4.75rem);
+		}
+
+		.missing-holes {
+			position: absolute;
+			inset: 0 auto 0 0;
+			display: grid;
+			align-content: space-evenly;
+			justify-items: center;
+			width: clamp(2rem, 1.6rem + 1.5vw, 2.75rem);
+		}
+
+		.missing-holes i {
+			width: 0.85rem;
+			height: 0.85rem;
+			border-radius: 50%;
+			background: var(--paper);
+			box-shadow: inset 0 1px 2px light-dark(rgb(76 52 24 / 0.35), rgb(0 0 0 / 0.6));
 		}
 
 		.missing-title {
-			margin-top: 0.75rem;
-			font-size: min(clamp(2.2rem, 1.2rem + 4.6vw, 4.6rem), 13svh);
+			margin-top: 1.25rem;
+			font-size: clamp(2.2rem, 1.2rem + 4.6vw, 4.6rem);
+			font-weight: 380;
+			letter-spacing: -0.035em;
+			line-height: 1.02;
 		}
 
 		.missing-lead {
-			margin-top: 0.75rem;
+			max-width: 28rem;
+			margin-top: 1.25rem;
+			color: var(--ink-muted);
+			font-size: var(--step-1);
+			line-height: 1.6;
+			text-wrap: pretty;
 		}
 
 		.missing-home {
-			margin-top: 1.25rem;
+			margin-top: 2rem;
+		}
+
+		.missing-home:is(:hover, :focus-visible) .button-icon {
+			transform: translateX(-3px);
+		}
+
+		.missing-note {
+			position: absolute;
+			right: clamp(1.25rem, 3vw, 2.5rem);
+			bottom: clamp(1.75rem, 4vw, 2.5rem);
+			color: var(--crayon-heart-ink);
+			font-size: 1.45rem;
+			rotate: -4deg;
+		}
+
+		.missing-sparkle {
+			position: absolute;
+			top: clamp(1.25rem, 3vw, 2rem);
+			right: clamp(1.25rem, 3vw, 2.25rem);
+		}
+
+		@media (max-width: 560px) {
+			.missing-note {
+				position: static;
+				margin-top: 1.25rem;
+				text-align: right;
+			}
 		}
 	}
 </style>

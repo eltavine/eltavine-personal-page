@@ -1,0 +1,122 @@
+---
+import { getEntries, type CollectionEntry } from "astro:content";
+import { pad2 } from "../../lib/format.ts";
+import Diagram from "../../ui/Diagram.astro";
+import Icon from "../../ui/Icon.astro";
+import Doodle from "../doodles/Doodle.astro";
+import LiveSketch from "../sketches/LiveSketch.astro";
+import { getDiagram } from "../sketches/registry.ts";
+import StarChart from "./StarChart.astro";
+import TitleBlock from "./TitleBlock.astro";
+
+interface Props {
+	project: CollectionEntry<"projects">;
+	repo?: CollectionEntry<"repos">;
+	total: number;
+}
+
+const { project, repo, total } = Astro.props;
+const { data, id } = project;
+const stack = await getEntries(data.stack);
+const titleId = `project-${id}-title`;
+/** A handful of stars draws a flat line that says nothing, so small repos skip the chart. */
+const history = repo && repo.data.stars >= 20 && repo.data.history.length >= 3 ? repo.data.history : null;
+const wireframe = data.wireframe ? getDiagram(data.wireframe) : null;
+const style = `--sheet-color: var(--crayon-${data.crayon}); --sheet-ink: var(--crayon-${data.crayon}-ink); --paper-accent: var(--crayon-${data.crayon}-ink);`;
+---
+
+<article
+	class:list={["project-sheet", "paper", `paper--${data.paper}`]}
+	id={`project-${id}`}
+	aria-labelledby={titleId}
+	data-project-sheet
+	data-project-id={id}
+	data-crayon={data.crayon}
+	data-reveal
+	style={style}
+>
+	<header class="sheet-head">
+		<p class="sheet-tab">
+			<Icon name={data.icon} class="sheet-tab-icon" aria-hidden="true" />
+			<span>{data.section}</span>
+		</p>
+	</header>
+
+	<div class="sheet-hero">
+		<span class="sheet-number" data-sheet-number aria-hidden="true">
+			{pad2(data.order)}
+		</span>
+		<h3 id={titleId} class="sheet-title" data-sheet-title>
+			{data.title}
+		</h3>
+		<p class="sheet-summary">{data.summary}</p>
+		<div class="sheet-doodle" data-doodle aria-hidden="true">
+			<Doodle name={data.doodle} seed={data.order} />
+		</div>
+	</div>
+
+	<div class="sheet-body">
+		<div class="sheet-main">
+			<p class="sheet-emphasis" data-sheet-item>
+				{data.emphasis}
+			</p>
+
+			<div class="sheet-stack" data-sheet-item>
+				<p class="label">Built with</p>
+				<ul class="spec-stack" aria-label={`${data.title} stack`}>
+					{stack.map((item) => (
+						<li>
+							<Icon name={item.data.icon} class="spec-stack-icon" aria-hidden="true" />
+							<span>{item.data.label}</span>
+						</li>
+					))}
+				</ul>
+				<a class="spec-map-link" href="#stack" data-stack-focus={id}>
+					<span>Highlight in stack</span>
+					<Icon name="lucide:arrow-down-right" class="spec-map-icon" aria-hidden="true" />
+				</a>
+			</div>
+
+			<TitleBlock project={project} repo={repo} total={total} />
+
+			{(history || wireframe) && (
+				<mobile-fold>
+					<details class="sheet-more" open>
+						<summary class="sheet-more-summary hand">
+							{history ? "star history" : "illustrative sketch"} ↓
+						</summary>
+						{history && repo ? (
+							<StarChart
+								history={history}
+								repo={repo.data.repo}
+								fetchedAt={repo.data.fetchedAt}
+								seed={data.order + 20}
+							/>
+						) : (
+							wireframe && (
+								<figure class="sheet-figure">
+									<Diagram diagram={wireframe} seed={data.order + 30} multiStroke={false} />
+									<figcaption class="figure-caption">{wireframe.caption}</figcaption>
+								</figure>
+							)
+						)}
+					</details>
+				</mobile-fold>
+			)}
+		</div>
+
+		<div class="sheet-side">
+			{data.sketch && <LiveSketch name={data.sketch} project={id} seed={data.order} />}
+			<mobile-fold>
+				<details class="sheet-more" open>
+					<summary class="sheet-more-summary hand">{data.notes.length} more notes ↓</summary>
+					<ol class="sheet-notes" aria-label={`${data.title} highlights`}>
+						{data.notes.map((note) => (
+							<li data-sheet-note>{note}</li>
+						))}
+					</ol>
+				</details>
+			</mobile-fold>
+		</div>
+	</div>
+</article>

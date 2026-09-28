@@ -1,0 +1,17 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+	label: string;
+	icon?: string;
+	rotate?: number;
+	class?: string;
+}
+
+const { label, icon, rotate = -7, class: className } = Astro.props;
+---
+
+<p class:list={["stamp", className]} style={`--stamp-rotate: ${rotate}deg;`} data-stamp>
+	{icon && <Icon name={icon} class="stamp-icon" aria-hidden="true" />}
+	<span>{label}</span>
+</p>

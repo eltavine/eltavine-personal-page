@@ -1,0 +1,132 @@
+@layer ui {
+	.paper {
+		--paper-accent: var(--ink);
+		background-color: var(--paper-raised);
+		background-image: var(--grain);
+		background-size: var(--grain-size);
+	}
+
+	.paper--ruled {
+		--rule: 2rem;
+		background-image:
+			var(--grain), linear-gradient(transparent calc(100% - 1px), var(--line) calc(100% - 1px));
+		background-size:
+			var(--grain-size),
+			100% var(--rule);
+	}
+
+	.paper--grid {
+		background-image:
+			var(--grain), linear-gradient(var(--grid-line) 1px, transparent 1px),
+			linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+		background-position:
+			0 0,
+			-1px -1px,
+			-1px -1px;
+		background-size:
+			var(--grain-size),
+			24px 24px,
+			24px 24px;
+	}
+
+	/*
+	 * Line patterns use whole-pixel tiles and put each 1px line at the end of its tile: rem-sized tiles
+	 * (28.8px, 41.6px...) land lines between device pixels, where WebKit smears them down to nothing.
+	 */
+
+	/* Inspection form: a margin column and ruled answer lines, printed in the sheet's ink. */
+	.paper--checklist {
+		--form-line: color-mix(in srgb, var(--paper-accent) 20%, transparent);
+		background-image:
+			var(--grain), linear-gradient(90deg, transparent 41px, var(--form-line) 41px 42px, transparent 42px),
+			linear-gradient(transparent calc(100% - 1px), var(--form-line) calc(100% - 1px));
+		background-repeat: repeat, no-repeat, repeat;
+		background-size:
+			var(--grain-size),
+			100% 100%,
+			100% 28px;
+	}
+
+	/* Engineering drawing paper: minor and major grid plus an inset border frame. */
+	.paper--drafting {
+		--minor: color-mix(in srgb, var(--paper-accent) 8%, transparent);
+		--major: color-mix(in srgb, var(--paper-accent) 16%, transparent);
+		background-image:
+			var(--grain), linear-gradient(var(--major) 1px, transparent 1px),
+			linear-gradient(90deg, var(--major) 1px, transparent 1px),
+			linear-gradient(var(--minor) 1px, transparent 1px),
+			linear-gradient(90deg, var(--minor) 1px, transparent 1px);
+		background-position:
+			0 0,
+			-1px -1px,
+			-1px -1px,
+			-1px -1px,
+			-1px -1px;
+		background-size:
+			var(--grain-size),
+			40px 40px,
+			40px 40px,
+			8px 8px,
+			8px 8px;
+	}
+
+	.paper--drafting::after {
+		position: absolute;
+		inset: 0.55rem;
+		border: 1px solid var(--major);
+		border-radius: 2px;
+		background:
+			linear-gradient(var(--major), var(--major)) 25% 0 / 1px 0.5rem no-repeat,
+			linear-gradient(var(--major), var(--major)) 50% 0 / 1px 0.5rem no-repeat,
+			linear-gradient(var(--major), var(--major)) 75% 0 / 1px 0.5rem no-repeat,
+			linear-gradient(var(--major), var(--major)) 0 33% / 0.5rem 1px no-repeat,
+			linear-gradient(var(--major), var(--major)) 0 66% / 0.5rem 1px no-repeat;
+		content: "";
+		pointer-events: none;
+	}
+
+	/* Tracing paper: a faint tint with two more sheets peeking out underneath. */
+	.paper--tracing {
+		background-color: color-mix(in srgb, var(--paper-raised) 93%, var(--paper-accent));
+		box-shadow:
+			9px 11px 0 -1px color-mix(in srgb, var(--paper-raised) 78%, transparent),
+			9px 11px 0 0 var(--line),
+			18px 22px 0 -1px color-mix(in srgb, var(--paper-raised) 55%, transparent),
+			18px 22px 0 0 var(--line),
+			var(--shadow-paper);
+	}
+
+	/* Continuous form paper: green-bar bands, tear lines, and pin-feed holes punched through. */
+	.paper--tractor {
+		--bar: color-mix(in srgb, var(--paper-accent) 10%, transparent);
+		--hole-x: 15px;
+		--hole-r: 4.5px;
+		--hole-pitch: 24px;
+		--tear: calc(2 * var(--hole-x));
+		background-image:
+			var(--grain),
+			linear-gradient(
+				90deg,
+				transparent calc(var(--tear) - 1px),
+				var(--line-strong) calc(var(--tear) - 1px) var(--tear),
+				transparent var(--tear) calc(100% - var(--tear)),
+				var(--line-strong) calc(100% - var(--tear)) calc(100% - var(--tear) + 1px),
+				transparent calc(100% - var(--tear) + 1px)
+			),
+			repeating-linear-gradient(transparent 0 48px, var(--bar) 48px 96px);
+		background-size:
+			var(--grain-size),
+			100% 100%,
+			auto;
+		mask:
+			radial-gradient(circle at var(--hole-x) 50%, #0000 var(--hole-r), #000 calc(var(--hole-r) + 0.5px)) 0
+				0 / 100% var(--hole-pitch),
+			radial-gradient(
+					circle at calc(100% - var(--hole-x)) 50%,
+					#0000 var(--hole-r),
+					#000 calc(var(--hole-r) + 0.5px)
+				)
+				0 0 / 100% var(--hole-pitch);
+		mask-composite: intersect;
+	}
+}

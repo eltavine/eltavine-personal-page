@@ -1,0 +1,74 @@
+---
+import { markPaths, markSize, type MarkKind } from "../lib/marks.ts";
+import type { Point } from "../lib/rough.ts";
+
+interface Props {
+	kind?: MarkKind;
+	seed?: number;
+	width?: number;
+	height?: number;
+	points?: Point[];
+	roughness?: number;
+	bowing?: number;
+	strokeWidth?: number;
+	/** Starts hidden while motion is loading and gets drawn in by the reveal. */
+	draw?: boolean;
+	stretch?: boolean;
+	/** Emit the paths once as a <symbol> and reuse them; for marks repeated across a grid. */
+	share?: boolean;
+	class?: string;
+}
+
+const {
+	kind = "underline",
+	seed = 7,
+	points,
+	roughness,
+	bowing,
+	strokeWidth = 3,
+	draw = false,
+	stretch = false,
+	share = false,
+	class: className,
+} = Astro.props;
+
+const [width, height] = markSize({ height: Astro.props.height, kind, width: Astro.props.width });
+const paths = markPaths({ bowing, height, kind, points, roughness, seed, strokeWidth, width });
+const symbolId = `mark-${kind}-${seed}-${width}x${height}-${strokeWidth}`.replace(/[^\w-]/g, "_");
+const emitted = (Astro.locals.crayonSymbols ??= new Set<string>());
+const firstUse = share && !emitted.has(symbolId);
+if (share) {
+	emitted.add(symbolId);
+}
+---
+
+{firstUse && (
+	<svg class="crayon-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+		<symbol id={symbolId}>
+			<g filter="url(#crayon)">
+				{paths.map((path) => (
+					<path d={path.d} pathLength="1" stroke="currentColor" stroke-width={path.strokeWidth} />
+				))}
+			</g>
+		</symbol>
+	</svg>
+)}
+<svg
+	class:list={["crayon-mark", `crayon-mark--${kind}`, className]}
+	viewBox={`0 0 ${width} ${height}`}
+	preserveAspectRatio={stretch ? "none" : undefined}
+	fill="none"
+	aria-hidden="true"
+	focusable="false"
+	data-draw={draw ? "" : undefined}
+>
+	{share ? (
+		<use href={`#${symbolId}`} />
+	) : (
+		<g filter="url(#crayon)">
+			{paths.map((path) => (
+				<path d={path.d} pathLength="1" stroke="currentColor" stroke-width={path.strokeWidth} />
+			))}
+		</g>
+	)}
+</svg>

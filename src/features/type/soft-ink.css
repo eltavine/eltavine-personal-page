@@ -1,0 +1,7 @@
+/*
+ * Deliberately unlayered: Astro declares the font variables outside any layer, and unlayered
+ * rules outrank layered ones, so this swap has to live at the same level.
+ */
+:root.soft-ink {
+	--font-display: var(--font-display-soft);
+}

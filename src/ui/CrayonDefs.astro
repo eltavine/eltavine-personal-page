@@ -1,0 +1,89 @@
+<svg class="crayon-defs" width="0" height="0" aria-hidden="true" focusable="false">
+	<defs>
+		<!--
+			The region is sized from the referencing SVG's viewport, not the stroke's bounding box: a marker
+			swipe or an underline has a bbox only a few units tall, and a bbox region would slice the stroke.
+		-->
+		<filter
+			id="crayon"
+			filterUnits="userSpaceOnUse"
+			x="-25%"
+			y="-25%"
+			width="150%"
+			height="150%"
+			color-interpolation-filters="sRGB"
+		>
+			<feTurbulence
+				type="fractalNoise"
+				baseFrequency="0.035"
+				numOctaves="2"
+				seed="4"
+				result="warp"
+			></feTurbulence>
+			<feDisplacementMap
+				in="SourceGraphic"
+				in2="warp"
+				scale="2.4"
+				xChannelSelector="R"
+				yChannelSelector="G"
+				result="wobble"
+			></feDisplacementMap>
+			<feTurbulence
+				type="fractalNoise"
+				baseFrequency="1.2"
+				numOctaves="1"
+				seed="11"
+				result="grain"
+			></feTurbulence>
+			<feColorMatrix
+				in="grain"
+				type="matrix"
+				values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.05"
+				result="wax"
+			></feColorMatrix>
+			<feComposite in="wobble" in2="wax" operator="in"></feComposite>
+		</filter>
+		<!-- Line boil: the same crayon wobble re-seeded a few times a second, used only on hover. -->
+		<filter
+			id="crayon-boil"
+			filterUnits="userSpaceOnUse"
+			x="-25%"
+			y="-25%"
+			width="150%"
+			height="150%"
+			color-interpolation-filters="sRGB"
+		>
+			<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="warp">
+				<animate
+					attributeName="seed"
+					values="4;9;15;22"
+					dur="0.48s"
+					calcMode="discrete"
+					repeatCount="indefinite"
+				></animate>
+			</feTurbulence>
+			<feDisplacementMap
+				in="SourceGraphic"
+				in2="warp"
+				scale="3"
+				xChannelSelector="R"
+				yChannelSelector="G"
+				result="wobble"
+			></feDisplacementMap>
+			<feTurbulence
+				type="fractalNoise"
+				baseFrequency="1.2"
+				numOctaves="1"
+				seed="11"
+				result="grain"
+			></feTurbulence>
+			<feColorMatrix
+				in="grain"
+				type="matrix"
+				values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.05"
+				result="wax"
+			></feColorMatrix>
+			<feComposite in="wobble" in2="wax" operator="in"></feComposite>
+		</filter>
+	</defs>
+</svg>

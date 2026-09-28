@@ -1,0 +1,20 @@
+---
+import Diagram from "../../ui/Diagram.astro";
+import { getDoodle } from "./registry.ts";
+
+interface Props {
+	name: string;
+	seed?: number;
+	class?: string;
+}
+
+const { name, seed = 1, class: className } = Astro.props;
+---
+
+<Diagram
+	diagram={getDoodle(name)}
+	seed={seed}
+	crayon
+	multiStroke={false}
+	class:list={["doodle", "boil-on-hover", className]}
+/>

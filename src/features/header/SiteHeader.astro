@@ -1,0 +1,66 @@
+---
+import { navigation, profile } from "../../config/site.ts";
+import { pad2 } from "../../lib/format.ts";
+import CrayonMark from "../../ui/CrayonMark.astro";
+import Icon from "../../ui/Icon.astro";
+import ThemeLamp from "../theme/ThemeLamp.astro";
+import "./header.css";
+---
+
+<site-header class="site-header">
+	<header class="shell site-header-inner">
+		<a class="brand" href="#top" aria-label={`${profile.name} home`}>
+			<img
+				class="brand-mark"
+				src={profile.avatar.src}
+				srcset={profile.avatar.srcset}
+				sizes="40px"
+				width="160"
+				height="160"
+				alt=""
+				decoding="async"
+			/>
+			<span class="brand-name">{profile.name}</span>
+		</a>
+
+		<div class="nav-pill">
+			<nav class="site-nav" aria-label="Primary navigation">
+				{navigation.map((item, index) => (
+					<a class="nav-link" href={item.href} data-nav-link>
+						<span class="nav-index" aria-hidden="true">
+							{pad2(index + 1)}
+						</span>
+						<Icon name={item.icon} class="nav-icon" aria-hidden="true" />
+						<span class="nav-label">{item.label}</span>
+						<CrayonMark
+							kind="underline"
+							seed={21 + index}
+							width={120}
+							height={16}
+							strokeWidth={2.6}
+							class="nav-mark"
+						/>
+					</a>
+				))}
+			</nav>
+			<svg class="reading-crayon" viewBox="0 0 48 14" aria-hidden="true" focusable="false">
+				<g filter="url(#crayon)">
+					<path class="reading-crayon__wax" d="M2 7 9 2.5h13v9H9Z" fill="currentColor"></path>
+					<rect
+						x="22"
+						y="2"
+						width="24"
+						height="10"
+						rx="1.5"
+						fill="var(--paper-raised)"
+						stroke="currentColor"
+						stroke-width="1.2"
+					></rect>
+					<path d="M28 2v10M40 2v10" stroke="currentColor" stroke-width="1"></path>
+				</g>
+			</svg>
+			<span class="nav-divider" aria-hidden="true"></span>
+			<ThemeLamp />
+		</div>
+	</header>
+</site-header>

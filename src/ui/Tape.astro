@@ -1,0 +1,15 @@
+---
+interface Props {
+	color?: string;
+	rotate?: number;
+	class?: string;
+}
+
+const { color = "var(--crayon-butter)", rotate = -8, class: className } = Astro.props;
+---
+
+<span
+	class:list={["tape", className]}
+	style={`--tape-color: ${color}; --tape-rotate: ${rotate}deg;`}
+	aria-hidden="true"
+></span>

@@ -1,0 +1,25 @@
+---
+greeting: hello!
+lead: The short version of who I am, plus the rules I keep coming back to.
+marginNote: "long version: the projects"
+bench: [pingora-panel, yurimashi, yunheshiguang-droid-farm]
+rules:
+  - title: Keep it local.
+    body: Checks run on the device, and data stays on the machine by default.
+    crayon: sage
+    evidence: { project: duck-detector, segment: scan, label: "see it in Fig. 01" }
+  - title: Make boundaries explicit.
+    body: "Contracts, an engine-neutral IR, ports and adapters: the seams are written down so each side can change safely."
+    crayon: blue
+    evidence: { project: pingora-panel, segment: pipeline, label: "follow the pipeline in Fig. 02" }
+  - title: Fail closed, recover cleanly.
+    body: When something breaks, stop safely, fall back to a last known good state, and treat recovery as a normal path.
+    crayon: marigold
+    evidence: { project: pingora-panel, segment: rollback, label: "watch the rollback in Fig. 02" }
+---
+
+I'm Eltavine, a software engineer who likes to work close to the platform: Android internals, native code, and the infrastructure that keeps services running.
+
+A lot of my work starts with a <Note text="where most projects start">trust question</Note>. Is this device in the state it claims? Is this config safe to roll out? Does this data need to leave the machine at all? I like answering those with <Highlight>tools that check locally and show their evidence</Highlight>.
+
+I care about calm software: clear signals, honest status, and failure modes that are designed rather than discovered.

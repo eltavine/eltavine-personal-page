@@ -1,0 +1,37 @@
+---
+import type { SectionCopy } from "../config/site.ts";
+import Marked from "./Marked.astro";
+
+interface Props {
+	copy: SectionCopy;
+	titleId: string;
+}
+
+const { copy, titleId } = Astro.props;
+// Punctuation right after the marked word stays glued to it, so a line never starts with ", quiet.".
+const [, glue = "", rest = ""] = (copy.after ?? "").match(/^([^\s\w]*)([\s\S]*)$/) ?? [];
+---
+
+<header class="section-head" data-section-head>
+	<div class="section-head-main">
+		<p class="eyebrow" data-eyebrow data-reveal>
+			<span class="eyebrow-index">{copy.index}</span>
+			<span class="eyebrow-rule" aria-hidden="true"></span>
+			<span data-eyebrow-label>{copy.label}</span>
+		</p>
+		<h2 id={titleId} data-reveal>
+			{copy.before}
+			<span class="nowrap">
+				<Marked kind={copy.mark} seed={copy.markSeed} struck={copy.struck}>
+					{copy.marked}
+				</Marked>
+				{glue}
+			</span>
+			{rest}
+		</h2>
+		<p class="section-lead" data-lead data-reveal>
+			{copy.lead}
+		</p>
+	</div>
+	<slot name="aside" />
+</header>

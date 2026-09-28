@@ -1,0 +1,119 @@
+---
+import { getCollection, getEntries } from "astro:content";
+import { sections, thisSite } from "../../config/site.ts";
+import { listNames, pad2 } from "../../lib/format.ts";
+import CrayonMark from "../../ui/CrayonMark.astro";
+import Icon from "../../ui/Icon.astro";
+import SectionHead from "../../ui/SectionHead.astro";
+import "./stack.css";
+
+const stackIds = new Set((await getCollection("stack")).map((item) => item.id));
+const unknown = thisSite.stack.filter((id) => !stackIds.has(id));
+if (unknown.length > 0) {
+	throw new Error(`thisSite.stack references unknown stack items: ${unknown.join(", ")}`);
+}
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+const sources = [
+	...projects.map(({ data, id }) => ({
+		crayon: data.crayon,
+		id,
+		number: pad2(data.order),
+		stack: data.stack.map((ref) => ref.id),
+		title: data.title,
+	})),
+	{ ...thisSite, number: "✳", stack: [...thisSite.stack] },
+];
+const usedBy = (id: string) => sources.filter((source) => source.stack.includes(id));
+
+const groups = await Promise.all(
+	(await getCollection("stackGroups"))
+		.sort((a, b) => a.data.order - b.data.order)
+		.map(async (group) => ({ ...group.data, id: group.id, items: await getEntries(group.data.items) })),
+);
+---
+
+<section id="stack" class="section stack section-anchor" aria-labelledby="stack-title" data-motion="stack">
+	<SectionHead copy={sections.stack} titleId="stack-title" />
+
+	<stack-filter class="stack-body">
+		<div class="stack-legend" data-reveal>
+			<p class="stack-legend-label label" id="stack-legend-label">
+				Cross-reference
+			</p>
+			<ul class="stack-legend-list" aria-labelledby="stack-legend-label">
+				{sources.map((source) => (
+					<li>
+						<button
+							class="legend-chip"
+							type="button"
+							data-stack-filter={source.id}
+							data-title={source.title}
+							aria-pressed="false"
+							disabled
+							style={`--chip-color: var(--crayon-${source.crayon}); --chip-ink: var(--crayon-${source.crayon}-ink);`}
+						>
+							<span class="legend-dot" aria-hidden="true" />
+							<span class="legend-number" aria-hidden="true">
+								{source.number}
+							</span>
+							<span>{source.title}</span>
+						</button>
+					</li>
+				))}
+			</ul>
+			<p class="sr-only" aria-live="polite" data-stack-status></p>
+		</div>
+
+		<div class="stack-groups" data-specimen>
+			{groups.map((group) => (
+				<div
+					class:list={["stack-group", group.items.length <= 4 ? "stack-group--compact" : "stack-group--wide"]}
+					data-specimen-row
+					style={`--group-color: var(--crayon-${group.crayon}); --group-ink: var(--crayon-${group.crayon}-ink); --cols: ${group.items.length};`}
+				>
+					<div class="stack-group-label" data-specimen-label>
+						<p class="eyebrow">
+							<Icon name={group.icon} class="stack-group-icon" aria-hidden="true" />
+							<span>{group.eyebrow}</span>
+						</p>
+						<h3>{group.title}</h3>
+						<p class="stack-group-description">{group.description}</p>
+					</div>
+					<ul class="stack-tiles" aria-label={`${group.title} items`}>
+						{group.items.map((item, index) => {
+							const refs = usedBy(item.id);
+							return (
+								<li class="tile" data-tile data-refs={refs.map((ref) => ref.id).join(" ")}>
+									{refs.length > 0 && (
+										<span class="tile-refs" aria-hidden="true">
+											{refs.map((ref) => (
+												<span class="tile-ref" style={`--ref-color: var(--crayon-${ref.crayon});`} />
+											))}
+										</span>
+									)}
+									<span class="tile-logo">
+										<Icon name={item.data.icon} class="tile-icon" aria-hidden="true" />
+										<CrayonMark
+											kind="circle"
+											seed={61 + ((group.order + index) % 5)}
+											width={80}
+											height={80}
+											strokeWidth={2.6}
+											share
+											class="tile-circle"
+										/>
+									</span>
+									<span class="tile-label">{item.data.label}</span>
+									{refs.length > 0 && (
+										<span class="sr-only">, used in {listNames(refs.map((ref) => ref.title))}</span>
+									)}
+								</li>
+							);
+						})}
+					</ul>
+				</div>
+			))}
+		</div>
+	</stack-filter>
+</section>

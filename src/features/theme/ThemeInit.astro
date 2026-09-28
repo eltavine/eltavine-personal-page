@@ -1,0 +1,30 @@
+---
+import { themeColors } from "../../config/site.ts";
+---
+
+<meta name="theme-color" media="(prefers-color-scheme: light)" content={themeColors.light} />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content={themeColors.dark} />
+<script is:inline>
+	(() => {
+		const root = document.documentElement;
+		try {
+			const stored = window.localStorage.getItem("eltavine-theme");
+			const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			const theme = stored === "dark" || stored === "light" ? stored : system;
+			root.dataset.theme = theme;
+			root.style.colorScheme = theme;
+		} catch {
+			root.dataset.theme = "light";
+			root.style.colorScheme = "light";
+		}
+
+		if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+			root.classList.add("js-motion");
+			window.setTimeout(() => {
+				if (root.dataset.motion !== "ready") {
+					root.classList.remove("js-motion");
+				}
+			}, 4000);
+		}
+	})();
+</script>

@@ -1,0 +1,83 @@
+---
+import { contact, footer, navigation, profile } from "../../config/site.ts";
+import CrayonMark from "../../ui/CrayonMark.astro";
+import Icon from "../../ui/Icon.astro";
+import Sparkle from "../../ui/Sparkle.astro";
+import FingerprintSeal from "../contact/FingerprintSeal.astro";
+import "./footer.css";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" data-motion="footer">
+	<div class="shell">
+		<div class="footer-top">
+			<p class="footer-note">{footer.note}</p>
+			<a class="back-to-top" href="#top">
+				<span class="hand">back to top</span>
+				<CrayonMark
+					kind="arrow"
+					seed={17}
+					width={30}
+					height={70}
+					strokeWidth={2.2}
+					points={[
+						[12, 66],
+						[18, 44],
+						[11, 22],
+						[16, 4],
+					]}
+					class="back-to-top-arrow"
+				/>
+			</a>
+		</div>
+
+		<wordmark-lens class="footer-wordmark" aria-hidden="true" data-wordmark>
+			<span class="footer-wordmark-text display" data-wordmark-text>
+				{profile.name}
+			</span>
+			<span class="footer-wordmark-draft display">{profile.name}</span>
+			<span class="footer-lens-ring"></span>
+			<CrayonMark
+				kind="scribble"
+				seed={19}
+				width={420}
+				height={46}
+				strokeWidth={5}
+				draw
+				class="footer-scribble"
+			/>
+			<Sparkle
+				class="footer-sparkle"
+				color="var(--crayon-marigold)"
+				size="clamp(1.6rem, 3.4vw, 3rem)"
+				rotate={-12}
+			/>
+		</wordmark-lens>
+
+		<div class="footer-bottom">
+			<nav class="footer-nav" aria-label="Footer navigation">
+				{navigation.map((item) => (
+					<a href={item.href}>
+						<Icon name={item.icon} class="footer-icon" aria-hidden="true" />
+						<span>{item.label}</span>
+					</a>
+				))}
+			</nav>
+			<div class="footer-meta">
+				<a href={contact.githubUrl} target="_blank" rel="noreferrer">
+					<Icon name="simple-icons:github" class="footer-icon" aria-hidden="true" />
+					<span>GitHub</span>
+				</a>
+				<a href={contact.publicKeyUrl} download>
+					<Icon name="lucide:key-round" class="footer-icon" aria-hidden="true" />
+					<span>PGP key</span>
+				</a>
+				<span>
+					© {year} {profile.name}
+				</span>
+				<FingerprintSeal class="footer-seal" reuse />
+			</div>
+		</div>
+	</div>
+</footer>

@@ -1,0 +1,139 @@
+@property --pull {
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
+}
+
+@layer features {
+	.theme-lamp {
+		position: relative;
+		display: inline-grid;
+	}
+
+	.theme-lamp:not(:defined) {
+		display: none;
+	}
+
+	.lamp-switch {
+		display: inline-grid;
+		place-items: center;
+		width: 2.45rem;
+		height: 2.45rem;
+		border: 0;
+		border-radius: 50%;
+		background: transparent;
+		color: var(--ink-muted);
+		cursor: pointer;
+		transition:
+			background-color 240ms ease,
+			color 240ms ease;
+	}
+
+	.lamp-switch:hover {
+		background: var(--paper-deep);
+		color: var(--ink);
+	}
+
+	.lamp-shade {
+		width: 1.2rem;
+		height: 1.2rem;
+		overflow: visible;
+	}
+
+	.lamp-halo {
+		fill: var(--crayon-marigold);
+		opacity: 0;
+		scale: 0.4;
+		transform-origin: 12px 15px;
+		transition:
+			opacity 420ms ease,
+			scale 640ms var(--ease-out-back);
+	}
+
+	:root[data-theme="dark"] .lamp-switch {
+		color: var(--crayon-marigold);
+	}
+
+	:root[data-theme="dark"] .lamp-halo {
+		opacity: 0.28;
+		scale: 1;
+	}
+
+	.lamp-cord {
+		--pull: 0;
+		position: absolute;
+		top: calc(100% - 0.35rem);
+		left: 50%;
+		display: grid;
+		justify-items: center;
+		width: 1.6rem;
+		padding-bottom: 0.4rem;
+		cursor: grab;
+		touch-action: none;
+		translate: -50% 0;
+		transition: --pull 700ms var(--ease-spring);
+	}
+
+	.lamp-cord[data-pulling] {
+		cursor: grabbing;
+		transition: none;
+	}
+
+	.lamp-cord__string {
+		width: 1.5px;
+		height: calc(1.35rem + var(--pull) * 1px);
+		background: var(--line-strong);
+	}
+
+	.lamp-cord__bead {
+		width: 0.55rem;
+		height: 0.7rem;
+		border-radius: 45% 45% 50% 50%;
+		background: var(--ink-muted);
+		box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.18);
+		transition: background-color 240ms ease;
+	}
+
+	.lamp-cord:hover .lamp-cord__bead {
+		background: var(--accent);
+	}
+
+	.lamp-glow {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 190;
+		width: 70rem;
+		height: 70rem;
+		margin: -35rem 0 0 -35rem;
+		border-radius: 50%;
+		background: radial-gradient(
+			closest-side,
+			rgb(255 196 120 / 0.2),
+			rgb(255 196 120 / 0.08) 50%,
+			transparent
+		);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 600ms ease;
+		translate: var(--lamp-x, 85vw) var(--lamp-y, 4rem);
+		will-change: translate;
+	}
+
+	:root[data-theme="dark"] .lamp-glow {
+		opacity: 1;
+	}
+
+	@media (max-width: 460px) {
+		.lamp-switch {
+			width: 2.25rem;
+			height: 2.25rem;
+		}
+	}
+
+	@media (forced-colors: active), print {
+		.lamp-glow {
+			display: none;
+		}
+	}
+}

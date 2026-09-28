@@ -1,0 +1,314 @@
+@layer ui {
+	.crayon-defs,
+	.crayon-sprite {
+		position: absolute;
+		width: 0;
+		height: 0;
+		overflow: hidden;
+	}
+
+	/* Dash state lives on the <svg> and is inherited by paths, including those inside <use>. */
+	.crayon-mark {
+		max-width: none;
+		overflow: visible;
+		pointer-events: none;
+		stroke-dasharray: 1 2;
+		stroke-dashoffset: 0;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	/* Swap the filter only where the crayon one sits; filtering every nested group would stack the wobble. */
+	@media (prefers-reduced-motion: no-preference) {
+		.boil-on-hover:hover [filter],
+		:hover > .boil-on-hover [filter] {
+			filter: url(#crayon-boil);
+		}
+	}
+
+	.nowrap {
+		white-space: nowrap;
+	}
+
+	.marked {
+		position: relative;
+		display: inline-block;
+		white-space: nowrap;
+		isolation: isolate;
+	}
+
+	.marked > .crayon-mark {
+		position: absolute;
+		z-index: -1;
+		color: var(--mark-color, var(--accent));
+	}
+
+	.marked--underline > .crayon-mark {
+		bottom: -0.12em;
+		left: -4%;
+		width: 108%;
+		height: auto;
+	}
+
+	.marked--circle > .crayon-mark {
+		top: -0.18em;
+		left: -0.32em;
+		width: calc(100% + 0.64em);
+		height: calc(100% + 0.36em);
+	}
+
+	.marked--highlight > .crayon-mark {
+		top: 0.12em;
+		left: -0.12em;
+		width: calc(100% + 0.24em);
+		height: 0.95em;
+		color: light-dark(
+			color-mix(in srgb, var(--crayon-butter) 88%, transparent),
+			color-mix(in srgb, var(--crayon-marigold) 32%, transparent)
+		);
+	}
+
+	/* Proofreading insertion: the replacement is written above the struck word, the line itself stays put. */
+	.marked--strike {
+		white-space: nowrap;
+	}
+
+	.marked-struck {
+		position: relative;
+		display: inline-block;
+		color: var(--ink-muted);
+	}
+
+	.marked-struck > .crayon-mark {
+		position: absolute;
+		top: 12%;
+		left: -6%;
+		width: 112%;
+		height: 80%;
+		color: var(--accent);
+	}
+
+	.marked-insert {
+		position: absolute;
+		bottom: 72%;
+		left: 0.1em;
+		color: var(--accent-ink);
+		font-size: 0.66em;
+		font-style: normal;
+		line-height: 1;
+		text-decoration: none;
+		white-space: nowrap;
+		rotate: -5deg;
+		transform-origin: left bottom;
+	}
+
+	.marked-caret {
+		position: absolute;
+		top: calc(100% + 0.05em);
+		left: 1.35em;
+		width: 0.7em;
+		height: auto;
+		color: var(--accent);
+	}
+
+	.sparkle {
+		display: block;
+		width: var(--sparkle-size);
+		height: var(--sparkle-size);
+		color: var(--sparkle-color);
+		rotate: var(--sparkle-rotate);
+		overflow: visible;
+	}
+
+	.sticker {
+		filter: drop-shadow(0 2px 1px var(--sticker-shadow)) drop-shadow(0 22px 26px var(--sticker-shadow));
+	}
+
+	.stamp {
+		--stamp-wear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.2 2.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: fit-content;
+		padding: 0.5rem 0.85rem 0.46rem;
+		border: 2px solid var(--stamp-color, currentColor);
+		border-radius: 7px;
+		outline: 1px solid var(--stamp-color, currentColor);
+		outline-offset: 3px;
+		color: var(--stamp-color, currentColor);
+		font-family: var(--font-mono);
+		font-size: var(--step--2);
+		font-weight: 600;
+		letter-spacing: 0.24em;
+		line-height: 1;
+		text-transform: uppercase;
+		mask-image: var(--stamp-wear);
+		mask-size: 160px 160px;
+		rotate: var(--stamp-rotate, -7deg);
+		opacity: 0.9;
+	}
+
+	.stamp > span {
+		margin-right: -0.24em;
+	}
+
+	.stamp-icon {
+		font-size: 0.95rem;
+		stroke-width: 2;
+	}
+
+	.tape {
+		position: absolute;
+		z-index: 2;
+		width: var(--tape-width, 5.5rem);
+		height: 1.6rem;
+		background:
+			repeating-linear-gradient(-45deg, transparent 0 7px, rgb(255 255 255 / 0.22) 7px 9px),
+			color-mix(in srgb, var(--tape-color, var(--crayon-butter)) 72%, transparent);
+		box-shadow: 0 1px 2px rgb(31 27 22 / 0.12);
+		clip-path: polygon(
+			3% 0,
+			97% 0,
+			100% 14%,
+			96% 28%,
+			100% 42%,
+			97% 57%,
+			100% 71%,
+			96% 86%,
+			99% 100%,
+			3% 100%,
+			0 86%,
+			4% 71%,
+			0 57%,
+			3% 42%,
+			0 28%,
+			4% 14%
+		);
+		rotate: var(--tape-rotate, -8deg);
+	}
+
+	.diagram {
+		--diagram-halo: var(--paper-raised);
+		width: 100%;
+		height: auto;
+		overflow: visible;
+		color: color-mix(in srgb, var(--ink) 76%, transparent);
+		stroke-dasharray: 1 2;
+		stroke-dashoffset: 0;
+	}
+
+	.diagram .is-accent {
+		color: var(--diagram-accent, var(--sheet-color, var(--accent)));
+	}
+
+	.diagram-dashed {
+		stroke-dasharray: 5 4;
+	}
+
+	.diagram-text {
+		fill: var(--ink);
+		paint-order: stroke fill;
+		stroke: var(--diagram-halo);
+		stroke-dasharray: none;
+		stroke-linejoin: round;
+		stroke-width: 3.5px;
+	}
+
+	.diagram-text--label {
+		font-family: var(--font-mono);
+		font-size: 13px;
+		font-weight: 500;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+	}
+
+	.diagram-text--sub,
+	.diagram-text--small,
+	.diagram-text--mono {
+		fill: var(--ink-muted);
+		font-size: 11.5px;
+	}
+
+	.diagram-text--sub {
+		font-family: var(--font-sans);
+	}
+
+	.diagram-text--small {
+		font-family: var(--font-mono);
+		letter-spacing: 0.08em;
+	}
+
+	.diagram-text--mono {
+		fill: var(--ink-soft);
+		font-family: var(--font-mono);
+	}
+
+	.diagram-text.is-on-fill {
+		stroke-width: 5px;
+	}
+
+	.diagram-text--sub.is-on-fill {
+		fill: var(--ink-soft);
+	}
+
+	.diagram-text--hand {
+		fill: var(--sheet-ink, var(--accent-ink));
+		font-family: var(--font-hand);
+		font-size: 18px;
+		font-weight: 600;
+	}
+
+	.figure-caption {
+		margin-top: 0.55rem;
+		color: var(--ink-muted);
+		font-family: var(--font-mono);
+		font-size: var(--step--2);
+		letter-spacing: 0.1em;
+		line-height: 1.5;
+		text-transform: uppercase;
+	}
+
+	.section {
+		position: relative;
+		padding-block: var(--section-space);
+		border-top: 1px solid var(--line);
+	}
+
+	.section-head {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: end;
+		gap: 2rem;
+		margin-bottom: clamp(3rem, 2rem + 4vw, 5.5rem);
+	}
+
+	.section-head h2 {
+		max-width: 16ch;
+		margin-top: 1.4rem;
+		font-size: var(--step-3);
+		font-weight: 380;
+		letter-spacing: -0.035em;
+		line-height: 1;
+		text-box: trim-both cap alphabetic;
+	}
+
+	.section-head h2:has(.marked--strike) {
+		margin-top: 2.4rem;
+	}
+
+	.section-lead {
+		max-width: 36rem;
+		margin-top: 1.5rem;
+		color: var(--ink-muted);
+		font-size: var(--step-1);
+		line-height: 1.6;
+		text-wrap: pretty;
+	}
+
+	@media (max-width: 820px) {
+		.section-head {
+			grid-template-columns: 1fr;
+			align-items: start;
+		}
+	}
+}

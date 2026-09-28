@@ -1,15 +1,6 @@
-@import "./modules/tokens.css";
-@import "./modules/foundation.css";
-@import "./modules/texture.css";
-@import "./modules/doodles.css";
-@import "./modules/header.css";
-@import "./modules/hero.css";
-@import "./modules/sections.css";
-@import "./modules/project.css";
-@import "./modules/sketch.css";
-@import "./modules/star-history.css";
-@import "./modules/about.css";
-@import "./modules/stack.css";
-@import "./modules/contact.css";
-@import "./modules/footer.css";
-@import "./modules/motion.css";
+@layer tokens, base, ui, features, overrides;
+
+@import "./tokens.css";
+@import "./base.css";
+@import "./paper.css";
+@import "./motion.css";

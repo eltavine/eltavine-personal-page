@@ -1,0 +1,19 @@
+order: 1
+title: Duck Detector
+crayon: marigold
+section: Android / Security
+icon: lucide:shield-check
+doodle: duck
+paper: checklist
+revision: C
+availability: public
+github: eltavine/Duck-Detector-Refactoring
+sketch: duck-detector
+status: Native Android security tooling
+summary: Duck Detector is a device-side Android security inspection app that keeps analysis local.
+emphasis: It turns device trust signals into focused local checks, from bootloader state to root traces and attestation results.
+notes:
+  - Checks risky device states locally, including bootloader, root, hook, mount, virtualization, and attestation signals.
+  - Uses Kotlin and Jetpack Compose for a clear Android inspection flow.
+  - Adds native probes where lower-level device evidence matters.
+stack: [android, kotlin, cpp, asm]

@@ -1,0 +1,16 @@
+---
+import { getImage } from "astro:assets";
+import { stickerImage } from "./sticker.ts";
+
+// The sticker is the LCP element; announcing it before ~70 KB of inline CSS lets it start downloading at once.
+const avif = await getImage({ format: "avif", src: stickerImage.src, widths: [...stickerImage.widths] });
+---
+
+<link
+	rel="preload"
+	as="image"
+	type="image/avif"
+	imagesrcset={avif.srcSet.attribute}
+	imagesizes={stickerImage.sizes}
+	fetchpriority="high"
+/>

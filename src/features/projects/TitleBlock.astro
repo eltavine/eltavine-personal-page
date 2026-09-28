@@ -1,0 +1,73 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { profile } from "../../config/site.ts";
+import { formatMonthYear, pad2 } from "../../lib/format.ts";
+import Stamp from "../../ui/Stamp.astro";
+import RepoStats from "./RepoStats.astro";
+
+interface Props {
+	project: CollectionEntry<"projects">;
+	repo?: CollectionEntry<"repos">;
+	total: number;
+}
+
+const { project, repo, total } = Astro.props;
+const { data } = project;
+const isPublic = data.availability === "public";
+const date = repo?.data.pushedAt
+	? formatMonthYear(repo.data.pushedAt)
+	: data.updated
+		? formatMonthYear(`${data.updated}-01`)
+		: "—";
+---
+
+<div class="title-block">
+	<dl class="title-block-grid">
+		<div>
+			<dt>Dwg no.</dt>
+			<dd>ED-{pad2(data.order)}</dd>
+		</div>
+		<div>
+			<dt>Rev</dt>
+			<dd>{data.revision}</dd>
+		</div>
+		<div>
+			<dt>Scale</dt>
+			<dd>1 : 1</dd>
+		</div>
+		<div>
+			<dt>Sheet</dt>
+			<dd>
+				{pad2(data.order)} / {pad2(total)}
+			</dd>
+		</div>
+		<div class="title-block-wide">
+			<dt>Status</dt>
+			<dd>{data.status}</dd>
+		</div>
+		<div class="title-block-source">
+			<dt>Source</dt>
+			<dd>
+				{data.github ? (
+					<RepoStats repo={data.github} title={data.title} stats={repo?.data} />
+				) : (
+					<span class="title-block-private">Private repository</span>
+				)}
+			</dd>
+		</div>
+		<div>
+			<dt>Date</dt>
+			<dd>{date}</dd>
+		</div>
+		<div class="title-block-drawn">
+			<dt>Drawn</dt>
+			<dd>{profile.name}</dd>
+		</div>
+	</dl>
+	<Stamp
+		label={isPublic ? "Public" : "Internal"}
+		icon={isPublic ? "lucide:globe" : "lucide:code-2"}
+		rotate={isPublic ? -7 : 6}
+		class="title-block-stamp"
+	/>
+</div>

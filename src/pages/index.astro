@@ -1,28 +1,17 @@
 ---
+import { contact, profile, site } from "../config/site.ts";
+import AboutSection from "../features/about/AboutSection.astro";
+import ContactSection from "../features/contact/ContactSection.astro";
+import SiteFooter from "../features/footer/SiteFooter.astro";
+import SiteHeader from "../features/header/SiteHeader.astro";
+import HeroPreload from "../features/hero/HeroPreload.astro";
+import HeroSection from "../features/hero/HeroSection.astro";
+import ProjectsSection from "../features/projects/ProjectsSection.astro";
+import StackSection from "../features/stack/StackSection.astro";
 import Layout from "../layouts/Layout.astro";
-import AboutSection from "../components/AboutSection.astro";
-import ContactSection from "../components/ContactSection.astro";
-import HeroSection from "../components/HeroSection.astro";
-import ProjectsSection from "../components/ProjectsSection.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteScripts from "../components/SiteScripts.astro";
-import StackSection from "../components/StackSection.astro";
-import {
-	about,
-	contact,
-	navigation,
-	profile,
-	projects,
-	siteMeta,
-	stackGroups,
-} from "../data/site.js";
 
-const year = new Date().getFullYear();
-const siteUrl = Astro.site?.toString() ?? siteMeta.siteUrl;
+const siteUrl = Astro.site?.toString() ?? site.url;
 const pageUrl = new URL("/", siteUrl).toString();
-const imageUrl = new URL(siteMeta.image, siteUrl).toString();
-
 const jsonLd = {
 	"@context": "https://schema.org",
 	"@graph": [
@@ -30,17 +19,9 @@ const jsonLd = {
 			"@id": `${pageUrl}#person`,
 			"@type": "Person",
 			description: profile.summary,
-			image: new URL(profile.avatarUrl, siteUrl).toString(),
+			image: new URL(profile.avatar.src, siteUrl).toString(),
 			jobTitle: profile.role,
-			knowsAbout: [
-				"Android security",
-				"Native systems",
-				"Network infrastructure",
-				"Cross-platform applications",
-				"Device automation",
-				"Backend systems",
-				"Product platforms",
-			],
+			knowsAbout: profile.knowsAbout,
 			name: profile.name,
 			sameAs: [contact.githubUrl],
 			url: pageUrl,
@@ -48,9 +29,9 @@ const jsonLd = {
 		{
 			"@id": `${pageUrl}#website`,
 			"@type": "WebSite",
-			description: siteMeta.description,
+			description: site.description,
 			inLanguage: "en",
-			name: siteMeta.title,
+			name: site.title,
 			publisher: { "@id": `${pageUrl}#person` },
 			url: pageUrl,
 		},
@@ -58,44 +39,29 @@ const jsonLd = {
 			"@id": `${pageUrl}#webpage`,
 			"@type": "ProfilePage",
 			about: { "@id": `${pageUrl}#person` },
-			description: siteMeta.description,
-			image: imageUrl,
+			description: site.description,
+			image: new URL(site.ogImage, siteUrl).toString(),
 			inLanguage: "en",
 			isPartOf: { "@id": `${pageUrl}#website` },
-			name: siteMeta.title,
-			primaryImageOfPage: imageUrl,
+			name: site.title,
+			primaryImageOfPage: new URL(site.ogImage, siteUrl).toString(),
 			url: pageUrl,
 		},
 	],
 };
 ---
 
-<Layout
-	title={siteMeta.title}
-	description={siteMeta.description}
-	image={siteMeta.image}
-	locale={siteMeta.locale}
-	siteUrl={siteUrl}
-	jsonLd={jsonLd}
->
-	<div class="site-frame" id="top">
-		<SiteHeader navigation={navigation} profile={profile} />
-
+<Layout jsonLd={jsonLd}>
+	<HeroPreload slot="head" />
+	<div class="site-frame" id="top" data-motion="reveal">
+		<SiteHeader />
 		<main class="shell" id="main">
-			<HeroSection profile={profile} />
-			<ProjectsSection projects={projects} />
-			<AboutSection about={about} projects={projects} />
-			<StackSection projects={projects} stackGroups={stackGroups} />
-			<ContactSection contact={contact} profile={profile} />
+			<HeroSection />
+			<ProjectsSection />
+			<AboutSection />
+			<StackSection />
+			<ContactSection />
 		</main>
-
-		<SiteFooter
-			contact={contact}
-			navigation={navigation}
-			profile={profile}
-			year={year}
-		/>
+		<SiteFooter />
 	</div>
-
-	<SiteScripts />
 </Layout>

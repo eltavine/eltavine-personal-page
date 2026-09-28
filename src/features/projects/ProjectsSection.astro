@@ -1,0 +1,58 @@
+---
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { sections } from "../../config/site.ts";
+import { pad2 } from "../../lib/format.ts";
+import SectionHead from "../../ui/SectionHead.astro";
+import ProjectIndex from "./ProjectIndex.astro";
+import ProjectSheet from "./ProjectSheet.astro";
+import "./projects.css";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+const repos = new Map<string, CollectionEntry<"repos"> | undefined>();
+for (const project of projects) {
+	if (project.data.github) {
+		repos.set(project.id, await getEntry("repos", project.data.github));
+	}
+}
+const publicCount = projects.filter((project) => project.data.availability === "public").length;
+const first = projects[0];
+---
+
+<section
+	id="projects"
+	class="section projects section-anchor"
+	aria-labelledby="projects-title"
+	data-motion="projects"
+>
+	<SectionHead copy={sections.projects} titleId="projects-title">
+		<dl class="section-tally" slot="aside" data-reveal>
+			<div>
+				<dt>Projects</dt>
+				<dd>{pad2(projects.length)}</dd>
+			</div>
+			<div>
+				<dt>Public</dt>
+				<dd>{pad2(publicCount)}</dd>
+			</div>
+			<div>
+				<dt>Internal</dt>
+				<dd>{pad2(projects.length - publicCount)}</dd>
+			</div>
+		</dl>
+	</SectionHead>
+
+	<projects-spy
+		class="projects-layout"
+		style={
+			first &&
+			`--project-color: var(--crayon-${first.data.crayon}); --project-ink: var(--crayon-${first.data.crayon}-ink);`
+		}
+	>
+		<ProjectIndex projects={projects} />
+		<div class="project-sheets" data-project-sheets>
+			{projects.map((project) => (
+				<ProjectSheet project={project} repo={repos.get(project.id)} total={projects.length} />
+			))}
+		</div>
+	</projects-spy>
+</section>

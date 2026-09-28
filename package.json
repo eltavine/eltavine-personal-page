@@ -1,26 +1,53 @@
 {
-  "name": "eltavine-personal-page",
-  "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
-    "@iconify-json/devicon": "^1.2.62",
-    "@iconify-json/logos": "^1.2.14",
-    "@iconify-json/lucide": "^1.2.129",
-    "@iconify-json/simple-icons": "^1.2.94",
-    "astro": "^7.3.1",
-    "astro-icon": "^1.2.0",
-    "gsap": "^3.15.0",
-    "roughjs": "^4.6.6",
-    "sharp": "^0.35.4"
-  }
+	"name": "eltavine-personal-page",
+	"type": "module",
+	"version": "0.0.1",
+	"private": true,
+	"packageManager": "pnpm@11.22.0",
+	"engines": {
+		"node": ">=22.12.0"
+	},
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"check": "astro check && tsc -p functions",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:e2e": "playwright test",
+		"snapshot:github": "node scripts/snapshot-github.ts",
+		"verify": "pnpm format:check && pnpm check && pnpm test && pnpm build && pnpm test:e2e"
+	},
+	"dependencies": {
+		"@astrojs/mdx": "8.0.2",
+		"@astrojs/sitemap": "3.7.4",
+		"@fontsource-variable/fraunces": "5.3.0",
+		"@fontsource/caveat": "5.3.0",
+		"@fontsource/fraunces": "5.3.0",
+		"@iconify-json/lucide": "1.2.137",
+		"@iconify-json/simple-icons": "1.2.97",
+		"@octokit/plugin-retry": "8.1.1",
+		"@octokit/plugin-throttling": "11.0.5",
+		"@octokit/rest": "22.0.1",
+		"astro": "7.3.5",
+		"astro-icon": "1.2.0",
+		"gsap": "3.15.0",
+		"roughjs": "4.6.6",
+		"satori": "0.33.5",
+		"sharp": "0.35.4",
+		"yaml": "2.9.1"
+	},
+	"devDependencies": {
+		"@astrojs/check": "0.9.10",
+		"@axe-core/playwright": "4.13.0",
+		"@cloudflare/workers-types": "5.20260928.1",
+		"@playwright/test": "1.63.0",
+		"prettier": "3.9.9",
+		"prettier-plugin-astro": "1.1.0",
+		"typescript": "6.0.3",
+		"vitest": "5.0.2"
+	}
 }

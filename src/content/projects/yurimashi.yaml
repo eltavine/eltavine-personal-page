@@ -1,0 +1,19 @@
+order: 3
+title: Yurimashi
+crayon: lavender
+section: Flutter / Rust / Local-first
+icon: lucide:bot
+doodle: layers
+paper: tracing
+revision: A
+availability: internal
+sketch: yurimashi
+wireframe: yurimashi-ui
+status: Internal development
+summary: Yurimashi is a local-first, cross-platform AI workspace with a Flutter interface and a secure Rust runtime.
+emphasis: It brings a secure native runtime, provider adapters, encrypted local storage, and a cross platform Flutter shell together behind explicit contracts.
+notes:
+  - Organizes an Android, iOS, macOS, Windows, and Linux workspace around Flutter UI, Rust runtime and persistence, and Buf managed Protobuf boundaries.
+  - Treats local first storage, encrypted CAS, SQLCipher, backups, privacy controls, and fail closed capability handling as product behavior.
+  - Provides a modular agent foundation with multiple AI and TTS provider adapters, durable runtime services, IPC, and independently testable package boundaries.
+stack: [dart, rust, protobuf, riverpod, sqlcipher, linux, android, ios, macos]

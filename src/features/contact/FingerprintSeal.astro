@@ -1,0 +1,40 @@
+---
+import { contact } from "../../config/site.ts";
+import { fingerprintSeal } from "../../lib/seal.ts";
+import Diagram from "../../ui/Diagram.astro";
+
+interface Props {
+	/** Reuse the seal drawn elsewhere on the page instead of emitting its paths again. */
+	reuse?: boolean;
+	class?: string;
+}
+
+const { reuse = false, class: className } = Astro.props;
+const seal = fingerprintSeal(contact.fingerprint);
+const label = `Seal drawn from PGP fingerprint ${contact.fingerprint} with the drunken bishop walk`;
+const SHARE_ID = "fingerprint-seal-art";
+---
+
+<figure class:list={["fingerprint-seal", className]}>
+	{reuse ? (
+		<svg
+			class="diagram seal-art"
+			viewBox={`-4 -4 ${seal.width + 8} ${seal.height + 8}`}
+			role="img"
+			aria-label={label}
+		>
+			<use href={`#${SHARE_ID}`} />
+		</svg>
+	) : (
+		<Diagram
+			diagram={seal}
+			seed={7}
+			crayon
+			multiStroke={false}
+			class="seal-art"
+			label={label}
+			shareId={SHARE_ID}
+		/>
+	)}
+	<figcaption class="seal-caption">fingerprint seal · visual hash</figcaption>
+</figure>

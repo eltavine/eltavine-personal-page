@@ -1,0 +1,20 @@
+order: 2
+title: Pingora Panel
+crayon: blue
+section: Rust / Networks / Reliability
+icon: lucide:network
+doodle: gateway
+paper: drafting
+revision: B
+availability: public
+github: eltavine/pingora-panel
+sketch: pingora-panel
+wireframe: release-log
+status: In progress / durable gateway foundation
+summary: Pingora Panel is a team operations gateway control platform built around a Pingora data plane, versioned configuration, and durable release workflows.
+emphasis: It turns Pingora into a durable control plane for team operated gateways, keeping configuration, activation, rollback, and recovery explicit.
+notes:
+  - Uses a versioned DSL, compiler pipeline, engine neutral IR, and ports and adapters to keep configuration semantics independent from the data plane.
+  - Exercises durable systems behavior through CAS activation, atomic snapshots, Last Known Good recovery, graceful drain, and fail closed management boundaries.
+  - Connects a Pingora data plane to Proto first contracts, Tonic gRPC health, REST adapter foundations, observability, and black box verification.
+stack: [rust, pingora, tokio, axum, tonic, protobuf, docker, linux]

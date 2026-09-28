@@ -1,0 +1,234 @@
+@layer features {
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		display: block;
+		padding-block: 0.85rem;
+		transition: transform 560ms var(--ease-out-expo);
+	}
+
+	.site-header[data-hidden="true"] {
+		transform: translateY(-140%);
+	}
+
+	.site-header-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.brand,
+	.nav-pill {
+		border: 1px solid transparent;
+		border-radius: var(--radius-pill);
+		transition:
+			background-color 360ms ease,
+			border-color 360ms ease,
+			box-shadow 360ms ease;
+	}
+
+	.site-header[data-scrolled="true"] :is(.brand, .nav-pill),
+	.site-header:not(:defined) :is(.brand, .nav-pill) {
+		border-color: var(--line);
+		background: color-mix(in srgb, var(--paper-raised) 82%, transparent);
+		box-shadow: var(--shadow-paper);
+		backdrop-filter: blur(14px) saturate(1.2);
+	}
+
+	.brand {
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		gap: 0.65rem;
+		padding: 0.3rem 1rem 0.3rem 0.3rem;
+	}
+
+	.brand-mark {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: var(--paper-deep);
+		box-shadow: 0 0 0 1px var(--line);
+		object-fit: cover;
+		transition: rotate 600ms var(--ease-out-back);
+	}
+
+	.brand:hover .brand-mark {
+		rotate: -10deg;
+	}
+
+	.brand-name {
+		font-family: var(--font-display);
+		font-size: 1.28rem;
+		letter-spacing: -0.01em;
+		line-height: 1;
+	}
+
+	.nav-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.2rem;
+		padding: 0.3rem;
+	}
+
+	.site-nav {
+		display: flex;
+		align-items: center;
+	}
+
+	.nav-link {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.72rem 0.85rem;
+		color: var(--ink-muted);
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		font-weight: 500;
+		letter-spacing: 0.1em;
+		line-height: 1;
+		text-transform: uppercase;
+		transition: color 240ms ease;
+	}
+
+	.nav-link:hover,
+	.nav-link[data-active] {
+		color: var(--ink);
+	}
+
+	.nav-index {
+		color: var(--accent-ink);
+		font-size: var(--step--2);
+		letter-spacing: 0.04em;
+	}
+
+	.nav-icon {
+		display: none;
+		font-size: 1.05rem;
+		stroke-width: 1.8;
+	}
+
+	.nav-mark {
+		position: absolute;
+		right: 0.7rem;
+		bottom: 0.18rem;
+		left: 0.7rem;
+		width: calc(100% - 1.4rem);
+		height: auto;
+		color: var(--accent);
+		stroke-dashoffset: 1.01;
+		transition: stroke-dashoffset 560ms var(--ease-in-out);
+	}
+
+	.nav-link:hover .nav-mark,
+	.nav-link[data-active] .nav-mark {
+		stroke-dashoffset: 0;
+	}
+
+	.nav-divider {
+		width: 1px;
+		height: 1.25rem;
+		margin-inline: 0.2rem;
+		background: var(--line-strong);
+	}
+
+	.reading-crayon {
+		width: 2.6rem;
+		height: auto;
+		margin-inline: 0.35rem 0.15rem;
+		color: var(--accent);
+		overflow: visible;
+	}
+
+	@supports (animation-timeline: scroll()) {
+		.reading-crayon__wax {
+			transform-box: fill-box;
+			transform-origin: right center;
+			animation: crayon-wear linear both;
+			animation-timeline: scroll(root block);
+		}
+	}
+
+	@keyframes crayon-wear {
+		to {
+			scale: 0.16 1;
+		}
+	}
+
+	@media (max-width: 860px) {
+		.reading-crayon {
+			display: none;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.nav-index {
+			display: none;
+		}
+
+		.nav-link {
+			padding-inline: 0.6rem;
+		}
+
+		.nav-mark {
+			right: 0.45rem;
+			left: 0.45rem;
+			width: calc(100% - 0.9rem);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.brand-name {
+			display: none;
+		}
+
+		.brand {
+			padding-right: 0.3rem;
+		}
+
+		.nav-link {
+			padding-inline: 0.45rem;
+			font-size: var(--step--2);
+			letter-spacing: 0.05em;
+		}
+	}
+
+	/* Below this width the words no longer fit at 11px, so the links become labelled icons. */
+	@media (max-width: 359px) {
+		.site-header-inner {
+			gap: 0.5rem;
+		}
+
+		.nav-icon {
+			display: inline-block;
+		}
+
+		.nav-label {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+
+		.nav-link {
+			padding: 0.7rem 0.6rem;
+		}
+
+		.nav-mark {
+			right: 0.3rem;
+			left: 0.3rem;
+			width: calc(100% - 0.6rem);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.site-header[data-hidden="true"] {
+			transform: none;
+		}
+	}
+}

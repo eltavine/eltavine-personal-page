@@ -1,0 +1,86 @@
+---
+import { layersOf, renderDiagram, type Diagram } from "../lib/diagram.ts";
+
+interface Props {
+	diagram: Diagram;
+	seed?: number;
+	multiStroke?: boolean;
+	/** Run the crayon wax filter over the lines (doodles, seals). */
+	crayon?: boolean;
+	/** Mark the drawing as a live sketch so its steps can be animated. */
+	live?: boolean;
+	label?: string;
+	/** Expose the drawing under this id so other instances can `<use>` it instead of repeating the paths. */
+	shareId?: string;
+	class?: string;
+}
+
+const {
+	diagram,
+	seed = 1,
+	multiStroke = true,
+	crayon = false,
+	live = false,
+	label,
+	shareId,
+	class: className,
+} = Astro.props;
+const rendered = renderDiagram(diagram, { multiStroke, seed });
+const pad = 4;
+const drawable = new Set(["stroke", "fill"]);
+---
+
+<svg
+	class:list={["diagram", className]}
+	viewBox={`${-pad} ${-pad} ${rendered.width + pad * 2} ${rendered.height + pad * 2}`}
+	role="img"
+	aria-label={label ?? diagram.description}
+	data-live-sketch={live ? "" : undefined}
+	data-scenario={live ? diagram.scenario : undefined}
+>
+	<g id={shareId}>
+		{layersOf(rendered).map((layer) => (
+			<g class="diagram-layer" data-group={layer.group} filter={crayon ? "url(#crayon)" : undefined}>
+				<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+					{layer.paths.map((path) =>
+						path.kind === "solid" ? (
+							<path
+								class:list={["diagram-solid", { "is-accent": path.accent }]}
+								d={path.d}
+								fill="currentColor"
+								data-step={path.step}
+								data-role={path.role}
+							/>
+						) : (
+							<path
+								class:list={[`diagram-${path.kind}`, { "is-accent": path.accent }]}
+								d={path.d}
+								stroke={path.kind === "track" ? "none" : "currentColor"}
+								stroke-width={path.width || undefined}
+								pathLength={drawable.has(path.kind) ? "1" : undefined}
+								data-step={path.step}
+								data-role={path.role}
+							/>
+						),
+					)}
+				</g>
+				{layer.texts.length > 0 && (
+					<g class="diagram-labels">
+						{layer.texts.map((entry) => (
+							<text
+								class:list={["diagram-text", `diagram-text--${entry.kind}`, { "is-on-fill": entry.onFill }]}
+								x={entry.x}
+								y={entry.y}
+								text-anchor={entry.anchor}
+								data-step={entry.step}
+								data-role={entry.role}
+							>
+								{entry.text}
+							</text>
+						))}
+					</g>
+				)}
+			</g>
+		))}
+	</g>
+</svg>

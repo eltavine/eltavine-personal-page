@@ -1,0 +1,45 @@
+@layer overrides {
+	/* Hidden starting states only exist while the motion chunk is expected to arrive. */
+	@media (prefers-reduced-motion: no-preference) {
+		.js-motion :is([data-reveal], [data-doodle]) {
+			opacity: 0;
+		}
+
+		.js-motion [data-draw],
+		.js-motion [data-live-sketch] :is(.diagram-stroke, .diagram-fill)[data-step] {
+			stroke-dashoffset: 1.01;
+		}
+
+		.js-motion [data-live-sketch] :is(text, .diagram-solid, .diagram-dashed)[data-step] {
+			opacity: 0;
+		}
+	}
+
+	.split-word-mask,
+	.split-char-mask {
+		margin: -0.12em -0.08em -0.14em;
+		padding: 0.12em 0.08em 0.14em;
+	}
+
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+		mix-blend-mode: normal;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+
+		*,
+		*::before,
+		*::after {
+			transition-duration: 1ms !important;
+			transition-delay: 0ms !important;
+			animation-duration: 1ms !important;
+			animation-delay: 0ms !important;
+			animation-iteration-count: 1 !important;
+		}
+	}
+}
