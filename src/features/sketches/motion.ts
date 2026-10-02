@@ -107,6 +107,16 @@ function createPlayer(gsap: Gsap, svg: SVGSVGElement) {
 			phones.forEach((phone, index) => timeline.call(() => light([phone]), [], index === 0 ? ">" : ">+0.1"));
 			timeline.call(() => light(phones, "is-lit", false), [], ">+1");
 		}
+		if (scenario === "hooks") {
+			travel(timeline, "packet-track", 1.8);
+			timeline
+				.call(() => light(role("handler")))
+				.call(() => light(role("handler"), "is-lit", false), [], ">+0.9");
+			travel(timeline, "default-track", 0.9);
+			timeline
+				.call(() => light(role("default")))
+				.call(() => light(role("default"), "is-lit", false), [], ">+1.2");
+		}
 	};
 
 	let drawn = false;

@@ -1,0 +1,20 @@
+order: 6
+title: Zhihu-Hyperion
+crayon: heart
+section: Kotlin Multiplatform / Reading
+icon: lucide:sunrise
+doodle: sunrise
+paper: plain
+revision: A
+availability: public
+github: eltavine/Zhihu-Hyperion
+sketch: zhihu-hyperion
+wireframe: hyperion-feed
+status: Released / stable and nightly builds
+summary: Zhihu-Hyperion is an ad-free, lightweight, AI-assisted Zhihu client for Android, iOS, Windows, Linux, and macOS, built on Zhihu++.
+emphasis: It hands the feed back to the reader. Ads, promoted posts, and paywalled columns are filtered out on the device, recommendations can run entirely locally with weights you choose, and nothing is sent as telemetry.
+notes:
+  - Splits one Kotlin Multiplatform codebase into core, feature, and shared modules wired with Koin, so the Android, iOS, desktop, and macOS apps share one Material 3 Expressive interface in Compose Multiplatform.
+  - Filters content with regex keywords, blocked users and topics, and quality thresholds, plus semantic blocking from an on-device ONNX Runtime embedding model in the Full build, while the Lite APK stays under 5 MB.
+  - Ships signed Android builds, unsigned iOS IPAs, a Windows MSI, a Linux AppImage, and a native macOS app from CI, each release carrying an update.json manifest, SHA-256 sums, and build provenance.
+stack: [kotlin, compose, ktor, sqlite, onnx, android, ios, macos, linux]

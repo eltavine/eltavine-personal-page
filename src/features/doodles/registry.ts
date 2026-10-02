@@ -160,6 +160,104 @@ export const doodles: Readonly<Record<string, Diagram>> = {
 			type: "polygon",
 		},
 	]),
+	plane: doodle("A crayon paper plane under a crescent moon and a few drops of evening rain.", [
+		{
+			fill: true,
+			points: [
+				[30, 4],
+				[17, 8],
+				[9, 19],
+				[11, 31],
+				[22, 38],
+				[32, 36],
+				[24, 30],
+				[21, 20],
+				[24, 11],
+			],
+			type: "polygon",
+		},
+		{
+			points: [
+				[38, 26],
+				[41, 33],
+				[38, 36],
+				[35, 33],
+			],
+			type: "polygon",
+		},
+		{
+			points: [
+				[30, 44],
+				[33, 51],
+				[30, 54],
+				[27, 51],
+			],
+			type: "polygon",
+		},
+		{
+			points: [
+				[20, 64],
+				[96, 30],
+				[62, 76],
+			],
+			type: "polygon",
+		},
+		{
+			fill: true,
+			points: [
+				[62, 76],
+				[96, 30],
+				[70, 96],
+			],
+			type: "polygon",
+		},
+		{
+			dashed: true,
+			points: [
+				[2, 96],
+				[8, 84],
+				[18, 86],
+				[24, 74],
+			],
+			type: "curve",
+		},
+	]),
+	sunrise: doodle("Two crayon pillars with a rising sun between them, drawn as an H.", [
+		{
+			points: [
+				[8, 87],
+				[30, 89],
+				[50, 86],
+				[70, 89],
+				[92, 87],
+			],
+			type: "curve",
+		},
+		{ h: 58, r: 8, type: "frame", w: 16, x: 22, y: 26 },
+		{ h: 58, r: 8, type: "frame", w: 16, x: 62, y: 26 },
+		{ cx: 50, cy: 55, fill: true, h: 30, type: "ellipse", w: 30 },
+		{
+			points: [
+				[50, 35],
+				[50, 26],
+			],
+			type: "line",
+		},
+		{
+			points: [
+				[42, 38],
+				[39, 30],
+			],
+			type: "line",
+		},
+		{
+			points: [
+				[58, 38],
+				[61, 30],
+			],
+			type: "line",
+		},
+	]),
 };
 
 export function getDoodle(key: string): Diagram {

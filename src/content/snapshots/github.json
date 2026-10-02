@@ -1,7 +1,7 @@
 {
 	"eltavine/Duck-Detector-Refactoring": {
-		"fetchedAt": "2026-09-28T04:14:05.257Z",
-		"forks": 172,
+		"fetchedAt": "2026-10-02T18:25:39.426Z",
+		"forks": 174,
 		"history": [
 			{
 				"date": "2026-03-20T11:03:24Z",
@@ -40,24 +40,58 @@
 				"stars": 801
 			},
 			{
-				"date": "2026-08-30T15:24:46Z",
+				"date": "2026-08-30T17:20:56Z",
 				"stars": 901
 			},
 			{
-				"date": "2026-09-15T13:21:37Z",
+				"date": "2026-09-15T16:51:01Z",
 				"stars": 1001
 			},
 			{
-				"date": "2026-09-28T04:14:05.257Z",
-				"stars": 1053
+				"date": "2026-10-02T18:25:39.426Z",
+				"stars": 1077
 			}
 		],
-		"pushedAt": "2026-09-27T09:03:36Z",
+		"pushedAt": "2026-10-02T12:25:19Z",
 		"repo": "eltavine/Duck-Detector-Refactoring",
-		"stars": 1053
+		"stars": 1077
+	},
+	"eltavine/SereinGram": {
+		"fetchedAt": "2026-10-02T18:25:47.553Z",
+		"forks": 0,
+		"history": [
+			{
+				"date": "2026-10-02T00:30:04Z",
+				"stars": 1
+			},
+			{
+				"date": "2026-10-02T18:25:47.553Z",
+				"stars": 4
+			}
+		],
+		"pushedAt": "2026-10-02T17:56:14Z",
+		"repo": "eltavine/SereinGram",
+		"stars": 4
+	},
+	"eltavine/Zhihu-Hyperion": {
+		"fetchedAt": "2026-10-02T18:25:48.663Z",
+		"forks": 0,
+		"history": [
+			{
+				"date": "2026-10-01T08:58:12Z",
+				"stars": 1
+			},
+			{
+				"date": "2026-10-02T18:25:48.663Z",
+				"stars": 11
+			}
+		],
+		"pushedAt": "2026-10-02T17:44:59Z",
+		"repo": "eltavine/Zhihu-Hyperion",
+		"stars": 11
 	},
 	"eltavine/pingora-panel": {
-		"fetchedAt": "2026-09-28T04:14:12.878Z",
+		"fetchedAt": "2026-10-02T18:25:50.081Z",
 		"forks": 0,
 		"history": [
 			{
@@ -65,7 +99,7 @@
 				"stars": 1
 			},
 			{
-				"date": "2026-09-28T04:14:12.878Z",
+				"date": "2026-10-02T18:25:50.081Z",
 				"stars": 1
 			}
 		],

@@ -7,6 +7,8 @@
 - { id: buf, label: Buf, icon: "lucide:boxes" }
 - { id: c, label: C, icon: "simple-icons:c" }
 - { id: cloudflare, label: Cloudflare, icon: "simple-icons:cloudflare" }
+- { id: cmake, label: CMake, icon: "simple-icons:cmake" }
+- { id: compose, label: Compose, icon: "simple-icons:jetpackcompose" }
 - { id: connectrpc, label: ConnectRPC, icon: "lucide:radio-tower" }
 - { id: cpp, label: C++, icon: "simple-icons:cplusplus" }
 - { id: dart, label: Dart, icon: "simple-icons:dart" }
@@ -16,19 +18,24 @@
 - { id: java, label: Java, icon: "simple-icons:openjdk" }
 - { id: javascript, label: JavaScript, icon: "simple-icons:javascript" }
 - { id: kotlin, label: Kotlin, icon: "simple-icons:kotlin" }
+- { id: ktor, label: Ktor, icon: "simple-icons:ktor" }
 - { id: linux, label: Linux, icon: "simple-icons:linux" }
 - { id: macos, label: macOS, icon: "simple-icons:macos" }
+- { id: onnx, label: ONNX Runtime, icon: "simple-icons:onnx" }
 - { id: ory, label: Ory, icon: "simple-icons:ory" }
 - { id: pingora, label: Pingora, icon: "lucide:network" }
 - { id: pnpm, label: pnpm, icon: "simple-icons:pnpm" }
 - { id: postgresql, label: PostgreSQL, icon: "simple-icons:postgresql" }
 - { id: protobuf, label: Protobuf, icon: "lucide:boxes" }
+- { id: python, label: Python, icon: "simple-icons:python" }
+- { id: qt, label: Qt, icon: "simple-icons:qt" }
 - { id: react, label: React, icon: "simple-icons:react" }
 - { id: redis, label: Redis, icon: "simple-icons:redis" }
 - { id: riverpod, label: Riverpod, icon: "lucide:git-branch" }
 - { id: rust, label: Rust, icon: "simple-icons:rust" }
 - { id: scrcpy, label: scrcpy, icon: "lucide:monitor" }
 - { id: sqlcipher, label: SQLCipher, icon: "lucide:database" }
+- { id: sqlite, label: SQLite, icon: "simple-icons:sqlite" }
 - { id: tailwind, label: Tailwind CSS, icon: "simple-icons:tailwindcss" }
 - { id: tauri, label: Tauri, icon: "simple-icons:tauri" }
 - { id: tokio, label: Tokio, icon: "simple-icons:tokio" }

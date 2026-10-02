@@ -70,7 +70,7 @@ const groups = await Promise.all(
 				<div
 					class:list={["stack-group", group.items.length <= 4 ? "stack-group--compact" : "stack-group--wide"]}
 					data-specimen-row
-					style={`--group-color: var(--crayon-${group.crayon}); --group-ink: var(--crayon-${group.crayon}-ink); --cols: ${group.items.length};`}
+					style={`--group-color: var(--crayon-${group.crayon}); --group-ink: var(--crayon-${group.crayon}-ink); --cols: ${group.items.length}; --cols-split: ${group.items.length > 8 ? Math.ceil(group.items.length / 2) : group.items.length};`}
 				>
 					<div class="stack-group-label" data-specimen-label>
 						<p class="eyebrow">

@@ -1,0 +1,20 @@
+order: 5
+title: SereinGram
+crayon: pink
+section: C++ / Qt / Desktop messaging
+icon: lucide:send
+doodle: plane
+paper: plain
+revision: A
+availability: public
+github: eltavine/SereinGram
+sketch: sereingram
+wireframe: sereingram-chat
+status: In progress / pre-release
+summary: SereinGram is an open source Telegram client for macOS, Windows, and Linux, built on Telegram Desktop and inspired by Nagram and AyuGram.
+emphasis: It adds ghost mode, a local message history, filters, and translation services to Telegram Desktop, while every addition starts switched off and reaches upstream code only through a narrow hook facade.
+notes:
+  - Reaches upstream only through one line calls into a serein/hooks facade that defaults to Telegram's own behavior, with a CI budget capping how many upstream files and lines change.
+  - Declares settings, structured configuration, export bundles, and history records in proto3 with Buf lint and breaking checks, and generates typed C++ options, codecs, and settings pages from them.
+  - Keeps deleted and edited messages in an AES-GCM encrypted Qt SQL history, and builds macOS universal, Windows, and Linux AppImage, deb, rpm, Flatpak, Arch, and Nix packages in CI.
+stack: [cpp, qt, cmake, protobuf, buf, python, sqlite, docker, linux, macos]

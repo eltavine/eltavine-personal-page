@@ -10,10 +10,10 @@
   order: 2
   eyebrow: Application
   title: Application Languages
-  description: Tools for Android apps, web interfaces, and shipped product features.
+  description: Tools for Android apps, desktop clients, web interfaces, and shipped product features.
   icon: "lucide:braces"
   crayon: marigold
-  items: [kotlin, typescript, javascript, java, react, astro, vite]
+  items: [kotlin, compose, typescript, javascript, java, qt, react, astro, vite]
 - id: platform
   order: 3
   eyebrow: Platform
@@ -34,7 +34,7 @@
   order: 5
   eyebrow: Workflow
   title: Build and Governance
-  description: Package and workspace tools that keep builds repeatable.
+  description: Build, package, and schema tools that keep builds repeatable.
   icon: "lucide:workflow"
   crayon: sage
-  items: [pnpm, turborepo]
+  items: [pnpm, turborepo, cmake, buf]

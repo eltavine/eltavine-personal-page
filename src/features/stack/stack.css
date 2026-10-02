@@ -228,6 +228,13 @@
 		}
 	}
 
+	/* Past eight tiles a single row squeezes labels like TYPESCRIPT mid-word, so long rows split in two. */
+	@media (min-width: 721px) and (max-width: 1079px) {
+		.stack-tiles {
+			grid-template-columns: repeat(var(--cols-split), minmax(0, 8.75rem));
+		}
+	}
+
 	@media (max-width: 720px) {
 		.stack-group--compact {
 			grid-column: span 12;
