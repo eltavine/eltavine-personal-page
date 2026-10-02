@@ -79,12 +79,18 @@
 		text-wrap: nowrap;
 	}
 
+	/*
+	 * The lens follows the pointer, including over the sparkle hanging past the last letter, so the sheet
+	 * runs on well beyond a lens radius on every side; otherwise its edge shows inside the ring.
+	 */
 	.footer-wordmark-draft {
 		--guide: color-mix(in srgb, var(--accent) 75%, transparent);
 		--guide-soft: color-mix(in srgb, var(--crayon-blue) 55%, transparent);
+		--bleed: 1em;
 		position: absolute;
-		inset: 0;
+		inset: calc(-1 * var(--bleed));
 		z-index: 1;
+		padding: var(--bleed);
 		background-color: var(--paper);
 		background-image:
 			linear-gradient(transparent 0.8em, var(--guide) 0.8em, var(--guide) calc(0.8em + 1.5px), transparent 0),
@@ -102,6 +108,8 @@
 			),
 			linear-gradient(var(--grid-line) 1px, transparent 1px),
 			linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+		background-origin: content-box;
+		background-repeat: repeat-x, repeat-x, repeat-x, repeat, repeat;
 		background-size:
 			auto,
 			auto,
@@ -110,7 +118,7 @@
 			0.08em 0.08em;
 		color: transparent;
 		-webkit-text-stroke: 1.25px color-mix(in srgb, var(--ink) 72%, transparent);
-		clip-path: circle(var(--lens-r) at var(--lens-x) var(--lens-y));
+		clip-path: circle(var(--lens-r) at calc(var(--lens-x) + var(--bleed)) calc(var(--lens-y) + var(--bleed)));
 		pointer-events: none;
 	}
 
