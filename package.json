@@ -22,7 +22,7 @@
 		"verify": "pnpm format:check && pnpm check && pnpm test && pnpm build && pnpm test:e2e"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "8.0.2",
+		"@astrojs/mdx": "8.0.3",
 		"@astrojs/sitemap": "3.7.4",
 		"@fontsource-variable/fraunces": "5.3.0",
 		"@fontsource/caveat": "5.3.0",
@@ -32,7 +32,7 @@
 		"@octokit/plugin-retry": "8.1.1",
 		"@octokit/plugin-throttling": "11.0.5",
 		"@octokit/rest": "22.0.1",
-		"astro": "7.3.5",
+		"astro": "7.3.8",
 		"astro-icon": "1.2.0",
 		"gsap": "3.15.0",
 		"roughjs": "4.6.6",
